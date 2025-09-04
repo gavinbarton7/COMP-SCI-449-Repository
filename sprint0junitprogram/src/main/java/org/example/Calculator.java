@@ -1,8 +1,7 @@
 package org.example;
 
 public class Calculator {
-    public int add(int number1, int number2)
-    {
+    public int add(int number1, int number2) {
         //create variable for result of calculation
         int result = 0;
 
@@ -13,8 +12,7 @@ public class Calculator {
         return result;
     }
 
-    public int subtract(int number1, int number2)
-    {
+    public int subtract(int number1, int number2) {
         //create variable for result of calculation
         int result = 0;
 
@@ -25,8 +23,7 @@ public class Calculator {
         return result;
     }
 
-    public int multiply(int number1, int number2)
-    {
+    public int multiply(int number1, int number2) {
         //create variable for result of calculation
         int result = 0;
 
@@ -37,8 +34,7 @@ public class Calculator {
         return result;
     }
 
-    public int divide(int number1, int number2)
-    {
+    public int divide(int number1, int number2) {
         //create variable for result of calculation
         int result = 0;
 
