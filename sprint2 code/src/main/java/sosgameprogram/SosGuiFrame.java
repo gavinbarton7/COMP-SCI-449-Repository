@@ -16,7 +16,9 @@ public class SosGuiFrame extends JFrame {
     // creates panel for top right of GUI and adds it to the "WEST" section
     // of the top panel
     JPanel topRightPanel = new JPanel();
+    JPanel topLeftPanel = new JPanel();
     topPanel.add(topRightPanel, BorderLayout.WEST);
+    topPanel.add(topLeftPanel, BorderLayout.EAST);
 
     // Creates a label for the SOS Game
     JLabel sosGameLabel = new JLabel();
@@ -35,9 +37,14 @@ public class SosGuiFrame extends JFrame {
 
     // Creates a button group for the simple and general game radio buttons and adds them to the
     // group
-    ButtonGroup simpleGenralGroup = new ButtonGroup();
-    simpleGenralGroup.add(simpleGameRadioButton);
-    simpleGenralGroup.add(generalGameRadioButton);
+    ButtonGroup simpleGeneralGroup = new ButtonGroup();
+    simpleGeneralGroup.add(simpleGameRadioButton);
+    simpleGeneralGroup.add(generalGameRadioButton);
+
+    JTextField boardSizeInput = new JTextField(2);
+    JLabel boardSizeLabel = new JLabel("Board Size ");
+    topLeftPanel.add(boardSizeLabel);
+    topLeftPanel.add(boardSizeInput);
 
     // Add the SOS game label and the simple and general game radio buttons to the "topRightPanel"
     // panel
@@ -90,50 +97,18 @@ public class SosGuiFrame extends JFrame {
     bluePlayerPanel.add(bluePlayerOButton);
 
     // Create an object for the SOS game board panel
-    SosGamePanel SosGamePanel = new SosGamePanel();
+    Board board = new Board();
 
     // Adds the "TopPanel" panel to the "NORTH" section of the GUI layout and the checkbox to the
     // "SOUTH" section of the GUI layout
     this.add(topPanel, BorderLayout.NORTH);
     this.add(recordGamecheckBox, BorderLayout.SOUTH);
-    this.add(SosGamePanel, BorderLayout.CENTER);
+    this.add(board, BorderLayout.CENTER);
     this.add(redPlayerPanel, BorderLayout.WEST);
     this.add(bluePlayerPanel, BorderLayout.EAST);
     this.pack();
     this.setVisible(true);
-  }
 
 
-  // This class creates a Panel for the SOS game board by drawing an 8x8 grid
-  private class SosGamePanel extends JPanel {
-    @Override
-    protected void paintComponent(Graphics board) {
-      super.paintComponent(board);
-
-      // Sets the color of the board to black
-      board.setColor(Color.BLACK);
-
-      // Draws the horizontal lines of SOS game board
-      board.drawLine(25, 50, 225, 50);
-      board.drawLine(25, 75, 225, 75);
-      board.drawLine(25, 100, 225, 100);
-      board.drawLine(25, 125, 225, 125);
-      board.drawLine(25, 150, 225, 150);
-      board.drawLine(25, 175, 225, 175);
-      board.drawLine(25, 200, 225, 200);
-      board.drawLine(25, 225, 225, 225);
-      board.drawLine(25, 250, 225, 250);
-
-      // Draws the vertical lines of SOS game board
-      board.drawLine(25, 50, 25, 250);
-      board.drawLine(50, 50, 50, 250);
-      board.drawLine(75, 50, 75, 250);
-      board.drawLine(100, 50, 100, 250);
-      board.drawLine(125, 50, 125, 250);
-      board.drawLine(150, 50, 150, 250);
-      board.drawLine(175, 50, 175, 250);
-      board.drawLine(200, 50, 200, 250);
-      board.drawLine(225, 50, 225, 250);
-    }
   }
 }
