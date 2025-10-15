@@ -4,6 +4,24 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Board extends JPanel {
+
+  // For testing purposes with my new method of drawing the board.
+  // Will be removed in final commit for this sprint
+  int boardSize = 8;
+
+  // Sets the board size in pixels
+  public Board() {
+    setSize(300,300);
+  }
+
+  // Draws board
+  public void paint(Graphics board) {
+    for (int x = 30; x <= boardSize*30; x += 30)
+      for (int y = 30; y <= boardSize*30; y += 30)
+        board.drawRect(x, y, 30, 30);
+  }
+
+  /*
   protected void paintComponent(Graphics board) {
     super.paintComponent(board);
 
@@ -32,4 +50,5 @@ public class Board extends JPanel {
     board.drawLine(200, 50, 200, 250);
     board.drawLine(225, 50, 225, 250);
   }
+  */
 }

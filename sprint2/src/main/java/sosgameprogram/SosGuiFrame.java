@@ -6,6 +6,7 @@ import java.awt.*;
 public class SosGuiFrame extends JFrame {
   public SosGuiFrame() {
     this.setTitle("SOS Game");
+    this.setTitle("SOS Game");
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setLayout(new BorderLayout());
 

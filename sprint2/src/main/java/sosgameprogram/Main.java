@@ -1,6 +1,7 @@
 package sosgameprogram;
 
 import javax.swing.*;
+import javax.swing.*;
 import java.awt.*;
 
 public class Main extends JFrame {
