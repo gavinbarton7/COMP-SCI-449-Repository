@@ -27,7 +27,6 @@ public class SosGameConsole {
     return boardSize;
   }
 
-
   public void setGameMode(String modeValue) {
     this.gameMode = modeValue;
   }
@@ -47,5 +46,17 @@ public class SosGameConsole {
     }
     currentPlayer = "B";
     gameCurrentlyPlaying = true;
+  }
+
+  public String getCurrentPlayer() {
+      return currentPlayer;
+  }
+
+  public void changeTurns() {
+      if (currentPlayer.equals("B")) {
+          currentPlayer = "R";
+      } else if (currentPlayer.equals("R")) {
+          currentPlayer = "B";
+      }
   }
 }

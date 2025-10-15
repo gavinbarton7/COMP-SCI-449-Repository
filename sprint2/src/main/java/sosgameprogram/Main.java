@@ -11,7 +11,4 @@ public class Main extends JFrame {
     SosGuiFrame frame = new SosGuiFrame();
     frame.setSize(550,500);
   }
-
-
-
 }

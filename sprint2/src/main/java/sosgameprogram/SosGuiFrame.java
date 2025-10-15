@@ -114,7 +114,5 @@ public class SosGuiFrame extends JFrame {
     this.add(bluePlayerPanel, BorderLayout.EAST);
     this.pack();
     this.setVisible(true);
-
-
   }
 }
