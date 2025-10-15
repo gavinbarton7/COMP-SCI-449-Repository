@@ -5,9 +5,9 @@ import java.awt.*;
 
 public class Board extends JPanel {
 
+  int boardSize = 8;
   // For testing purposes with my new method of drawing the board.
   // Will be removed in final commit for this sprint
-  int boardSize = 8;
 
   // Sets the board size in pixels
   public Board() {

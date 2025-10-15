@@ -4,8 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class SosGuiFrame extends JFrame {
+  private SosGameConsole game;
+  private Board board;
+
   public SosGuiFrame() {
-    this.setTitle("SOS Game");
     this.setTitle("SOS Game");
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setLayout(new BorderLayout());
@@ -42,9 +44,11 @@ public class SosGuiFrame extends JFrame {
     simpleGeneralGroup.add(simpleGameRadioButton);
     simpleGeneralGroup.add(generalGameRadioButton);
 
-
-    JTextField boardSizeInput = new JTextField(2);
+    // Creates the New Game button and a place for the user to input there board size on the GUI
+    JButton newGameButton = new JButton("New Game");
+    JTextField boardSizeInput = new JTextField(3);
     JLabel boardSizeLabel = new JLabel("Board Size ");
+    topLeftPanel.add(newGameButton);
     topLeftPanel.add(boardSizeLabel);
     topLeftPanel.add(boardSizeInput);
 
