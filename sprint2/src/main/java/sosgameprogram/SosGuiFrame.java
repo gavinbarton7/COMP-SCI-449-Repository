@@ -42,6 +42,7 @@ public class SosGuiFrame extends JFrame {
     simpleGeneralGroup.add(simpleGameRadioButton);
     simpleGeneralGroup.add(generalGameRadioButton);
 
+
     JTextField boardSizeInput = new JTextField(2);
     JLabel boardSizeLabel = new JLabel("Board Size ");
     topLeftPanel.add(boardSizeLabel);
@@ -50,8 +51,8 @@ public class SosGuiFrame extends JFrame {
     // Add the SOS game label and the simple and general game radio buttons to the "topRightPanel"
     // panel
     topRightPanel.add(sosGameLabel);
-    topRightPanel.add(generalGameRadioButton);
     topRightPanel.add(simpleGameRadioButton);
+    topRightPanel.add(generalGameRadioButton);
 
     // Creates radio S and O buttons for player 1
     JRadioButton redPlayerSButton = new JRadioButton();
