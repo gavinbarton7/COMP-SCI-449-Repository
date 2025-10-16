@@ -49,14 +49,14 @@ public class SosGameConsole {
   }
 
   public String getCurrentPlayer() {
-      return currentPlayer;
+    return currentPlayer;
   }
 
   public void changeTurns() {
-      if (currentPlayer.equals("B")) {
-          currentPlayer = "R";
-      } else if (currentPlayer.equals("R")) {
-          currentPlayer = "B";
-      }
+    if (currentPlayer.equals("B")) {
+      currentPlayer = "R";
+    } else if (currentPlayer.equals("R")) {
+      currentPlayer = "B";
+    }
   }
 }

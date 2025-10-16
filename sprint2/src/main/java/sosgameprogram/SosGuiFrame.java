@@ -12,51 +12,11 @@ public class SosGuiFrame extends JFrame {
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setLayout(new BorderLayout());
 
-    // creates panel for top of GUI
-    JPanel topPanel = new JPanel();
-    topPanel.setLayout(new BorderLayout());
-
-    // creates panel for top right of GUI and adds it to the "WEST" section
-    // of the top panel
-    JPanel topRightPanel = new JPanel();
-    JPanel topLeftPanel = new JPanel();
-    topPanel.add(topRightPanel, BorderLayout.WEST);
-    topPanel.add(topLeftPanel, BorderLayout.EAST);
-
-    // Creates a label for the SOS Game
-    JLabel sosGameLabel = new JLabel();
-    sosGameLabel.setText("SOS Game");
+    createTopPanel();
 
     // Creates the checkbox for whether or not the game will be recorded
     JCheckBox recordGamecheckBox = new JCheckBox();
     recordGamecheckBox.setText("Record Game");
-
-    // Creates the radio buttons for choosing simple or general game
-    JRadioButton simpleGameRadioButton = new JRadioButton();
-    simpleGameRadioButton.setText("Simple Game");
-    JRadioButton generalGameRadioButton = new JRadioButton();
-    generalGameRadioButton.setText("General Game");
-    simpleGameRadioButton.setBounds(200,200,10,10);
-
-    // Creates a button group for the simple and general game radio buttons and adds them to the
-    // group
-    ButtonGroup simpleGeneralGroup = new ButtonGroup();
-    simpleGeneralGroup.add(simpleGameRadioButton);
-    simpleGeneralGroup.add(generalGameRadioButton);
-
-    // Creates the New Game button and a place for the user to input there board size on the GUI
-    JButton newGameButton = new JButton("New Game");
-    JTextField boardSizeInput = new JTextField(3);
-    JLabel boardSizeLabel = new JLabel("Board Size ");
-    topLeftPanel.add(newGameButton);
-    topLeftPanel.add(boardSizeLabel);
-    topLeftPanel.add(boardSizeInput);
-
-    // Add the SOS game label and the simple and general game radio buttons to the "topRightPanel"
-    // panel
-    topRightPanel.add(sosGameLabel);
-    topRightPanel.add(simpleGameRadioButton);
-    topRightPanel.add(generalGameRadioButton);
 
     // Creates radio S and O buttons for player 1
     JRadioButton redPlayerSButton = new JRadioButton();
@@ -107,12 +67,60 @@ public class SosGuiFrame extends JFrame {
 
     // Adds the "TopPanel" panel to the "NORTH" section of the GUI layout and the checkbox to the
     // "SOUTH" section of the GUI layout
-    this.add(topPanel, BorderLayout.NORTH);
+
     this.add(recordGamecheckBox, BorderLayout.SOUTH);
     this.add(board, BorderLayout.CENTER);
     this.add(redPlayerPanel, BorderLayout.WEST);
     this.add(bluePlayerPanel, BorderLayout.EAST);
     this.pack();
     this.setVisible(true);
+  }
+
+  // Creates top panel of GUI (I decided to put the panels in separate methods for increased
+  // modularity)
+  public void createTopPanel() {
+    // creates panel for top of GUI
+    JPanel topPanel = new JPanel();
+    topPanel.setLayout(new BorderLayout());
+
+    // creates panel for top right of GUI and adds it to the "WEST" section
+    // of the top panel
+    JPanel topRightPanel = new JPanel();
+    JPanel topLeftPanel = new JPanel();
+    topPanel.add(topRightPanel, BorderLayout.WEST);
+    topPanel.add(topLeftPanel, BorderLayout.EAST);
+
+    // Creates a label for the SOS Game
+    JLabel sosGameLabel = new JLabel();
+    sosGameLabel.setText("SOS Game");
+
+    // Creates the New Game button and a place for the user to input there board size on the GUI
+    JButton newGameButton = new JButton("New Game");
+    JTextField boardSizeInput = new JTextField(3);
+    JLabel boardSizeLabel = new JLabel("Board Size ");
+    topLeftPanel.add(newGameButton);
+    topLeftPanel.add(boardSizeLabel);
+    topLeftPanel.add(boardSizeInput);
+
+    // Creates the radio buttons for choosing simple or general game
+    JRadioButton simpleGameRadioButton = new JRadioButton();
+    simpleGameRadioButton.setText("Simple Game");
+    JRadioButton generalGameRadioButton = new JRadioButton();
+    generalGameRadioButton.setText("General Game");
+    simpleGameRadioButton.setBounds(200,200,10,10);
+
+    // Creates a button group for the simple and general game radio buttons and adds them to the
+    // group
+    ButtonGroup simpleGeneralGroup = new ButtonGroup();
+    simpleGeneralGroup.add(simpleGameRadioButton);
+    simpleGeneralGroup.add(generalGameRadioButton);
+
+    // Add the SOS game label and the simple and general game radio buttons to the "topRightPanel"
+    // panel
+    topRightPanel.add(sosGameLabel);
+    topRightPanel.add(simpleGameRadioButton);
+    topRightPanel.add(generalGameRadioButton);
+
+    this.add(topPanel, BorderLayout.NORTH);
   }
 }
