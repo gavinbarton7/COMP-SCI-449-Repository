@@ -13,65 +13,17 @@ public class SosGuiFrame extends JFrame {
     this.setLayout(new BorderLayout());
 
     createTopPanel();
-
-    // Creates the checkbox for whether or not the game will be recorded
-    JCheckBox recordGamecheckBox = new JCheckBox();
-    recordGamecheckBox.setText("Record Game");
-
-    // Creates radio S and O buttons for player 1
-    JRadioButton redPlayerSButton = new JRadioButton();
-    redPlayerSButton.setText("S");
-    JRadioButton redPlayerOButton = new JRadioButton();
-    redPlayerOButton.setText("O");
-
-    // Creates label for the Red player
-    JLabel redPlayerLabel = new JLabel();
-    redPlayerLabel.setText(" Red Player");
-
-    // Creates a group for the player buttons and adds the buttons for the red player
-    ButtonGroup redPlayerSOGroup = new ButtonGroup();
-    redPlayerSOGroup.add(redPlayerSButton);
-    redPlayerSOGroup.add(redPlayerOButton);
-
-    // Creates a panel that holds the SO buttons for the red player
-    JPanel redPlayerPanel = new JPanel();
-    redPlayerPanel.setLayout(new BoxLayout(redPlayerPanel, BoxLayout.Y_AXIS));
-    redPlayerPanel.add(redPlayerLabel);
-    redPlayerPanel.add(redPlayerSButton);
-    redPlayerPanel.add(redPlayerOButton);
-
-    // Creates radio S and O buttons for the blue player
-    JRadioButton bluePlayerSButton = new JRadioButton();
-    bluePlayerSButton.setText("S");
-    JRadioButton bluePlayerOButton = new JRadioButton();
-    bluePlayerOButton.setText("O");
-
-    // Creates label for the Blue player
-    JLabel bluePlayerLabel = new JLabel();
-    bluePlayerLabel.setText(" Blue Player ");
-
-    // Creates a group for the player buttons and adds the buttons for the blue player
-    ButtonGroup bluePlayerSOGroup = new ButtonGroup();
-    bluePlayerSOGroup.add(bluePlayerSButton);
-    bluePlayerSOGroup.add(bluePlayerOButton);
-
-    // Creates a panel that holds the SO buttons for the blue player
-    JPanel bluePlayerPanel = new JPanel();
-    bluePlayerPanel.setLayout(new BoxLayout(bluePlayerPanel, BoxLayout.Y_AXIS));
-    bluePlayerPanel.add(bluePlayerLabel);
-    bluePlayerPanel.add(bluePlayerSButton);
-    bluePlayerPanel.add(bluePlayerOButton);
+    createBottomPanel();
+    createRedPlayerPanel();
+    createBluePlayerPanel();
 
     // Create an object for the SOS game board panel
     Board board = new Board();
 
     // Adds the "TopPanel" panel to the "NORTH" section of the GUI layout and the checkbox to the
     // "SOUTH" section of the GUI layout
-
-    this.add(recordGamecheckBox, BorderLayout.SOUTH);
     this.add(board, BorderLayout.CENTER);
-    this.add(redPlayerPanel, BorderLayout.WEST);
-    this.add(bluePlayerPanel, BorderLayout.EAST);
+
     this.pack();
     this.setVisible(true);
   }
@@ -122,5 +74,65 @@ public class SosGuiFrame extends JFrame {
     topRightPanel.add(generalGameRadioButton);
 
     this.add(topPanel, BorderLayout.NORTH);
+  }
+
+  public void createBottomPanel() {
+    // Creates the checkbox for whether or not the game will be recorded
+    JCheckBox recordGamecheckBox = new JCheckBox();
+    recordGamecheckBox.setText("Record Game");
+
+    this.add(recordGamecheckBox, BorderLayout.SOUTH);
+  }
+
+  public void createRedPlayerPanel() {
+    // Creates label for the Red player
+    JLabel redPlayerLabel = new JLabel();
+    redPlayerLabel.setText(" Red Player");
+
+    // Creates radio S and O buttons for red player
+    JRadioButton redPlayerSButton = new JRadioButton();
+    redPlayerSButton.setText("S");
+    JRadioButton redPlayerOButton = new JRadioButton();
+    redPlayerOButton.setText("O");
+
+    // Creates a group for the player buttons and adds the buttons for the red player
+    ButtonGroup redPlayerSOGroup = new ButtonGroup();
+    redPlayerSOGroup.add(redPlayerSButton);
+    redPlayerSOGroup.add(redPlayerOButton);
+
+    // Creates a panel that holds the SO buttons for the red player
+    JPanel redPlayerPanel = new JPanel();
+    redPlayerPanel.setLayout(new BoxLayout(redPlayerPanel, BoxLayout.Y_AXIS));
+    redPlayerPanel.add(redPlayerLabel);
+    redPlayerPanel.add(redPlayerSButton);
+    redPlayerPanel.add(redPlayerOButton);
+
+    this.add(redPlayerPanel, BorderLayout.WEST);
+  }
+
+  public void createBluePlayerPanel () {
+    // Creates radio S and O buttons for the blue player
+    JRadioButton bluePlayerSButton = new JRadioButton();
+    bluePlayerSButton.setText("S");
+    JRadioButton bluePlayerOButton = new JRadioButton();
+    bluePlayerOButton.setText("O");
+
+    // Creates label for the Blue player
+    JLabel bluePlayerLabel = new JLabel();
+    bluePlayerLabel.setText(" Blue Player ");
+
+    // Creates a group for the player buttons and adds the buttons for the blue player
+    ButtonGroup bluePlayerSOGroup = new ButtonGroup();
+    bluePlayerSOGroup.add(bluePlayerSButton);
+    bluePlayerSOGroup.add(bluePlayerOButton);
+
+    // Creates a panel that holds the SO buttons for the blue player
+    JPanel bluePlayerPanel = new JPanel();
+    bluePlayerPanel.setLayout(new BoxLayout(bluePlayerPanel, BoxLayout.Y_AXIS));
+    bluePlayerPanel.add(bluePlayerLabel);
+    bluePlayerPanel.add(bluePlayerSButton);
+    bluePlayerPanel.add(bluePlayerOButton);
+
+    this.add(bluePlayerPanel, BorderLayout.EAST);
   }
 }
