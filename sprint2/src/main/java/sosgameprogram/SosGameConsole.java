@@ -8,6 +8,8 @@ public class SosGameConsole {
   // currentPlayer holds "B" for blue player or "R" for red player
   String currentPlayer;
   String[][] gameBoard;
+  String redPlayerLetterSelection;
+  String bluePlayerLetterSelection;
 
   public SosGameConsole() {
     // Note: -1 is used as an initial value to tell if the board size has been set yet
@@ -15,6 +17,8 @@ public class SosGameConsole {
     this.gameMode = null;
     // currentPlayer is intialized to "B" since blue player moves first in every game
     this.currentPlayer = "B";
+    this.redPlayerLetterSelection = "";
+    this.bluePlayerLetterSelection = "";
   }
 
   // Sets the size of the board if inputted size is between 3 and 10, but returns false if inputted
@@ -66,5 +70,35 @@ public class SosGameConsole {
     } else if (currentPlayer.equals("R")) {
       currentPlayer = "B";
     }
+  }
+
+  // Sets the letter selection for the red player
+  public void setRedPlayerLetterSelection(String letterSelection) {
+    if (letterSelection == "S") {
+      redPlayerLetterSelection = "S";
+    } else if (letterSelection == "O") {
+      redPlayerLetterSelection = "O";
+    }
+  }
+
+  public String getRedPlayerLetterSelection() {
+    return redPlayerLetterSelection;
+  }
+
+  // Sets the letter selection for the blue player
+  public void setBluePlayerLetterSelection(String letterSelection) {
+    if (letterSelection == "S") {
+      bluePlayerLetterSelection = "S";
+    } else if (letterSelection == "O") {
+      bluePlayerLetterSelection = "O";
+    }
+  }
+
+  public String getBluePlayerLetterSelection() {
+    return bluePlayerLetterSelection;
+  }
+
+  public String getCellContent(int row, int column) {
+    return gameBoard[row][column];
   }
 }

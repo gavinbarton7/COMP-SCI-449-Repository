@@ -19,13 +19,7 @@ public class SosGuiFrame extends JFrame {
     createBottomPanel();
     createRedPlayerPanel();
     createBluePlayerPanel();
-
-    // Create an object for the SOS game board panel
-    board = new Board(game, this);
-
-    // Adds the "TopPanel" panel to the "NORTH" section of the GUI layout and the checkbox to the
-    // "SOUTH" section of the GUI layout
-    this.add(board, BorderLayout.CENTER);
+    createGameBoardPanel();
 
     this.pack();
     this.setVisible(true);
@@ -218,5 +212,14 @@ public class SosGuiFrame extends JFrame {
       board.newBoard();
       game.setUpForNewGame();
     }
+  }
+
+  public void createGameBoardPanel() {
+    // Create an object for the SOS game board panel
+    board = new Board(game, this);
+
+    // Adds the "TopPanel" panel to the "NORTH" section of the GUI layout and the checkbox to the
+    // "SOUTH" section of the GUI layout
+    this.add(board, BorderLayout.CENTER);
   }
 }

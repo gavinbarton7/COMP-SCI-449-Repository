@@ -7,6 +7,8 @@ public class Board extends JPanel {
 
   private SosGameConsole game;
   private SosGuiFrame gameGui;
+  int cellSize = 40;
+  int boardOffest = 10;
 
   // Sets the board size in pixels
   public Board(SosGameConsole game, SosGuiFrame gameGui) {
@@ -27,9 +29,9 @@ public class Board extends JPanel {
 
     int boardSize = game.getBoardSize();
     if (boardSize != -1){
-      for (int x = 30; x <= boardSize*30; x += 30)
-        for (int y = 30; y <= boardSize*30; y += 30)
-          board.drawRect(x, y, 30, 30);
+      for (int x = boardOffest; x <= boardSize*cellSize; x += cellSize)
+        for (int y = boardOffest; y <= boardSize*cellSize; y += cellSize)
+          board.drawRect(x, y, cellSize, cellSize);
     }
   }
 
