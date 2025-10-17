@@ -11,7 +11,6 @@ public class SosGuiFrame extends JFrame {
 
   public SosGuiFrame() {
     this.game = new SosGameConsole();
-    this.board = new Board();
     this.setTitle("SOS Game");
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setLayout(new BorderLayout());
@@ -22,7 +21,7 @@ public class SosGuiFrame extends JFrame {
     createBluePlayerPanel();
 
     // Create an object for the SOS game board panel
-    Board board = new Board();
+    board = new Board(game, this);
 
     // Adds the "TopPanel" panel to the "NORTH" section of the GUI layout and the checkbox to the
     // "SOUTH" section of the GUI layout
@@ -85,7 +84,7 @@ public class SosGuiFrame extends JFrame {
     newGameButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        startOfANewGame();
+        startNewGame();
       }
     });
 
@@ -201,7 +200,7 @@ public class SosGuiFrame extends JFrame {
     this.add(bluePlayerPanel, BorderLayout.EAST);
   }
 
-  public void startOfANewGame() {
+  public void startNewGame() {
     // Checks to see if the board size and game mode have been entered
     if (game.getBoardSize() == -1) {
       JOptionPane.showMessageDialog(this,
@@ -215,6 +214,9 @@ public class SosGuiFrame extends JFrame {
           "No Game Mode",
           JOptionPane.WARNING_MESSAGE);
       return;
+    } else {
+      board.newBoard();
+      game.setUpForNewGame();
     }
   }
 }

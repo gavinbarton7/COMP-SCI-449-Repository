@@ -8,9 +8,6 @@ public class SosGameConsole {
   // currentPlayer holds "B" for blue player or "R" for red player
   String currentPlayer;
   String[][] gameBoard;
-  boolean gameCurrentlyPlaying;
-  boolean isBoardSizeSet;
-
 
   public SosGameConsole() {
     // Note: -1 is used as an initial value to tell if the board size has been set yet
@@ -18,7 +15,6 @@ public class SosGameConsole {
     this.gameMode = null;
     // currentPlayer is intialized to "B" since blue player moves first in every game
     this.currentPlayer = "B";
-    this.gameCurrentlyPlaying = false;
   }
 
   // Sets the size of the board if inputted size is between 3 and 10, but returns false if inputted
@@ -26,7 +22,6 @@ public class SosGameConsole {
   public boolean setBoardSize(int sizeInput) {
     if (sizeInput >= 3 && sizeInput <= 10) {
       this.boardSize = sizeInput;
-      this.isBoardSizeSet = true;
       return true;
     }
     return false;
@@ -59,7 +54,6 @@ public class SosGameConsole {
       }
     }
     currentPlayer = "B";
-    gameCurrentlyPlaying = true;
   }
 
   public String getCurrentPlayer() {
