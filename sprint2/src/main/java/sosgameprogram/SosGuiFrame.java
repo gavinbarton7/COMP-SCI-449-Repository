@@ -2,12 +2,16 @@ package sosgameprogram;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class SosGuiFrame extends JFrame {
   private SosGameConsole game;
   private Board board;
 
   public SosGuiFrame() {
+    this.game = new SosGameConsole();
+    this.board = new Board();
     this.setTitle("SOS Game");
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setLayout(new BorderLayout());
@@ -49,10 +53,30 @@ public class SosGuiFrame extends JFrame {
     // Creates the New Game button and a place for the user to input there board size on the GUI
     JButton newGameButton = new JButton("New Game");
     JTextField boardSizeInput = new JTextField(3);
-    JLabel boardSizeLabel = new JLabel("Board Size ");
+    JLabel boardSizeLabel = new JLabel("Board Size: ");
     topLeftPanel.add(newGameButton);
     topLeftPanel.add(boardSizeLabel);
     topLeftPanel.add(boardSizeInput);
+
+    boardSizeInput.addActionListener(e -> {
+      String sizeText = boardSizeInput.getText().trim();
+      if (sizeText.isEmpty() == false) {
+        try {
+          int size = Integer.parseInt(sizeText);
+          if (game.setBoardSize(size) == false) {
+            JOptionPane.showMessageDialog(this,
+              "Please enter a board size between 3 and 10",
+              "Invalid Board Size",
+              JOptionPane.WARNING_MESSAGE);
+          }
+        } catch (NumberFormatException ex) {
+          JOptionPane.showMessageDialog(this,
+            "Please enter a valid number for the board size",
+            "Invalid Input",
+            JOptionPane.ERROR_MESSAGE);
+        }
+      }
+    });
 
     // Creates the radio buttons for choosing simple or general game
     JRadioButton simpleGameRadioButton = new JRadioButton();
@@ -77,11 +101,15 @@ public class SosGuiFrame extends JFrame {
   }
 
   public void createBottomPanel() {
+    JPanel bottomPanel = new JPanel();
+    bottomPanel.setLayout(new FlowLayout());
+
     // Creates the checkbox for whether or not the game will be recorded
     JCheckBox recordGamecheckBox = new JCheckBox();
     recordGamecheckBox.setText("Record Game");
 
-    this.add(recordGamecheckBox, BorderLayout.SOUTH);
+    bottomPanel.add(recordGamecheckBox, BorderLayout.WEST);
+    this.add(bottomPanel, BorderLayout.SOUTH);
   }
 
   public void createRedPlayerPanel() {

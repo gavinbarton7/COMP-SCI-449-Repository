@@ -9,6 +9,7 @@ public class SosGameConsole {
   String currentPlayer;
   String[][] gameBoard;
   boolean gameCurrentlyPlaying;
+  boolean isBoardSizeSet;
 
 
   public SosGameConsole() {
@@ -18,9 +19,15 @@ public class SosGameConsole {
     this.gameCurrentlyPlaying = false;
   }
 
-  // Sets the size of the board
-  public void setBoardSize(int sizeInput) {
-    this.boardSize = sizeInput;
+  // Sets the size of the board if inputted size is between 3 and 10, but returns false if
+  // inputted size is outside the range of 3-10
+  public boolean setBoardSize(int sizeInput) {
+    if (sizeInput >= 3 && sizeInput <= 10) {
+      this.boardSize = sizeInput;
+      this.isBoardSizeSet = true;
+      return true;
+    }
+    return false;
   }
 
   public int getBoardSize() {
