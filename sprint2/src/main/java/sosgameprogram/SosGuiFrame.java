@@ -153,6 +153,15 @@ public class SosGuiFrame extends JFrame {
     JRadioButton redPlayerOButton = new JRadioButton();
     redPlayerOButton.setText("O");
 
+    // Adds action listener that set the letter selection for the red player based on which
+    // letter radio button they have selected
+    redPlayerSButton.addActionListener(e ->
+        game.setRedPlayerLetterSelection("S")
+    );
+    redPlayerOButton.addActionListener(e ->
+        game.setRedPlayerLetterSelection("O")
+    );
+
     // Creates a group for the player buttons and adds the buttons for the red player
     ButtonGroup redPlayerSOGroup = new ButtonGroup();
     redPlayerSOGroup.add(redPlayerSButton);
@@ -165,7 +174,7 @@ public class SosGuiFrame extends JFrame {
     redPlayerPanel.add(redPlayerSButton);
     redPlayerPanel.add(redPlayerOButton);
 
-    this.add(redPlayerPanel, BorderLayout.WEST);
+    this.add(redPlayerPanel, BorderLayout.EAST);
   }
 
   public void createBluePlayerPanel () {
@@ -184,6 +193,15 @@ public class SosGuiFrame extends JFrame {
     bluePlayerSOGroup.add(bluePlayerSButton);
     bluePlayerSOGroup.add(bluePlayerOButton);
 
+    // Adds action listeners that set the letter selection for the blue player based on which
+    // letter radio button they have selected
+    bluePlayerSButton.addActionListener(e ->
+        game.setBluePlayerLetterSelection("S")
+    );
+    bluePlayerOButton.addActionListener(e ->
+        game.setBluePlayerLetterSelection("O")
+    );
+
     // Creates a panel that holds the SO buttons for the blue player
     JPanel bluePlayerPanel = new JPanel();
     bluePlayerPanel.setLayout(new BoxLayout(bluePlayerPanel, BoxLayout.Y_AXIS));
@@ -191,7 +209,7 @@ public class SosGuiFrame extends JFrame {
     bluePlayerPanel.add(bluePlayerSButton);
     bluePlayerPanel.add(bluePlayerOButton);
 
-    this.add(bluePlayerPanel, BorderLayout.EAST);
+    this.add(bluePlayerPanel, BorderLayout.WEST);
   }
 
   public void startNewGame() {

@@ -2,6 +2,8 @@ package sosgameprogram;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Board extends JPanel {
 
@@ -14,6 +16,14 @@ public class Board extends JPanel {
   public Board(SosGameConsole game, SosGuiFrame gameGui) {
     this.game = game;
     this.gameGui = gameGui;
+
+    // Adds listener for clicks on the program GUI
+    addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        cellClickHandler(e.getX(), e.getY());
+      }
+    });
   }
 
   // Draws board
@@ -28,10 +38,52 @@ public class Board extends JPanel {
     }
 
     int boardSize = game.getBoardSize();
-    if (boardSize != -1){
-      for (int x = boardOffest; x <= boardSize*cellSize; x += cellSize)
-        for (int y = boardOffest; y <= boardSize*cellSize; y += cellSize)
+    if (boardSize != -1) {
+      for (int x = boardOffest; x <= boardSize * cellSize; x += cellSize) {
+        for (int y = boardOffest; y <= boardSize * cellSize; y += cellSize) {
           board.drawRect(x, y, cellSize, cellSize);
+        }
+      }
+    }
+
+
+    Graphics2D g2d = (Graphics2D) board;
+    // Sets th font and font size for the letters to be placed on the board after move
+    g2d.setFont(new Font("Arial", Font.BOLD, 14));
+
+    // Paints the S and O letters on the occupied board cells and leaves the unoccupied cells empty
+    for (int row = 0; row < boardSize; row++) {
+      for (int col = 0; col < boardSize; col++) {
+        String cellContent = game.getCellContent(row, col);
+        if ((cellContent == "") == false) {
+          g2d.setColor(Color.BLACK);
+
+          FontMetrics fm = g2d.getFontMetrics();
+          int textWidth = fm.stringWidth(cellContent);
+          int textHeight = fm.getAscent();
+          int textX = boardOffest + col * cellSize + (cellSize - textWidth) / 2;
+          int textY = boardOffest + row * cellSize + (cellSize + textHeight) / 2;
+
+          g2d.drawString(cellContent, textX, textY);
+        }
+      }
+    }
+  }
+
+  // Tells program what to do if a cell is clicked on the board
+  private void cellClickHandler(int x, int y) {
+    int boardSize = game.getBoardSize();
+
+    // Determines which cell was clicked
+    int col = (x - boardOffest) / cellSize;
+    int row = (y - boardOffest) / cellSize;
+
+    // Checks to see if the click is within the game board and paints S or O if it cell is
+    // unoccupied
+    if (row >= 0 && row < boardSize && col >= 0 && col < boardSize) {
+      if (game.setCellContent(row, col)) {
+        repaint();
+      }
     }
   }
 

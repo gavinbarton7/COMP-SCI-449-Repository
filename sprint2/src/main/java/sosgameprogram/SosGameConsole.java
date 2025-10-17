@@ -65,9 +65,9 @@ public class SosGameConsole {
   }
 
   public void changeTurns() {
-    if (currentPlayer.equals("B")) {
+    if (currentPlayer == "B") {
       currentPlayer = "R";
-    } else if (currentPlayer.equals("R")) {
+    } else if (currentPlayer == "R") {
       currentPlayer = "B";
     }
   }
@@ -100,5 +100,34 @@ public class SosGameConsole {
 
   public String getCellContent(int row, int column) {
     return gameBoard[row][column];
+  }
+
+  // Updates the content of an unoccupied cell when either play makes on move on it, but returns
+  // false if the cell is occupied
+  public boolean setCellContent(int row, int column) {
+    if (gameBoard[row][column] == "") {
+      if (currentPlayer == "B") {
+        if (bluePlayerLetterSelection == "S") {
+          gameBoard[row][column] = "S";
+          changeTurns();
+          return true;
+        } else if (bluePlayerLetterSelection == "O") {
+          gameBoard[row][column] = "O";
+          changeTurns();
+          return true;
+        }
+      } else if (currentPlayer == "R") {
+        if (redPlayerLetterSelection == "S") {
+          gameBoard[row][column] = "S";
+          changeTurns();
+          return true;
+        } else if (redPlayerLetterSelection == "O") {
+          gameBoard[row][column] = "O";
+          changeTurns();
+          return true;
+        }
+      }
+    }
+    return false;
   }
 }
