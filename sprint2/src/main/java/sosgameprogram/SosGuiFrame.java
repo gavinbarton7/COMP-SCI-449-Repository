@@ -58,6 +58,8 @@ public class SosGuiFrame extends JFrame {
     topLeftPanel.add(boardSizeLabel);
     topLeftPanel.add(boardSizeInput);
 
+    // Looks for the test in the boardSizeInput text box to see if it is a valid number between 3
+    // and 10, and sets the board size if so and displays an error message to the user if not
     boardSizeInput.addActionListener(e -> {
       String sizeText = boardSizeInput.getText().trim();
       if (sizeText.isEmpty() == false) {
@@ -65,16 +67,25 @@ public class SosGuiFrame extends JFrame {
           int size = Integer.parseInt(sizeText);
           if (game.setBoardSize(size) == false) {
             JOptionPane.showMessageDialog(this,
-              "Please enter a board size between 3 and 10",
-              "Invalid Board Size",
-              JOptionPane.WARNING_MESSAGE);
+                "Please enter a board size between 3 and 10",
+                "Invalid Board Size",
+                JOptionPane.WARNING_MESSAGE);
           }
         } catch (NumberFormatException ex) {
           JOptionPane.showMessageDialog(this,
-            "Please enter a valid number for the board size",
-            "Invalid Input",
-            JOptionPane.ERROR_MESSAGE);
+              "Please enter a valid number for the board size",
+              "Invalid Input",
+              JOptionPane.ERROR_MESSAGE);
         }
+      }
+    });
+
+    // Starts a new game when the new button is clicked if the board size and game mode have been
+    // selected
+    newGameButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        startNewGame();
       }
     });
 
@@ -162,5 +173,16 @@ public class SosGuiFrame extends JFrame {
     bluePlayerPanel.add(bluePlayerOButton);
 
     this.add(bluePlayerPanel, BorderLayout.EAST);
+  }
+
+  public void startNewGame() {
+    // Check to see if the board size has been entered
+    if (game.getBoardSize() == -1) {
+      JOptionPane.showMessageDialog(this,
+          "You must choose a board size to play a game",
+          "No Board Size",
+          JOptionPane.WARNING_MESSAGE);
+      return;
+    }
   }
 }

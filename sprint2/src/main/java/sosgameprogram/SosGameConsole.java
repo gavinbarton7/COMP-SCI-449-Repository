@@ -13,14 +13,16 @@ public class SosGameConsole {
 
 
   public SosGameConsole() {
-    this.boardSize = 8;
-    this.gameMode = "S";
+    // Note: -1 is used as an initial value to tell if the board size has been set yet
+    this.boardSize = -1;
+    this.gameMode = null;
+    // currentPlayer is intialized to "B" since blue player moves first in every game
     this.currentPlayer = "B";
     this.gameCurrentlyPlaying = false;
   }
 
-  // Sets the size of the board if inputted size is between 3 and 10, but returns false if
-  // inputted size is outside the range of 3-10
+  // Sets the size of the board if inputted size is between 3 and 10, but returns false if inputted
+  // size is outside the range of 3-10
   public boolean setBoardSize(int sizeInput) {
     if (sizeInput >= 3 && sizeInput <= 10) {
       this.boardSize = sizeInput;
