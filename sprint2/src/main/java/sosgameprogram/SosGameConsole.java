@@ -36,8 +36,13 @@ public class SosGameConsole {
     return boardSize;
   }
 
-  public void setGameMode(String modeValue) {
-    this.gameMode = modeValue;
+  public boolean setGameMode(String modeValue) {
+    if (modeValue == "S" || modeValue == "G") {
+      this.gameMode = modeValue;
+      return true;
+    } else {
+      return false;
+    }
   }
 
   public String getGameMode() {

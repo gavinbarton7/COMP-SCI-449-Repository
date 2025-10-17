@@ -85,7 +85,7 @@ public class SosGuiFrame extends JFrame {
     newGameButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        startNewGame();
+        startOfANewGame();
       }
     });
 
@@ -101,6 +101,32 @@ public class SosGuiFrame extends JFrame {
     ButtonGroup simpleGeneralGroup = new ButtonGroup();
     simpleGeneralGroup.add(simpleGameRadioButton);
     simpleGeneralGroup.add(generalGameRadioButton);
+
+    // Tells the program what to do when the user click on the "Simple" radio button
+    simpleGameRadioButton.addActionListener(e -> {
+      if (game.getBoardSize() == -1) {
+        JOptionPane.showMessageDialog(this,
+            "Please choose board size before selecting a game mode",
+            "No Board Size",
+            JOptionPane.WARNING_MESSAGE);
+        simpleGeneralGroup.clearSelection();
+      } else {
+        game.setGameMode("S");
+      }
+    });
+
+    // Tells the program what to do when the user click on the "General" radio button
+    generalGameRadioButton.addActionListener(e -> {
+      if (game.getBoardSize() == -1) {
+        JOptionPane.showMessageDialog(this,
+            "Please choose board size before selecting a game mode",
+            "No Board Size",
+            JOptionPane.WARNING_MESSAGE);
+        simpleGeneralGroup.clearSelection();
+      } else {
+        game.setGameMode("G");
+      }
+    });
 
     // Add the SOS game label and the simple and general game radio buttons to the "topRightPanel"
     // panel
@@ -175,12 +201,18 @@ public class SosGuiFrame extends JFrame {
     this.add(bluePlayerPanel, BorderLayout.EAST);
   }
 
-  public void startNewGame() {
-    // Check to see if the board size has been entered
+  public void startOfANewGame() {
+    // Checks to see if the board size and game mode have been entered
     if (game.getBoardSize() == -1) {
       JOptionPane.showMessageDialog(this,
           "You must choose a board size to play a game",
           "No Board Size",
+          JOptionPane.WARNING_MESSAGE);
+      return;
+    } else if (game.getGameMode() == null) {
+      JOptionPane.showMessageDialog(this,
+          "You must choose a game mode to play a game",
+          "No Game Mode",
           JOptionPane.WARNING_MESSAGE);
       return;
     }
