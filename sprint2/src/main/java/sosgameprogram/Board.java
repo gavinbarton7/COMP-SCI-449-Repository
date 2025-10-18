@@ -52,6 +52,8 @@ public class Board extends JPanel {
     g2d.setFont(new Font("Arial", Font.BOLD, 14));
 
     // Paints the S and O letters on the occupied board cells and leaves the unoccupied cells empty
+    // after each move, also call the updateCurrentPlayerLabel method after the move to indicate
+    // that it is now the other players turn
     for (int row = 0; row < boardSize; row++) {
       for (int col = 0; col < boardSize; col++) {
         String cellContent = game.getCellContent(row, col);
@@ -65,6 +67,7 @@ public class Board extends JPanel {
           int textY = boardOffest + row * cellSize + (cellSize + textHeight) / 2;
 
           g2d.drawString(cellContent, textX, textY);
+          gameGui.updateCurrentPlayerLabel();
         }
       }
     }

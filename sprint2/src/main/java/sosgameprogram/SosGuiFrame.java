@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 public class SosGuiFrame extends JFrame {
   private SosGameConsole game;
   private Board board;
+  private JLabel currentPlayerLabel;
 
   public SosGuiFrame() {
     this.game = new SosGameConsole();
@@ -132,13 +133,17 @@ public class SosGuiFrame extends JFrame {
 
   public void createBottomPanel() {
     JPanel bottomPanel = new JPanel();
-    bottomPanel.setLayout(new FlowLayout());
+    bottomPanel.setLayout(new BorderLayout());
 
     // Creates the checkbox for whether or not the game will be recorded
     JCheckBox recordGamecheckBox = new JCheckBox();
     recordGamecheckBox.setText("Record Game");
 
+    currentPlayerLabel = new JLabel("Current Player: Blue", SwingConstants.CENTER);
+    currentPlayerLabel.setForeground(Color.BLUE);
+
     bottomPanel.add(recordGamecheckBox, BorderLayout.WEST);
+    bottomPanel.add(currentPlayerLabel);
     this.add(bottomPanel, BorderLayout.SOUTH);
   }
 
@@ -229,6 +234,7 @@ public class SosGuiFrame extends JFrame {
     } else {
       board.newBoard();
       game.setUpForNewGame();
+      updateCurrentPlayerLabel();
     }
   }
 
@@ -239,5 +245,17 @@ public class SosGuiFrame extends JFrame {
     // Adds the "TopPanel" panel to the "NORTH" section of the GUI layout and the checkbox to the
     // "SOUTH" section of the GUI layout
     this.add(board, BorderLayout.CENTER);
+  }
+
+  // Changes the label for the current player after each move
+  public void updateCurrentPlayerLabel() {
+    String currentPlayer = game.getCurrentPlayer();
+    if (currentPlayer == "B") {
+      currentPlayerLabel.setText("Current turn: Blue");
+      currentPlayerLabel.setForeground(Color.BLUE);
+    } else if (currentPlayer == "R") {
+      currentPlayerLabel.setText("Current turn: Red");
+      currentPlayerLabel.setForeground(Color.RED);
+    }
   }
 }
