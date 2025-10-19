@@ -231,7 +231,7 @@ public class SosGuiFrame extends JFrame {
   }
 
   public void simpleRadioButtonClicked() {
-    if (game.getBoardSize() == -1) {
+    if (game.setGameMode("S") == false) {
       JOptionPane.showMessageDialog(this,
               "Please choose board size before selecting a game mode",
               "No Board Size",
@@ -243,7 +243,7 @@ public class SosGuiFrame extends JFrame {
   }
 
   public void generalRadioButtonClicked() {
-    if (game.getBoardSize() == -1) {
+    if (game.setGameMode("G") == false) {
       JOptionPane.showMessageDialog(this,
               "Please choose board size before selecting a game mode",
               "No Board Size",
