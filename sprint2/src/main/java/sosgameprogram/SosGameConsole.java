@@ -113,6 +113,7 @@ public class SosGameConsole {
   public boolean setCellContent(int row, int column) {
     if (gameBoard[row][column] == "") {
       playerValidMove(row, column);
+      return true;
     }
     return false;
   }
