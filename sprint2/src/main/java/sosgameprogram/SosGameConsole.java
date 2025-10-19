@@ -57,7 +57,11 @@ public class SosGameConsole {
         gameBoard[i][j] = "";
       }
     }
-    currentPlayer = "B";
+    setCurrentPlayer("B");
+  }
+
+  public void setCurrentPlayer(String currentPlayer) {
+    this.currentPlayer = currentPlayer;
   }
 
   public String getCurrentPlayer() {
@@ -66,9 +70,9 @@ public class SosGameConsole {
 
   public void changeTurns() {
     if (currentPlayer == "B") {
-      currentPlayer = "R";
+      setCurrentPlayer("R");
     } else if (currentPlayer == "R") {
-      currentPlayer = "B";
+      setCurrentPlayer("B");
     }
   }
 
@@ -106,28 +110,36 @@ public class SosGameConsole {
   // false if the cell is occupied
   public boolean setCellContent(int row, int column) {
     if (gameBoard[row][column] == "") {
-      if (currentPlayer == "B") {
-        if (bluePlayerLetterSelection == "S") {
-          gameBoard[row][column] = "S";
-          changeTurns();
-          return true;
-        } else if (bluePlayerLetterSelection == "O") {
-          gameBoard[row][column] = "O";
-          changeTurns();
-          return true;
-        }
-      } else if (currentPlayer == "R") {
-        if (redPlayerLetterSelection == "S") {
-          gameBoard[row][column] = "S";
-          changeTurns();
-          return true;
-        } else if (redPlayerLetterSelection == "O") {
-          gameBoard[row][column] = "O";
-          changeTurns();
-          return true;
-        }
-      }
+      playerValidMove(row, column);
     }
     return false;
+  }
+
+  public void playerValidMove(int row, int column) {
+    if (currentPlayer == "B") {
+      bluePlayerValidMove(row, column);
+    } else if (currentPlayer == "R") {
+      redPlayerValidMove(row, column);
+    }
+  }
+
+  public void bluePlayerValidMove(int row, int column) {
+    if (bluePlayerLetterSelection == "S") {
+      gameBoard[row][column] = "S";
+      changeTurns();
+    } else if (bluePlayerLetterSelection == "O") {
+      gameBoard[row][column] = "O";
+      changeTurns();
+    }
+  }
+
+  public void redPlayerValidMove(int row, int column) {
+    if (redPlayerLetterSelection == "S") {
+      gameBoard[row][column] = "S";
+      changeTurns();
+    } else if (redPlayerLetterSelection == "O") {
+      gameBoard[row][column] = "O";
+      changeTurns();
+    }
   }
 }

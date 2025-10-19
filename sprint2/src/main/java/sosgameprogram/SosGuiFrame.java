@@ -9,6 +9,11 @@ public class SosGuiFrame extends JFrame {
   private SosGameConsole game;
   private Board board;
   private JLabel currentPlayerLabel;
+  private JRadioButton simpleGameRadioButton;
+  private JRadioButton generalGameRadioButton;
+  private ButtonGroup simpleGeneralGroup;
+  private JTextField boardSizeInput;
+  private JButton newGameButton;
 
   public SosGuiFrame() {
     this.game = new SosGameConsole();
@@ -44,9 +49,9 @@ public class SosGuiFrame extends JFrame {
     JLabel sosGameLabel = new JLabel();
     sosGameLabel.setText("SOS Game");
 
-    // Creates the New Game button and a place for the user to input there board size on the GUI
-    JButton newGameButton = new JButton("New Game");
-    JTextField boardSizeInput = new JTextField(3);
+    // Adds the New Game button and a place for the user to input there board size on the GUI
+    newGameButton = new JButton("New Game");
+    boardSizeInput = new JTextField(3);
     JLabel boardSizeLabel = new JLabel("Board Size: ");
     topLeftPanel.add(newGameButton);
     topLeftPanel.add(boardSizeLabel);
@@ -55,23 +60,7 @@ public class SosGuiFrame extends JFrame {
     // Looks for the test in the boardSizeInput text box to see if it is a valid number between 3
     // and 10, and sets the board size if so and displays an error message to the user if not
     boardSizeInput.addActionListener(e -> {
-      String sizeText = boardSizeInput.getText().trim();
-      if (sizeText.isEmpty() == false) {
-        try {
-          int size = Integer.parseInt(sizeText);
-          if (game.setBoardSize(size) == false) {
-            JOptionPane.showMessageDialog(this,
-                "Please enter a board size between 3 and 10",
-                "Invalid Board Size",
-                JOptionPane.WARNING_MESSAGE);
-          }
-        } catch (NumberFormatException ex) {
-          JOptionPane.showMessageDialog(this,
-              "Please enter a valid number for the board size",
-              "Invalid Input",
-              JOptionPane.ERROR_MESSAGE);
-        }
-      }
+      boardSizeEntered();
     });
 
     // Starts a new game when the new button is clicked if the board size and game mode have been
@@ -83,43 +72,25 @@ public class SosGuiFrame extends JFrame {
       }
     });
 
-    // Creates the radio buttons for choosing simple or general game
-    JRadioButton simpleGameRadioButton = new JRadioButton();
+    // Sets up the labels for the radio buttons for choosing simple or general game
+    simpleGameRadioButton = new JRadioButton();
     simpleGameRadioButton.setText("Simple Game");
-    JRadioButton generalGameRadioButton = new JRadioButton();
+    generalGameRadioButton = new JRadioButton();
     generalGameRadioButton.setText("General Game");
     simpleGameRadioButton.setBounds(200,200,10,10);
 
-    // Creates a button group for the simple and general game radio buttons and adds them to the
-    // group
-    ButtonGroup simpleGeneralGroup = new ButtonGroup();
+    // Adds the simple and general radio buttons to the simpleGeneral button group
+    simpleGeneralGroup = new ButtonGroup();
     simpleGeneralGroup.add(simpleGameRadioButton);
     simpleGeneralGroup.add(generalGameRadioButton);
 
     // Tells the program what to do when the user click on the "Simple" radio button
     simpleGameRadioButton.addActionListener(e -> {
-      if (game.getBoardSize() == -1) {
-        JOptionPane.showMessageDialog(this,
-            "Please choose board size before selecting a game mode",
-            "No Board Size",
-            JOptionPane.WARNING_MESSAGE);
-        simpleGeneralGroup.clearSelection();
-      } else {
-        game.setGameMode("S");
-      }
+      simpleRadioButtonClicked();
     });
 
-    // Tells the program what to do when the user click on the "General" radio button
     generalGameRadioButton.addActionListener(e -> {
-      if (game.getBoardSize() == -1) {
-        JOptionPane.showMessageDialog(this,
-            "Please choose board size before selecting a game mode",
-            "No Board Size",
-            JOptionPane.WARNING_MESSAGE);
-        simpleGeneralGroup.clearSelection();
-      } else {
-        game.setGameMode("G");
-      }
+      generalRadioButtonClicked();
     });
 
     // Add the SOS game label and the simple and general game radio buttons to the "topRightPanel"
@@ -256,6 +227,50 @@ public class SosGuiFrame extends JFrame {
     } else if (currentPlayer == "R") {
       currentPlayerLabel.setText("Current turn: Red");
       currentPlayerLabel.setForeground(Color.RED);
+    }
+  }
+
+  public void simpleRadioButtonClicked() {
+    if (game.getBoardSize() == -1) {
+      JOptionPane.showMessageDialog(this,
+              "Please choose board size before selecting a game mode",
+              "No Board Size",
+              JOptionPane.WARNING_MESSAGE);
+      simpleGeneralGroup.clearSelection();
+    } else {
+      game.setGameMode("S");
+    }
+  }
+
+  public void generalRadioButtonClicked() {
+    if (game.getBoardSize() == -1) {
+      JOptionPane.showMessageDialog(this,
+              "Please choose board size before selecting a game mode",
+              "No Board Size",
+              JOptionPane.WARNING_MESSAGE);
+      simpleGeneralGroup.clearSelection();
+    } else {
+      game.setGameMode("G");
+    }
+  }
+
+  public void boardSizeEntered() {
+    String sizeText = boardSizeInput.getText().trim();
+    if (sizeText.isEmpty() == false) {
+      try {
+        int size = Integer.parseInt(sizeText);
+        if (game.setBoardSize(size) == false) {
+          JOptionPane.showMessageDialog(this,
+                  "Please enter a board size between 3 and 10",
+                  "Invalid Board Size",
+                  JOptionPane.WARNING_MESSAGE);
+        }
+      } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(this,
+                "Please enter a valid number for the board size",
+                "Invalid Input",
+                JOptionPane.ERROR_MESSAGE);
+      }
     }
   }
 }

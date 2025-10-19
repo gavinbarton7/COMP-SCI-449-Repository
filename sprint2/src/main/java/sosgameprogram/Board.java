@@ -9,8 +9,8 @@ public class Board extends JPanel {
 
   private SosGameConsole game;
   private SosGuiFrame gameGui;
-  int cellSize = 40;
-  int boardOffest = 10;
+  private int cellSize = 40;
+  private int boardOffset = 10;
 
   // Sets the board size in pixels
   public Board(SosGameConsole game, SosGuiFrame gameGui) {
@@ -39,8 +39,8 @@ public class Board extends JPanel {
 
     int boardSize = game.getBoardSize();
     if (boardSize != -1) {
-      for (int x = boardOffest; x <= boardSize * cellSize; x += cellSize) {
-        for (int y = boardOffest; y <= boardSize * cellSize; y += cellSize) {
+      for (int x = boardOffset; x <= boardSize * cellSize; x += cellSize) {
+        for (int y = boardOffset; y <= boardSize * cellSize; y += cellSize) {
           board.drawRect(x, y, cellSize, cellSize);
         }
       }
@@ -63,8 +63,8 @@ public class Board extends JPanel {
           FontMetrics fm = g2d.getFontMetrics();
           int textWidth = fm.stringWidth(cellContent);
           int textHeight = fm.getAscent();
-          int textX = boardOffest + col * cellSize + (cellSize - textWidth) / 2;
-          int textY = boardOffest + row * cellSize + (cellSize + textHeight) / 2;
+          int textX = boardOffset + col * cellSize + (cellSize - textWidth) / 2;
+          int textY = boardOffset + row * cellSize + (cellSize + textHeight) / 2;
 
           g2d.drawString(cellContent, textX, textY);
           gameGui.updateCurrentPlayerLabel();
@@ -78,8 +78,8 @@ public class Board extends JPanel {
     int boardSize = game.getBoardSize();
 
     // Determines which cell was clicked
-    int col = (x - boardOffest) / cellSize;
-    int row = (y - boardOffest) / cellSize;
+    int col = (x - boardOffset) / cellSize;
+    int row = (y - boardOffset) / cellSize;
 
     // Checks to see if the click is within the game board and paints S or O if it cell is
     // unoccupied
