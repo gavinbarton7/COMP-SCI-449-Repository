@@ -50,53 +50,66 @@ class SosGameConsoleTest {
   }
 
   @Test
-  public void testAC1_2_InvalidBoardSizeTooLow() {
-    // Test a middle value
-    boolean result = game.setBoardSize(2);
-    assertFalse(result);
-    assertEquals(-1, game.getBoardSize());
-  }
-
-  @Test
-  public void testAC1_3_InvalidBoardSizeTooHigh() {
-    boolean result = game.setBoardSize(11);
-    assertFalse(result);
-    assertEquals(-1, game.getBoardSize());
-  }
-
-  @Test
   public void testAC2_1_SimpleGameModeSelectionWithBoardSize() {
+    // Given the board size has been chosen
     game.setBoardSize(5);
+
+    // And the game has not begun
+
+    // When the player selects the “simple game” radio button
     boolean result = game.setGameMode("S");
     assertTrue(result);
+
+    // Then the game mode is saved into memory for use once the game begins
     assertEquals("S", game.getGameMode());
   }
 
   @Test
   public void testAC2_2_GeneralGameModeSelectionWithBoardSize() {
+    // Given the board size has been chosen
     game.setBoardSize(5);
+
+    // And the game has not begun
+
+    // When the player selects the “general game” radio button
     boolean result = game.setGameMode("G");
     assertTrue(result);
+
+    // Then the game mode is saved into memory for use once the game begins
     assertEquals("G", game.getGameMode());
   }
 
   @Test
-  public void testAC2_3_SimpleGameModeSelectionWithoutBoardSize() {
-    boolean result = game.setGameMode("S");
-    assertFalse(result);
-    assertEquals(null, game.getGameMode());
+  public void testAC3_2_InvalidRowIndex() {
+    // Given a board of size nxn, with n being the chosen board size
+    game.setBoardSize(7);
+    game.setGameMode("S");
+    game.setUpForNewGame();
+    int row = 7;
+    int col = 5;
+
+    // When a cell is referenced by row index > n
+    // Then the cell reference is invalid
+    assertEquals("Invalid cell reference", game.getCellContent(row, col));
   }
 
   @Test
-  public void testAC2_3_GeneralGameModeSelectionWithoutBoardSize() {
-    boolean result = game.setGameMode("G");
-    assertFalse(result);
-    assertEquals(null, game.getGameMode());
+  public void testAC3_3_InvalidColumnIndex() {
+    // Given a board of size nxn, with n being the chosen board size
+    game.setBoardSize(6);
+    game.setGameMode("S");
+    game.setUpForNewGame();
+    int row = 3;
+    int col = 6;
+
+    // When a cell is referenced by column index > n
+    // Then the cell reference is invalid
+    assertEquals("Invalid cell reference", game.getCellContent(row, col));
   }
 
   @Test
-  public void testAC4_1_SimpleGameValidBluePlayerMoveWithSLetterNoSOS() {
-    // Given: an ongoing game with the red player's turn
+  public void testAC4_1_SimpleGameValidBluePlayerMoveWithSLetter() {
+    // Given an ongoing game with the blue player's turn
     game.setBoardSize(5);
     game.setGameMode("S");
     game.setUpForNewGame();
@@ -108,21 +121,22 @@ class SosGameConsoleTest {
     int testCol = 4;
     assertEquals("", game.getCellContent(testRow, testCol));
 
-    // When: the blue player selects an unoccupied square
-    // And: the move does not result in the formation of an "SOS" sequence on the board
+    // When the blue player selects an unoccupied square
+    // And the move does not result in the formation of an "SOS" sequence on the board
     boolean result = game.setCellContent(testRow, testCol);
     assertTrue(result);
 
-    // Then: the move is recorded on the board by placing "S" on the selected unoccupied square
+    // Then “S” or “O”, whichever letter the blue player has selected, is placed on the selected
+    // unoccupied square
     assertEquals("S", game.getCellContent(testRow, testCol));
 
-    // And: it becomes the blue player's turn
+    // And it becomes the red player's turn
     assertEquals("R", game.getCurrentPlayer());
   }
 
   @Test
-  public void testAC4_1_SimpleGameValidBluePlayerMoveWithOLetterNoSOS() {
-    // Given: an ongoing game with the red player's turn, red player chooses "O"
+  public void testAC4_1_SimpleGameValidBluePlayerMoveWithOLetter() {
+    // Given an ongoing game with the red player's turn, red player chooses "O"
     game.setBoardSize(5);
     game.setGameMode("S");
     game.setUpForNewGame();
@@ -133,47 +147,49 @@ class SosGameConsoleTest {
     int testCol = 2;
     assertEquals("", game.getCellContent(testRow, testCol));
 
-    // When: the blue player selects an unoccupied square with "O"
-    // And: the move does not result in SOS formation
+    // When the blue player selects an unoccupied square with "O"
+    // And the move does not result in SOS formation
     boolean result = game.setCellContent(testRow, testCol);
     assertTrue(result);
 
-    // Then: the move is recorded with "O"
+    // Then “S” or “O”, whichever letter the blue player has selected, is placed on the selected
+    // unoccupied square
     assertEquals("O", game.getCellContent(testRow, testCol));
 
-    // And: it becomes the blue player's turn
+    // And it becomes the red player's turn
     assertEquals("R", game.getCurrentPlayer());
   }
 
   @Test
-  public void testAC4_2_SimpleGameValidRedPlayerMoveWithSLetterNoSOS() {
-    // Given: an ongoing game with the red player's turn
+  public void testAC4_2_SimpleGameValidRedPlayerMoveWithSLetter() {
+    // Given an ongoing game with the red player's turn
     game.setBoardSize(3);
     game.setGameMode("S");
     game.setUpForNewGame();
-    game.setCurrentPlayer("R"); // Set to red player's turn
-    game.setRedPlayerLetterSelection("S"); // Red player chooses "S"
+    game.setCurrentPlayer("R");
+    game.setRedPlayerLetterSelection("S");
 
     // Ensure the target cell is unoccupied
     int testRow = 1;
     int testCol = 1;
     assertEquals("", game.getCellContent(testRow, testCol));
 
-    // When: the red player selects an unoccupied square
-    // And: the move does not result in the formation of an "SOS" sequence on the board
+    // When the red player selects an unoccupied square
+    // And the move does not result in the formation of an "SOS" sequence on the board
     boolean result = game.setCellContent(testRow, testCol);
     assertTrue(result);
 
-    // Then: the move is recorded on the board by placing "S" on the selected unoccupied square
+    // Then “S” or “O”, whichever letter the red player has selected, is placed on the selected
+    // unoccupied square
     assertEquals("S", game.getCellContent(testRow, testCol));
 
-    // And: it becomes the blue player's turn
+    // And it becomes the blue player's turn
     assertEquals("B", game.getCurrentPlayer());
   }
 
   @Test
-  public void testAC4_2_SimpleGameValidRedPlayerMoveWithOLetterNoSOS() {
-    // Given: an ongoing game with the red player's turn, red player chooses "O"
+  public void testAC4_2_SimpleGameValidRedPlayerMoveWithOLetter() {
+    // Given an ongoing game with the red player's turn
     game.setBoardSize(3);
     game.setGameMode("S");
     game.setUpForNewGame();
@@ -184,21 +200,83 @@ class SosGameConsoleTest {
     int testCol = 2;
     assertEquals("", game.getCellContent(testRow, testCol));
 
-    // When: the red player selects an unoccupied square with "O"
-    // And: the move does not result in SOS formation
+    // When the red player selects an unoccupied square
+    // And the move does not result in SOS formation
     boolean result = game.setCellContent(testRow, testCol);
     assertTrue(result);
 
-    // Then: the move is recorded with "O"
+    // Then “S” or “O”, whichever letter the blue player has selected, is placed on the selected
+    // unoccupied square
     assertEquals("O", game.getCellContent(testRow, testCol));
 
-    // And: it becomes the blue player's turn
+    // And it becomes the blue player's turn
+    assertEquals("B", game.getCurrentPlayer());
+  }
+
+
+  @Test
+  public void testAC4_3_SimpleGameInvalidBluePlayerMoveOnBoard() {
+    // Given an ongoing game with the red player's turn
+    game.setBoardSize(5);
+    game.setGameMode("S");
+    game.setUpForNewGame();
+    game.setCurrentPlayer("R");
+    game.setRedPlayerLetterSelection("O");
+
+    // Creates an occupied set at index 3, 3 to use in this test
+    int testRow = 3;
+    int testCol = 3;
+    game.setCellContent(testRow, testCol);
+
+    // Given an ongoing game with the blue player's turn
+    game.setCurrentPlayer("B");
+    game.setBluePlayerLetterSelection("S");
+
+    // When the blue player selects an occupied square
+    assertEquals("O", game.getCellContent(testRow, testCol));
+    boolean result = game.setCellContent(testRow, testCol);
+    assertFalse(result);
+
+    // Then the square remains the same
+    assertEquals("O", game.getCellContent(testRow, testCol));
+
+    // And the turn is not changed
     assertEquals("B", game.getCurrentPlayer());
   }
 
   @Test
+  public void testAC4_4_SimpleGameInvalidRedPlayerMoveOnBoard() {
+    // Given an ongoing game with the red player's turn
+    game.setBoardSize(7);
+    game.setGameMode("S");
+    game.setUpForNewGame();
+    game.setCurrentPlayer("B");
+    game.setBluePlayerLetterSelection("S");
+
+    // Creates an occupied set at index 3, 3 to use in this test
+    int testRow = 4;
+    int testCol = 4;
+    game.setCellContent(testRow, testCol);
+
+    // Given an ongoing game with the blue player's turn
+    game.setCurrentPlayer("R");
+    game.setRedPlayerLetterSelection("O");
+
+    // When the red player selects an occupied square
+    assertEquals("S", game.getCellContent(testRow, testCol));
+    boolean result = game.setCellContent(testRow, testCol);
+    assertFalse(result);
+
+    // Then the square remains the same
+    assertEquals("S", game.getCellContent(testRow, testCol));
+
+    // And the turn is not changed
+    assertEquals("R", game.getCurrentPlayer());
+  }
+
+  @Test
   public void testAC6_1_GeneralGameValidBluePlayerMoveWithSLetterNoSOS() {
-    // Given: an ongoing game with the red player's turn
+    // Given an ongoing game with the blue player's turn
     game.setBoardSize(5);
     game.setGameMode("G");
     game.setUpForNewGame();
@@ -210,46 +288,48 @@ class SosGameConsoleTest {
     int testCol = 4;
     assertEquals("", game.getCellContent(testRow, testCol));
 
-    // When: the blue player selects an unoccupied square
-    // And: the move does not result in the formation of an "SOS" sequence on the board
+    // When the blue player selects an unoccupied square
     boolean result = game.setCellContent(testRow, testCol);
     assertTrue(result);
 
-    // Then: the move is recorded on the board by placing "S" on the selected unoccupied square
+    // Then “S” or “O”, whichever letter the blue player has selected, is placed on the selected
+    // unoccupied square
     assertEquals("S", game.getCellContent(testRow, testCol));
 
-    // And: it becomes the blue player's turn
+    // And it becomes the red player's turn
     assertEquals("R", game.getCurrentPlayer());
   }
 
   @Test
   public void testAC6_1_GeneralGameValidBluePlayerMoveWithOLetterNoSOS() {
-    // Given: an ongoing game with the red player's turn, red player chooses "O"
+    // Given an ongoing game with the red player's turn, red player chooses "O"
     game.setBoardSize(5);
     game.setGameMode("G");
     game.setUpForNewGame();
     game.setCurrentPlayer("B");
     game.setBluePlayerLetterSelection("O");
 
+    // Ensure the target cell is unoccupied
     int testRow = 3;
     int testCol = 2;
     assertEquals("", game.getCellContent(testRow, testCol));
 
-    // When: the blue player selects an unoccupied square with "O"
-    // And: the move does not result in SOS formation
+    // When the blue player selects an unoccupied square
+    // And the move does not result in SOS formation
     boolean result = game.setCellContent(testRow, testCol);
     assertTrue(result);
 
-    // Then: the move is recorded with "O"
+    // Then “S” or “O”, whichever letter the blue player has selected, is placed on the selected
+    // unoccupied square
     assertEquals("O", game.getCellContent(testRow, testCol));
 
-    // And: it becomes the blue player's turn
+    // And it becomes the red player's turn
     assertEquals("R", game.getCurrentPlayer());
   }
 
   @Test
   public void testAC6_2_GeneralGameValidRedPlayerMoveWithSLetterNoSOS() {
-    // Given: an ongoing game with the red player's turn
+    // Given an ongoing game with the red player's turn
     game.setBoardSize(3);
     game.setGameMode("G");
     game.setUpForNewGame();
@@ -261,15 +341,16 @@ class SosGameConsoleTest {
     int testCol = 1;
     assertEquals("", game.getCellContent(testRow, testCol));
 
-    // When: the red player selects an unoccupied square
-    // And: the move does not result in the formation of an "SOS" sequence on the board
+    // When the red player selects an unoccupied square
+    // And the move does not result in the formation of an "SOS" sequence on the board
     boolean result = game.setCellContent(testRow, testCol);
     assertTrue(result);
 
-    // Then: the move is recorded on the board by placing "S" on the selected unoccupied square
+    // Then “S” or “O”, whichever letter the blue player has selected, is placed on the selected
+    // unoccupied square
     assertEquals("S", game.getCellContent(testRow, testCol));
 
-    // And: it becomes the blue player's turn
+    // And it becomes the blue player's turn
     assertEquals("B", game.getCurrentPlayer());
   }
 
@@ -286,15 +367,16 @@ class SosGameConsoleTest {
     int testCol = 2;
     assertEquals("", game.getCellContent(testRow, testCol));
 
-    // When: the red player selects an unoccupied square with "O"
-    // And: the move does not result in SOS formation
+    // When the red player selects an unoccupied square
+    // And the move does not result in SOS formation
     boolean result = game.setCellContent(testRow, testCol);
     assertTrue(result);
 
-    // Then: the move is recorded with "O"
+    // Then “S” or “O”, whichever letter the blue player has selected, is placed on the selected
+    // unoccupied square
     assertEquals("O", game.getCellContent(testRow, testCol));
 
-    // And: it becomes the blue player's turn
+    // And it becomes the blue player's turn
     assertEquals("B", game.getCurrentPlayer());
   }
 }

@@ -105,7 +105,11 @@ public class SosGameConsole {
   }
 
   public String getCellContent(int row, int column) {
-    return gameBoard[row][column];
+    if(row >= 0 && row < boardSize && column >= 0 && column < boardSize) {
+      return gameBoard[row][column];
+    } else {
+      return "Invalid cell reference";
+    }
   }
 
   // Updates the content of an unoccupied cell when either play makes on move on it, but returns
