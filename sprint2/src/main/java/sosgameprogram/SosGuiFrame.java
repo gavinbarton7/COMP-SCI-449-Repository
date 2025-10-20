@@ -188,25 +188,22 @@ public class SosGuiFrame extends JFrame {
     this.add(bluePlayerPanel, BorderLayout.WEST);
   }
 
-  public boolean startNewGame() {
+  public void startNewGame() {
     // Checks to see if the board size and game mode have been entered
     if (game.getBoardSize() == -1) {
       JOptionPane.showMessageDialog(this,
           "You must choose a board size to play a game",
           "No Board Size",
           JOptionPane.WARNING_MESSAGE);
-      return false;
     } else if (game.getGameMode() == null) {
       JOptionPane.showMessageDialog(this,
           "You must choose a game mode to play a game",
           "No Game Mode",
           JOptionPane.WARNING_MESSAGE);
-      return false;
     } else {
       board.newBoard();
       game.setUpForNewGame();
       updateCurrentPlayerLabel();
-      return true;
     }
   }
 

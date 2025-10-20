@@ -216,7 +216,6 @@ class SosGameConsoleTest {
 
   @Test
   public void testAC4_3_SimpleGameInvalidBluePlayerMoveOnBoard() {
-    // Given an ongoing game with the red player's turn
     game.setBoardSize(5);
     game.setGameMode("S");
     game.setUpForNewGame();
@@ -258,7 +257,7 @@ class SosGameConsoleTest {
     int testCol = 4;
     game.setCellContent(testRow, testCol);
 
-    // Given an ongoing game with the blue player's turn
+    // Given an ongoing game with the red player's turn
     game.setCurrentPlayer("R");
     game.setRedPlayerLetterSelection("O");
 
@@ -378,5 +377,63 @@ class SosGameConsoleTest {
 
     // And it becomes the blue player's turn
     assertEquals("B", game.getCurrentPlayer());
+  }
+
+  @Test
+  public void testAC6_3_GeneralGameInvalidBluePlayerMoveOnBoard() {
+    game.setBoardSize(9);
+    game.setGameMode("G");
+    game.setUpForNewGame();
+    game.setCurrentPlayer("R");
+    game.setRedPlayerLetterSelection("O");
+
+    // Creates an occupied set at index 3, 3 to use in this test
+    int testRow = 7;
+    int testCol = 8;
+    game.setCellContent(testRow, testCol);
+
+    // Given an ongoing game with the blue player's turn
+    game.setCurrentPlayer("B");
+    game.setBluePlayerLetterSelection("S");
+
+    // When the blue player selects an occupied square
+    assertEquals("O", game.getCellContent(testRow, testCol));
+    boolean result = game.setCellContent(testRow, testCol);
+    assertFalse(result);
+
+    // Then the square remains the same
+    assertEquals("O", game.getCellContent(testRow, testCol));
+
+    // And the turn is not changed
+    assertEquals("B", game.getCurrentPlayer());
+  }
+
+  @Test
+  public void testAC6_4_GeneralGameInvalidRedPlayerMoveOnBoard() {
+    game.setBoardSize(4);
+    game.setGameMode("G");
+    game.setUpForNewGame();
+    game.setCurrentPlayer("B");
+    game.setBluePlayerLetterSelection("S");
+
+    // Creates an occupied set at index 3, 3 to use in this test
+    int testRow = 3;
+    int testCol = 0;
+    game.setCellContent(testRow, testCol);
+
+    // Given an ongoing game with the red player's turn
+    game.setCurrentPlayer("R");
+    game.setRedPlayerLetterSelection("O");
+
+    // When the red player selects an occupied square
+    assertEquals("S", game.getCellContent(testRow, testCol));
+    boolean result = game.setCellContent(testRow, testCol);
+    assertFalse(result);
+
+    // Then the square remains the same
+    assertEquals("S", game.getCellContent(testRow, testCol));
+
+    // And the turn is not changed
+    assertEquals("R", game.getCurrentPlayer());
   }
 }

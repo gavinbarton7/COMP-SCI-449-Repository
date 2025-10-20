@@ -1,4 +1,4 @@
-package sosgameprogram;
+package  sosgameprogram;
 
 import javax.swing.*;
 import javax.swing.*;
