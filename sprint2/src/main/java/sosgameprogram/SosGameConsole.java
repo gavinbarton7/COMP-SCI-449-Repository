@@ -15,7 +15,7 @@ public class SosGameConsole {
     // Note: -1 is used as an initial value to tell if the board size has been set yet
     this.boardSize = -1;
     this.gameMode = null;
-    // currentPlayer is intialized to "B" since blue player moves first in every game
+    // currentPlayer is initialized to "B" since blue player moves first in every game
     this.currentPlayer = "B";
     this.redPlayerLetterSelection = "";
     this.bluePlayerLetterSelection = "";

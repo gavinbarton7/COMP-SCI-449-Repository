@@ -12,12 +12,12 @@ public class Board extends JPanel {
   private int cellSize = 40;
   private int boardOffset = 10;
 
-  // Sets the board size in pixels
+
   public Board(SosGameConsole game, SosGuiFrame gameGui) {
     this.game = game;
     this.gameGui = gameGui;
 
-    // Adds listener for clicks on the program GUI
+    // Adds listener for clicks on the SOS game GUI
     addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
@@ -37,6 +37,33 @@ public class Board extends JPanel {
       return;
     }
 
+    drawBoardGrid(board);
+    drawSAndOLetters(board);
+  }
+
+  // Tells program what to do if a cell is clicked on the board
+  private void cellClickHandler(int x, int y) {
+    int boardSize = game.getBoardSize();
+
+    // Determines which cell was clicked
+    int col = (x - boardOffset) / cellSize;
+    int row = (y - boardOffset) / cellSize;
+
+    // Checks to see if the click is within the game board and paints S or O if the cell is
+    // unoccupied
+    if (row >= 0 && row < boardSize && col >= 0 && col < boardSize) {
+      if (game.setCellContent(row, col)) {
+        repaint();
+      }
+    }
+  }
+
+  public void newBoard() {
+    repaint();
+  }
+
+  // This method draws the grid of the board of the users selected board size
+  private void drawBoardGrid(Graphics board) {
     int boardSize = game.getBoardSize();
     if (boardSize != -1) {
       for (int x = boardOffset; x <= boardSize * cellSize; x += cellSize) {
@@ -45,15 +72,18 @@ public class Board extends JPanel {
         }
       }
     }
+  }
 
-
+  // This method Paints the S and O letters on the occupied board cells and leaves the unoccupied
+  // cells empty after each move, also call the updateCurrentPlayerLabel method after the move to
+  // indicate that it is now the other players turn
+  private void drawSAndOLetters(Graphics board) {
+    int boardSize = game.getBoardSize();
     Graphics2D g2d = (Graphics2D) board;
-    // Sets th font and font size for the letters to be placed on the board after move
+    // Sets the font and font size for the letters to be placed on the board after move
     g2d.setFont(new Font("Arial", Font.BOLD, 14));
 
-    // Paints the S and O letters on the occupied board cells and leaves the unoccupied cells empty
-    // after each move, also call the updateCurrentPlayerLabel method after the move to indicate
-    // that it is now the other players turn
+
     for (int row = 0; row < boardSize; row++) {
       for (int col = 0; col < boardSize; col++) {
         String cellContent = game.getCellContent(row, col);
@@ -71,26 +101,5 @@ public class Board extends JPanel {
         }
       }
     }
-  }
-
-  // Tells program what to do if a cell is clicked on the board
-  private void cellClickHandler(int x, int y) {
-    int boardSize = game.getBoardSize();
-
-    // Determines which cell was clicked
-    int col = (x - boardOffset) / cellSize;
-    int row = (y - boardOffset) / cellSize;
-
-    // Checks to see if the click is within the game board and paints S or O if it cell is
-    // unoccupied
-    if (row >= 0 && row < boardSize && col >= 0 && col < boardSize) {
-      if (game.setCellContent(row, col)) {
-        repaint();
-      }
-    }
-  }
-
-  public void newBoard() {
-    repaint();
   }
 }
