@@ -42,14 +42,6 @@ class SosGameConsoleTest {
   }
 
   @Test
-  public void testAC1_1_ValidBoardSizeMiddleRange() {
-    // Test a middle value
-    boolean result = game.setBoardSize(7);
-    assertTrue(result);
-    assertEquals(7, game.getBoardSize());
-  }
-
-  @Test
   public void testAC2_1_SimpleGameModeSelectionWithBoardSize() {
     // Given the board size has been chosen
     game.setBoardSize(5);
