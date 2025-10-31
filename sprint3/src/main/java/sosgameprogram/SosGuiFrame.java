@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class SosGuiFrame extends JFrame {
-  private SosGame game;
+  private SosGameController controller;
   private Board board;
   private JLabel currentPlayerLabel;
   private JRadioButton simpleGameRadioButton;
@@ -16,10 +16,7 @@ public class SosGuiFrame extends JFrame {
   private JButton newGameButton;
 
   public SosGuiFrame() {
-    this.game = new SosGame();
-    if (game.getGameMode() == "S") {
-      this.game = new SimpleGame();
-    }
+    this.controller = new SosGameController();
     this.setTitle("SOS Game");
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setLayout(new BorderLayout());
@@ -80,7 +77,6 @@ public class SosGuiFrame extends JFrame {
     simpleGameRadioButton.setText("Simple Game");
     generalGameRadioButton = new JRadioButton();
     generalGameRadioButton.setText("General Game");
-    simpleGameRadioButton.setBounds(200,200,10,10);
 
     // Adds the simple and general radio buttons to the simpleGeneral button group
     simpleGeneralGroup = new ButtonGroup();
@@ -135,10 +131,10 @@ public class SosGuiFrame extends JFrame {
     // Adds action listener that set the letter selection for the red player based on which
     // letter radio button they have selected
     redPlayerSButton.addActionListener(e ->
-        game.setRedPlayerLetterSelection("S")
+        controller.setRedPlayerLetterSelection("S")
     );
     redPlayerOButton.addActionListener(e ->
-        game.setRedPlayerLetterSelection("O")
+        controller.setRedPlayerLetterSelection("O")
     );
 
     // Creates a group for the player buttons and adds the buttons for the red player
@@ -175,10 +171,10 @@ public class SosGuiFrame extends JFrame {
     // Adds action listeners that set the letter selection for the blue player based on which
     // letter radio button they have selected
     bluePlayerSButton.addActionListener(e ->
-        game.setBluePlayerLetterSelection("S")
+        controller.setBluePlayerLetterSelection("S")
     );
     bluePlayerOButton.addActionListener(e ->
-        game.setBluePlayerLetterSelection("O")
+        controller.setBluePlayerLetterSelection("O")
     );
 
     // Creates a panel that holds the SO buttons for the blue player
@@ -193,26 +189,26 @@ public class SosGuiFrame extends JFrame {
 
   public void startNewGame() {
     // Checks to see if the board size and game mode have been entered
-    if (game.getBoardSize() == -1) {
+    if (controller.getBoardSize() == -1) {
       JOptionPane.showMessageDialog(this,
           "You must choose a board size to play a game",
           "No Board Size",
           JOptionPane.WARNING_MESSAGE);
-    } else if (game.getGameMode() == null) {
+    } else if (controller.getGameMode() == null) {
       JOptionPane.showMessageDialog(this,
           "You must choose a game mode to play a game",
           "No Game Mode",
           JOptionPane.WARNING_MESSAGE);
     } else {
       board.newBoard();
-      game.setUpForNewGame();
+      controller.startOfANewGame();
       updateCurrentPlayerLabel();
     }
   }
 
   public void createGameBoardPanel() {
     // Create an object for the SOS game board panel
-    board = new Board(game, this);
+    board = new Board(controller, this);
 
     // Adds the "TopPanel" panel to the "NORTH" section of the GUI layout and the checkbox to the
     // "SOUTH" section of the GUI layout
@@ -221,7 +217,7 @@ public class SosGuiFrame extends JFrame {
 
   // Changes the label for the current player after each move
   public void updateCurrentPlayerLabel() {
-    String currentPlayer = game.getCurrentPlayer();
+    String currentPlayer = controller.getCurrentPlayer();
     if (currentPlayer == "B") {
       currentPlayerLabel.setText("Current turn: Blue");
       currentPlayerLabel.setForeground(Color.BLUE);
@@ -232,26 +228,22 @@ public class SosGuiFrame extends JFrame {
   }
 
   public void simpleRadioButtonClicked() {
-    if (game.setGameMode("S") == false) {
+    if (controller.setGameMode("S") == false) {
       JOptionPane.showMessageDialog(this,
               "Please choose board size before selecting a game mode",
               "No Board Size",
               JOptionPane.WARNING_MESSAGE);
       simpleGeneralGroup.clearSelection();
-    } else {
-      game.setGameMode("S");
     }
   }
 
   public void generalRadioButtonClicked() {
-    if (game.setGameMode("G") == false) {
+    if (controller.setGameMode("G") == false) {
       JOptionPane.showMessageDialog(this,
               "Please choose board size before selecting a game mode",
               "No Board Size",
               JOptionPane.WARNING_MESSAGE);
       simpleGeneralGroup.clearSelection();
-    } else {
-      game.setGameMode("G");
     }
   }
 
@@ -260,7 +252,7 @@ public class SosGuiFrame extends JFrame {
     if (sizeText.isEmpty() == false) {
       try {
         int size = Integer.parseInt(sizeText);
-        if (game.setBoardSize(size) == false) {
+        if (controller.setBoardSize(size) == false) {
           JOptionPane.showMessageDialog(this,
                   "Please enter a board size between 3 and 10",
                   "Invalid Board Size",

@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SosGameTest {
-  private SosGame game;
+  private SosGameController;
 
   @BeforeEach
   public void setUp() {

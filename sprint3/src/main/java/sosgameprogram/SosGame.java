@@ -1,6 +1,6 @@
 package sosgameprogram;
 
-public class SosGame {
+public abstract class SosGame {
 
   protected int boardSize;
   // gameMode holds "S" for simple game or "G" for general game
@@ -37,21 +37,6 @@ public class SosGame {
 
   public int getBoardSize() {
     return boardSize;
-  }
-
-  public boolean setGameMode(String modeValue) {
-    if (boardSize == -1) {
-      return false;
-    } else if (modeValue == "S" || modeValue == "G") {
-      this.gameMode = modeValue;
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  public String getGameMode() {
-    return gameMode;
   }
 
   // Sets up an empty board of the selected board size and sets the current player to the

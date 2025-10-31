@@ -72,6 +72,14 @@ public class GeneralGame extends SosGame {
     }
   }
 
+  public int getBluePlayerScore() {
+    return bluePlayerScore;
+  }
+
+  public int getRedPlayerScore() {
+    return redPlayerScore;
+  }
+
   public void setGeneralGameResult(int bluePlayerScore, int redPlayerScore) {
     if (bluePlayerScore > redPlayerScore) {
       setGameResult("BV");
