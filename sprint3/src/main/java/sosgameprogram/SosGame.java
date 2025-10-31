@@ -219,6 +219,78 @@ public class SosGame {
       }
     }
 
+    // Detects and SOS formation in the form of
+    // S
+    //   O
+    //     S
+    // After an S is placed to the top left "OS" to form diagonal SOS
+    if (row >= 0 && row + 2 < boardSize && column >= 0 && column + 2 < boardSize) {
+      if (gameBoard[row][column] == "S" && gameBoard[row + 1][column + 1] == "O" &&
+          gameBoard[row + 2][column + 2] == "S") {
+        return true;
+      }
+    }
+
+    // Detects and SOS formation in the form of
+    // S
+    //   O
+    //     S
+    // After an O is placed between 2 Ss to form diagonal SOS
+    if (row >= 1 && row + 1 < boardSize && column >= 1 && column + 1 < boardSize) {
+      if (gameBoard[row - 1][column - 1] == "S" && gameBoard[row][column] == "O" &&
+          gameBoard[row + 1][column + 1] == "S") {
+        return true;
+      }
+    }
+
+    // Detects and SOS formation in the form of
+    // S
+    //   O
+    //     S
+    // After an S is placed to the bottom right of an "SO" to form diagonal SOS
+    if (row >= 2 && column >= 2) {
+      if (gameBoard[row - 2][column - 2] == "S" && gameBoard[row - 1][column - 1] == "O" &&
+          gameBoard[row][column] == "S") {
+        return true;
+      }
+    }
+
+    // Detects and SOS formation in the form of
+    //     S
+    //   O
+    // S
+    // After an S is placed to the top right "OS" to form diagonal SOS
+    if (row >= 0 && row + 2 < boardSize && column >= 2 && column < boardSize) {
+      if (gameBoard[row][column] == "S" && gameBoard[row + 1][column - 1] == "O" &&
+          gameBoard[row + 2][column - 2] == "S") {
+        return true;
+      }
+    }
+
+    // Detects and SOS formation in the form of
+    //     S
+    //   O
+    // S
+    // After an O is placed between two Ss to form diagonal SOS
+    if (row >= 1 && row + 1 < boardSize && column >= 1 && column + 1 < boardSize) {
+      if (gameBoard[row - 1][column + 1].equals("S") && gameBoard[row][column].equals("O") &&
+          gameBoard[row + 1][column - 1].equals("S")) {
+        return true;
+      }
+    }
+
+    // Detects and SOS formation in the form of
+    //     S
+    //   O
+    // S
+    // After an S is placed to the bottom left of "OS" to form diagonal SOS
+    if (row >= 2 && column + 2 < boardSize) {
+      if (gameBoard[row - 2][column + 2] == "S" && gameBoard[row - 1][column + 1] == "O" &&
+          gameBoard[row][column] == "S") {
+        return true;
+      }
+    }
+
     return false;
   }
 }
