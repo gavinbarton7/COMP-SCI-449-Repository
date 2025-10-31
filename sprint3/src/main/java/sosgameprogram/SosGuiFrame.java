@@ -17,6 +17,9 @@ public class SosGuiFrame extends JFrame {
 
   public SosGuiFrame() {
     this.game = new SosGame();
+    if (game.getGameMode() == "S") {
+      this.game = new SimpleGame();
+    }
     this.setTitle("SOS Game");
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setLayout(new BorderLayout());

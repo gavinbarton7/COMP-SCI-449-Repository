@@ -2,17 +2,17 @@ package sosgameprogram;
 
 public class SosGame {
 
-  private int boardSize;
+  protected int boardSize;
   // gameMode holds "S" for simple game or "G" for general game
-  private String gameMode;
+  protected String gameMode;
   // currentPlayer holds "B" for blue player or "R" for red player
-  private String currentPlayer;
-  private String[][] gameBoard;
-  private String redPlayerLetterSelection;
-  private String bluePlayerLetterSelection;
+  protected String currentPlayer;
+  protected String[][] gameBoard;
+  protected String redPlayerLetterSelection;
+  protected String bluePlayerLetterSelection;
   // Stores the result of the SOS game ("BV" for blue player victory, "RV" for red playe victory,
   // and "D" for draw
-  private String gameResult;
+  protected String gameResult;
 
   public SosGame() {
     // Note: -1 is used as an initial value to tell if the board size has been set yet
