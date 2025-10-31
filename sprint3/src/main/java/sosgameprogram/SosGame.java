@@ -149,4 +149,76 @@ public class SosGame {
       changeTurns();
     }
   }
+
+  // Checks to see if an SOS sequence has been formed after every move
+  private boolean checkForSosFormation(int row, int column) {
+
+    // Detects and SOS formation in the form of
+    // S O S
+    // After an S is placed to the left of "OS" to form horizontal SOS
+    if (column >= 0 && column + 2 < boardSize) {
+      if (gameBoard[row][column] == "S" && gameBoard[row][column + 1] == "O" &&
+          gameBoard[row][column + 2] == "S") {
+        return true;
+      }
+    }
+
+    // Detects and SOS formation in the form of
+    // S O S
+    // After an O is placed between to Ss to form a horizontal SOS
+    if (column >= 1 && column + 1 < boardSize) {
+      if (gameBoard[row][column - 1] == "S" && gameBoard[row][column] == "O" &&
+          gameBoard[row][column + 1] == "S") {
+        return true;
+      }
+    }
+
+    // Detects and SOS formation in the form of
+    // S O S
+    // After an S is placed to the left of "SO" to form a horizontal SOS
+    if (column >= 2) {
+      if (gameBoard[row][column - 2] == "S" && gameBoard[row][column - 1] == "O" &&
+          gameBoard[row][column] == "S") {
+        return true;
+      }
+    }
+
+    // Detects and SOS formation in the form of
+    // S
+    // O
+    // S
+    // After an S is placed above "OS" to form vertical SOS
+    if (row >= 0 && row + 2 < boardSize) {
+      if (gameBoard[row][column] == "S" &&  gameBoard[row + 1][column] == "O" &&
+          gameBoard[row + 2][column] == "S") {
+        return true;
+      }
+    }
+
+    // Detects and SOS formation in the form of
+    // S
+    // O
+    // S
+    // After an O is placed between to Ss to form a vertical SOS
+    if (row >= 1 && row + 1 < boardSize) {
+      if (gameBoard[row - 1][column] == "S" && gameBoard[row][column] == "O" &&
+          gameBoard[row + 1][column] == "S") {
+        return true;
+      }
+    }
+
+    // Detects and SOS formation in the form of
+    // S
+    // O
+    // S
+    // After an S is placed below an "SO" to form a vertical SOS
+    if (row >= 2) {
+      if (gameBoard[row - 2][column] == "S" && gameBoard[row - 1][column] == "O" &&
+          gameBoard[row][column] == "S") {
+        return true;
+      }
+    }
+
+    return false;
+  }
 }
