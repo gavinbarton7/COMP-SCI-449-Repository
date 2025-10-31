@@ -10,6 +10,9 @@ public class SosGame {
   String[][] gameBoard;
   String redPlayerLetterSelection;
   String bluePlayerLetterSelection;
+  // Stores the result of the SOS game ("BV" for blue player victory, "RV" for red playe victory,
+  // and "D" for draw
+  String gameResult;
 
   public SosGame() {
     // Note: -1 is used as an initial value to tell if the board size has been set yet
@@ -19,6 +22,7 @@ public class SosGame {
     this.currentPlayer = "B";
     this.redPlayerLetterSelection = "";
     this.bluePlayerLetterSelection = "";
+    this.gameResult = null;
   }
 
   // Sets the size of the board if inputted size is between 3 and 10, but returns false if inputted
@@ -60,6 +64,7 @@ public class SosGame {
       }
     }
     setCurrentPlayer("B");
+    gameResult = null;
   }
 
   public void setCurrentPlayer(String currentPlayer) {
@@ -150,8 +155,16 @@ public class SosGame {
     }
   }
 
+  public void setGameResult(String gameResult) {
+    this.gameResult = gameResult;
+  }
+
+  public String getGameResult() {
+    return gameResult;
+  }
+
   // Checks to see if an SOS sequence has been formed after every move
-  private boolean checkForSosFormation(int row, int column) {
+  public boolean checkForSosFormation(int row, int column) {
 
     // Detects and SOS formation in the form of
     // S O S
@@ -292,5 +305,17 @@ public class SosGame {
     }
 
     return false;
+  }
+
+  // Checks to see if the game board is full
+  public boolean isBoardFull() {
+    for (int i = 0; i < boardSize; i++) {
+      for (int j = 0; j < boardSize; j++) {
+        if (gameBoard[i][j] == "") {
+          return false;
+        }
+      }
+    }
+    return true;
   }
 }
