@@ -7,13 +7,13 @@ import java.awt.event.MouseEvent;
 
 public class Board extends JPanel {
 
-  private SosGameConsole game;
+  private SosGame game;
   private SosGuiFrame gameGui;
   private int cellSize = 40;
   private int boardOffset = 10;
 
 
-  public Board(SosGameConsole game, SosGuiFrame gameGui) {
+  public Board(SosGame game, SosGuiFrame gameGui) {
     this.game = game;
     this.gameGui = gameGui;
 

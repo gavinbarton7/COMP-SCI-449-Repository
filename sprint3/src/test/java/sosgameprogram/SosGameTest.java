@@ -4,12 +4,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class SosGameConsoleTest {
-  private SosGameConsole game;
+class SosGameTest {
+  private SosGame game;
 
   @BeforeEach
   public void setUp() {
-    game = new SosGameConsole();
+    game = new SosGame();
   }
 
   @Test

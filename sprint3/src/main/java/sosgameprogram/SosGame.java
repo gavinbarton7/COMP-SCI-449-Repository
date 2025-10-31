@@ -1,6 +1,6 @@
 package sosgameprogram;
 
-public class SosGameConsole {
+public class SosGame {
 
   int boardSize;
   // gameMode holds "S" for simple game or "G" for general game
@@ -11,7 +11,7 @@ public class SosGameConsole {
   String redPlayerLetterSelection;
   String bluePlayerLetterSelection;
 
-  public SosGameConsole() {
+  public SosGame() {
     // Note: -1 is used as an initial value to tell if the board size has been set yet
     this.boardSize = -1;
     this.gameMode = null;

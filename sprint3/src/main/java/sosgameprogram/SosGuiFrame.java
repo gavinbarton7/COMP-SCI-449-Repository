@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class SosGuiFrame extends JFrame {
-  private SosGameConsole game;
+  private SosGame game;
   private Board board;
   private JLabel currentPlayerLabel;
   private JRadioButton simpleGameRadioButton;
@@ -16,7 +16,7 @@ public class SosGuiFrame extends JFrame {
   private JButton newGameButton;
 
   public SosGuiFrame() {
-    this.game = new SosGameConsole();
+    this.game = new SosGame();
     this.setTitle("SOS Game");
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setLayout(new BorderLayout());
