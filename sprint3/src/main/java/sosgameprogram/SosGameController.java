@@ -1,7 +1,8 @@
 package sosgameprogram;
 
 // This class manages the controls for the game, such as selecting the simple/general radio
-// buttons, the S and O radio buttons, etc.
+// buttons, the S and O radio buttons, the current player's turn etc. It essentially acts
+// as an intermediary between the GUI and the main game internal logic in SosGame
 public class SosGameController {
 
   private SosGame game;
@@ -79,5 +80,9 @@ public class SosGameController {
 
     game.setBoardSize(boardSize);
     game.setUpForNewGame();
+  }
+
+  public String getGameResult() {
+    return game.getGameResult();
   }
 }

@@ -120,25 +120,9 @@ public abstract class SosGame {
     }
   }
 
-  public void bluePlayerValidMove(int row, int column) {
-    if (bluePlayerLetterSelection == "S") {
-      gameBoard[row][column] = "S";
-      changeTurns();
-    } else if (bluePlayerLetterSelection == "O") {
-      gameBoard[row][column] = "O";
-      changeTurns();
-    }
-  }
+  public abstract void bluePlayerValidMove(int row, int column);
 
-  public void redPlayerValidMove(int row, int column) {
-    if (redPlayerLetterSelection == "S") {
-      gameBoard[row][column] = "S";
-      changeTurns();
-    } else if (redPlayerLetterSelection == "O") {
-      gameBoard[row][column] = "O";
-      changeTurns();
-    }
-  }
+  public abstract void redPlayerValidMove(int row, int column);
 
   public void setGameResult(String gameResult) {
     this.gameResult = gameResult;

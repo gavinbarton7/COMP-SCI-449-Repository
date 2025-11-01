@@ -266,4 +266,20 @@ public class SosGuiFrame extends JFrame {
       }
     }
   }
+
+  public void endOfGameMessage() {
+    String result = controller.getGameResult();
+    String message = null;
+
+    if (result == "D") {
+      message = "This game will end in a draw!";
+    } else if (result == "BV") {
+      message = "The Blue Player has won!";
+    } else if (result == "RV") {
+      message = "The Red Player has won!";
+    }
+
+    JOptionPane.showMessageDialog(this, message, "Game Over",
+        JOptionPane.INFORMATION_MESSAGE);
+  }
 }
