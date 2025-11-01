@@ -31,6 +31,7 @@ public class GeneralGame extends SosGame {
       }
       if (isBoardFull() == true) {
         setGeneralGameResult(bluePlayerScore, redPlayerScore);
+        gameInProgress = false;
         return;
       }
       changeTurns();
@@ -41,6 +42,7 @@ public class GeneralGame extends SosGame {
       }
       if (isBoardFull() == true) {
         setGeneralGameResult(bluePlayerScore, redPlayerScore);
+        gameInProgress = false;
         return;
       }
       changeTurns();
@@ -56,6 +58,7 @@ public class GeneralGame extends SosGame {
       }
       if (isBoardFull() == true) {
         setGeneralGameResult(bluePlayerScore, redPlayerScore);
+        gameInProgress = false;
         return;
       }
       changeTurns();
@@ -66,6 +69,7 @@ public class GeneralGame extends SosGame {
       }
       if (isBoardFull() == true) {
         setGeneralGameResult(bluePlayerScore, redPlayerScore);
+        gameInProgress = false;
         return;
       }
       changeTurns();

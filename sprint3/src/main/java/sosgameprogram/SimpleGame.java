@@ -81,10 +81,12 @@ public class SimpleGame extends SosGame {
 
   public boolean simpleGameOver(int row, int column) {
     if (checkForSosFormation(row, column) == true) {
+      gameInProgress = false;
       return true;
     }
 
     if (isBoardFull() == true) {
+      gameInProgress = false;
       return true;
     }
 

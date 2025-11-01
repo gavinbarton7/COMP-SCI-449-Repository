@@ -13,6 +13,7 @@ public abstract class SosGame {
   // Stores the result of the SOS game ("BV" for blue player victory, "RV" for red playe victory,
   // and "D" for draw
   protected String gameResult;
+  protected boolean gameInProgress;
 
   public SosGame() {
     // Note: -1 is used as an initial value to tell if the board size has been set yet
@@ -23,6 +24,7 @@ public abstract class SosGame {
     this.redPlayerLetterSelection = "";
     this.bluePlayerLetterSelection = "";
     this.gameResult = null;
+    this.gameInProgress = false;
   }
 
   // Sets the size of the board if inputted size is between 3 and 10, but returns false if inputted
@@ -50,6 +52,7 @@ public abstract class SosGame {
     }
     setCurrentPlayer("B");
     gameResult = null;
+    gameInProgress = true;
   }
 
   public void setCurrentPlayer(String currentPlayer) {
@@ -130,6 +133,10 @@ public abstract class SosGame {
 
   public String getGameResult() {
     return gameResult;
+  }
+
+  public boolean isGameInProgress() {
+    return gameInProgress;
   }
 
   // Checks to see if an SOS sequence has been formed after every move

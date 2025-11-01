@@ -51,11 +51,17 @@ public class Board extends JPanel {
     int col = (x - boardOffset) / cellSize;
     int row = (y - boardOffset) / cellSize;
 
-    // Checks to see if the click is within the game board and paints S or O if the cell is
-    // unoccupied
-    if (row >= 0 && row < boardSize && col >= 0 && col < boardSize) {
-      if (game.setCellContent(row, col)) {
-        repaint();
+    if (game.isGameInProgress() == true) {
+      // Checks to see if the click is within the game board and paints S or O if the cell is
+      // unoccupied
+      if (row >= 0 && row < boardSize && col >= 0 && col < boardSize) {
+        if (game.setCellContent(row, col)) {
+          repaint();
+        }
+      }
+
+      if (game.isGameInProgress() == false) {
+        gameGui.endOfGameMessage();
       }
     }
   }
