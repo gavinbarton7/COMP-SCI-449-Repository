@@ -28,7 +28,6 @@ public class Board extends JPanel {
 
   // Draws board
   protected void paintComponent(Graphics board) {
-
     super.paintComponent(board);
 
     // If no game mode is selected, then the functions returns without painting a board (to keep
@@ -40,6 +39,7 @@ public class Board extends JPanel {
 
     drawBoardGrid(board);
     drawSAndOLetters(board);
+    drawSosLines(board);
   }
 
   // Tells program what to do if a cell is clicked on the board
@@ -109,6 +109,29 @@ public class Board extends JPanel {
           gameGui.updateCurrentPlayerLabel();
         }
       }
+    }
+  }
+
+  // This class is used to draw the lines for the SOS fomations
+  private void drawSosLines(Graphics board) {
+    SosGame game = controller.getGame();
+
+    Graphics2D g2d = (Graphics2D) board;
+    g2d.setStroke(new BasicStroke(3));
+
+    for (SosGame.SosLine line : game.getSosLines()) {
+      if (line.player == "B") {
+        g2d.setColor(Color.BLUE);
+      } else if  (line.player == "R") {
+        g2d.setColor(Color.RED);
+      }
+
+      int startX = boardOffset + line.firstColumn * cellSize + cellSize / 2;
+      int startY = boardOffset + line.firstRow * cellSize + cellSize / 2;
+      int endX = boardOffset + line.lastColumn * cellSize + cellSize / 2;
+      int endY = boardOffset + line.lastRow * cellSize + cellSize / 2;
+
+      g2d.drawLine(startX, startY, endX, endY);
     }
   }
 }

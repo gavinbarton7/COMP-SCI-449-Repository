@@ -14,6 +14,8 @@ public class SosGuiFrame extends JFrame {
   private ButtonGroup simpleGeneralGroup;
   private JTextField boardSizeInput;
   private JButton newGameButton;
+  ButtonGroup bluePlayerSOGroup;
+  ButtonGroup redPlayerSOGroup;
 
   public SosGuiFrame() {
     this.controller = new SosGameController();
@@ -138,7 +140,7 @@ public class SosGuiFrame extends JFrame {
     );
 
     // Creates a group for the player buttons and adds the buttons for the red player
-    ButtonGroup redPlayerSOGroup = new ButtonGroup();
+    redPlayerSOGroup = new ButtonGroup();
     redPlayerSOGroup.add(redPlayerSButton);
     redPlayerSOGroup.add(redPlayerOButton);
 
@@ -164,7 +166,7 @@ public class SosGuiFrame extends JFrame {
     bluePlayerLabel.setText(" Blue Player ");
 
     // Creates a group for the player buttons and adds the buttons for the blue player
-    ButtonGroup bluePlayerSOGroup = new ButtonGroup();
+    bluePlayerSOGroup = new ButtonGroup();
     bluePlayerSOGroup.add(bluePlayerSButton);
     bluePlayerSOGroup.add(bluePlayerOButton);
 
@@ -200,6 +202,8 @@ public class SosGuiFrame extends JFrame {
           "No Game Mode",
           JOptionPane.WARNING_MESSAGE);
     } else {
+      bluePlayerSOGroup.clearSelection();
+      redPlayerSOGroup.clearSelection();
       board.newBoard();
       controller.startOfANewGame();
       updateCurrentPlayerLabel();

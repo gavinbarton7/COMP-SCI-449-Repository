@@ -28,24 +28,26 @@ public class GeneralGame extends SosGame {
       gameBoard[row][column] = "S";
       if (checkForSosFormation(row, column) == true) {
         bluePlayerScore++;
+      } else {
+        changeTurns();
       }
       if (isBoardFull() == true) {
         setGeneralGameResult(bluePlayerScore, redPlayerScore);
         gameInProgress = false;
         return;
       }
-      changeTurns();
     } else if (bluePlayerLetterSelection == "O") {
       gameBoard[row][column] = "O";
       if (checkForSosFormation(row, column) == true) {
         bluePlayerScore++;
+      } else {
+        changeTurns();
       }
       if (isBoardFull() == true) {
         setGeneralGameResult(bluePlayerScore, redPlayerScore);
         gameInProgress = false;
         return;
       }
-      changeTurns();
     }
   }
 
@@ -55,24 +57,27 @@ public class GeneralGame extends SosGame {
       gameBoard[row][column] = "S";
       if (checkForSosFormation(row, column) == true) {
         redPlayerScore++;
+      } else {
+        changeTurns();
       }
       if (isBoardFull() == true) {
         setGeneralGameResult(bluePlayerScore, redPlayerScore);
         gameInProgress = false;
         return;
       }
-      changeTurns();
     } else if (redPlayerLetterSelection == "O") {
       gameBoard[row][column] = "O";
       if (checkForSosFormation(row, column) == true) {
         redPlayerScore++;
+      } else {
+        changeTurns();
       }
       if (isBoardFull() == true) {
         setGeneralGameResult(bluePlayerScore, redPlayerScore);
         gameInProgress = false;
         return;
       }
-      changeTurns();
+
     }
   }
 
