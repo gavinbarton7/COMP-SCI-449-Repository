@@ -71,18 +71,18 @@ public abstract class SosGame {
   }
 
   public void changeTurns() {
-    if (currentPlayer == "B") {
+    if (currentPlayer.equals("B")) {
       setCurrentPlayer("R");
-    } else if (currentPlayer == "R") {
+    } else if (currentPlayer.equals("R")) {
       setCurrentPlayer("B");
     }
   }
 
   // Sets the letter selection for the red player
   public void setRedPlayerLetterSelection(String letterSelection) {
-    if (letterSelection == "S") {
+    if (letterSelection.equals("S")) {
       redPlayerLetterSelection = "S";
-    } else if (letterSelection == "O") {
+    } else if (letterSelection.equals("O")) {
       redPlayerLetterSelection = "O";
     }
   }
@@ -93,9 +93,9 @@ public abstract class SosGame {
 
   // Sets the letter selection for the blue player
   public void setBluePlayerLetterSelection(String letterSelection) {
-    if (letterSelection == "S") {
+    if (letterSelection.equals("S")) {
       bluePlayerLetterSelection = "S";
-    } else if (letterSelection == "O") {
+    } else if (letterSelection.equals("O")) {
       bluePlayerLetterSelection = "O";
     }
   }
@@ -115,7 +115,7 @@ public abstract class SosGame {
   // Updates the content of an unoccupied cell when either play makes on move on it, but returns
   // false if the cell is occupied
   public boolean setCellContent(int row, int column) {
-    if (gameBoard[row][column] == "") {
+    if (gameBoard[row][column].equals("")) {
       playerValidMove(row, column);
       return true;
     }
@@ -123,9 +123,9 @@ public abstract class SosGame {
   }
 
   public void playerValidMove(int row, int column) {
-    if (currentPlayer == "B") {
+    if (currentPlayer.equals("B")) {
       bluePlayerValidMove(row, column);
-    } else if (currentPlayer == "R") {
+    } else if (currentPlayer.equals("R")) {
       redPlayerValidMove(row, column);
     }
   }
@@ -154,8 +154,8 @@ public abstract class SosGame {
     // S O S
     // After an S is placed to the left of "OS" to form horizontal SOS
     if (column >= 0 && column + 2 < boardSize) {
-      if (gameBoard[row][column] == "S" && gameBoard[row][column + 1] == "O" &&
-          gameBoard[row][column + 2] == "S") {
+      if (gameBoard[row][column].equals("S") && gameBoard[row][column + 1].equals("O") &&
+          gameBoard[row][column + 2].equals("S")) {
         sosLines.add(new SosLine(row, column, row, column + 2, currentPlayer));
         scoreIncrement++;
       }
@@ -165,8 +165,8 @@ public abstract class SosGame {
     // S O S
     // After an O is placed between to Ss to form a horizontal SOS
     if (column >= 1 && column + 1 < boardSize) {
-      if (gameBoard[row][column - 1] == "S" && gameBoard[row][column] == "O" &&
-          gameBoard[row][column + 1] == "S") {
+      if (gameBoard[row][column - 1].equals("S") && gameBoard[row][column].equals("O") &&
+          gameBoard[row][column + 1].equals("S")) {
         sosLines.add(new SosLine(row, column - 1, row, column + 1,
             currentPlayer));
         scoreIncrement++;
@@ -177,8 +177,8 @@ public abstract class SosGame {
     // S O S
     // After an S is placed to the left of "SO" to form a horizontal SOS
     if (column >= 2) {
-      if (gameBoard[row][column - 2] == "S" && gameBoard[row][column - 1] == "O" &&
-          gameBoard[row][column] == "S") {
+      if (gameBoard[row][column - 2].equals("S") && gameBoard[row][column - 1].equals("O") &&
+          gameBoard[row][column].equals("S")) {
         sosLines.add(new SosLine(row, column - 2, row, column, currentPlayer));
         scoreIncrement++;
       }
@@ -190,8 +190,8 @@ public abstract class SosGame {
     // S
     // After an S is placed above "OS" to form vertical SOS
     if (row >= 0 && row + 2 < boardSize) {
-      if (gameBoard[row][column] == "S" &&  gameBoard[row + 1][column] == "O" &&
-          gameBoard[row + 2][column] == "S") {
+      if (gameBoard[row][column].equals("S") &&  gameBoard[row + 1][column].equals("O") &&
+          gameBoard[row + 2][column].equals("S")) {
         sosLines.add(new SosLine(row, column, row + 2, column, currentPlayer));
         scoreIncrement++;
       }
@@ -203,8 +203,8 @@ public abstract class SosGame {
     // S
     // After an O is placed between to Ss to form a vertical SOS
     if (row >= 1 && row + 1 < boardSize) {
-      if (gameBoard[row - 1][column] == "S" && gameBoard[row][column] == "O" &&
-          gameBoard[row + 1][column] == "S") {
+      if (gameBoard[row - 1][column].equals("S") && gameBoard[row][column].equals("O") &&
+          gameBoard[row + 1][column].equals("S")) {
         sosLines.add(new SosLine(row - 1, column, row + 1, column, currentPlayer));
         scoreIncrement++;
       }
@@ -216,8 +216,8 @@ public abstract class SosGame {
     // S
     // After an S is placed below an "SO" to form a vertical SOS
     if (row >= 2) {
-      if (gameBoard[row - 2][column] == "S" && gameBoard[row - 1][column] == "O" &&
-          gameBoard[row][column] == "S") {
+      if (gameBoard[row - 2][column].equals("S") && gameBoard[row - 1][column].equals("O") &&
+          gameBoard[row][column].equals("S")) {
         sosLines.add(new SosLine(row - 2, column, row, column, currentPlayer));
         scoreIncrement++;
       }
@@ -229,8 +229,8 @@ public abstract class SosGame {
     //     S
     // After an S is placed to the top left "OS" to form diagonal SOS
     if (row >= 0 && row + 2 < boardSize && column >= 0 && column + 2 < boardSize) {
-      if (gameBoard[row][column] == "S" && gameBoard[row + 1][column + 1] == "O" &&
-          gameBoard[row + 2][column + 2] == "S") {
+      if (gameBoard[row][column].equals("S") && gameBoard[row + 1][column + 1].equals("O") &&
+          gameBoard[row + 2][column + 2].equals("S")) {
         sosLines.add(new SosLine(row, column, row + 2, column + 2,
             currentPlayer));
         scoreIncrement++;
@@ -243,8 +243,8 @@ public abstract class SosGame {
     //     S
     // After an O is placed between 2 Ss to form diagonal SOS
     if (row >= 1 && row + 1 < boardSize && column >= 1 && column + 1 < boardSize) {
-      if (gameBoard[row - 1][column - 1] == "S" && gameBoard[row][column] == "O" &&
-          gameBoard[row + 1][column + 1] == "S") {
+      if (gameBoard[row - 1][column - 1].equals("S") && gameBoard[row][column].equals("O") &&
+          gameBoard[row + 1][column + 1].equals("S")) {
         sosLines.add(new SosLine(row - 1, column - 1, row + 1,
             column + 1, currentPlayer));
         scoreIncrement++;
@@ -257,8 +257,8 @@ public abstract class SosGame {
     //     S
     // After an S is placed to the bottom right of an "SO" to form diagonal SOS
     if (row >= 2 && column >= 2) {
-      if (gameBoard[row - 2][column - 2] == "S" && gameBoard[row - 1][column - 1] == "O" &&
-          gameBoard[row][column] == "S") {
+      if (gameBoard[row - 2][column - 2].equals("S") &&
+          gameBoard[row - 1][column - 1].equals("O") && gameBoard[row][column].equals("S")) {
         sosLines.add(new SosLine(row - 2, column - 2, row, column,
             currentPlayer));
         scoreIncrement++;
@@ -271,8 +271,8 @@ public abstract class SosGame {
     // S
     // After an S is placed to the top right "OS" to form diagonal SOS
     if (row >= 0 && row + 2 < boardSize && column >= 2 && column < boardSize) {
-      if (gameBoard[row][column] == "S" && gameBoard[row + 1][column - 1] == "O" &&
-          gameBoard[row + 2][column - 2] == "S") {
+      if (gameBoard[row][column].equals("S") && gameBoard[row + 1][column - 1].equals("O") &&
+          gameBoard[row + 2][column - 2].equals("S")) {
         sosLines.add(new SosLine(row, column, row + 2, column - 2,
             currentPlayer));
         scoreIncrement++;
@@ -299,8 +299,8 @@ public abstract class SosGame {
     // S
     // After an S is placed to the bottom left of "OS" to form diagonal SOS
     if (row >= 2 && column + 2 < boardSize) {
-      if (gameBoard[row - 2][column + 2] == "S" && gameBoard[row - 1][column + 1] == "O" &&
-          gameBoard[row][column] == "S") {
+      if (gameBoard[row - 2][column + 2].equals("S") &&
+          gameBoard[row - 1][column + 1].equals("O") && gameBoard[row][column].equals("S")) {
         sosLines.add(new SosLine(row - 2, column + 2, row, column,
             currentPlayer));
         scoreIncrement++;
@@ -314,7 +314,7 @@ public abstract class SosGame {
   public boolean isBoardFull() {
     for (int i = 0; i < boardSize; i++) {
       for (int j = 0; j < boardSize; j++) {
-        if (gameBoard[i][j] == "") {
+        if (gameBoard[i][j].equals("")) {
           return false;
         }
       }

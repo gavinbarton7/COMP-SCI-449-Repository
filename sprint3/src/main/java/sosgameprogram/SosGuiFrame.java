@@ -222,10 +222,10 @@ public class SosGuiFrame extends JFrame {
   // Changes the label for the current player after each move
   public void updateCurrentPlayerLabel() {
     String currentPlayer = controller.getCurrentPlayer();
-    if (currentPlayer == "B") {
+    if (currentPlayer.equals("B")) {
       currentPlayerLabel.setText("Current turn: Blue");
       currentPlayerLabel.setForeground(Color.BLUE);
-    } else if (currentPlayer == "R") {
+    } else if (currentPlayer.equals("R")) {
       currentPlayerLabel.setText("Current turn: Red");
       currentPlayerLabel.setForeground(Color.RED);
     }
@@ -275,11 +275,11 @@ public class SosGuiFrame extends JFrame {
     String result = controller.getGameResult();
     String message = null;
 
-    if (result == "D") {
+    if (result.equals("D")) {
       message = "This game will end in a draw!";
-    } else if (result == "BV") {
+    } else if (result.equals("BV")) {
       message = "The Blue Player has won!";
-    } else if (result == "RV") {
+    } else if (result.equals("RV")) {
       message = "The Red Player has won!";
     }
 

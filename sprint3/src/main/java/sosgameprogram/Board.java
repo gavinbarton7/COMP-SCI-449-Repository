@@ -96,7 +96,7 @@ public class Board extends JPanel {
     for (int row = 0; row < boardSize; row++) {
       for (int col = 0; col < boardSize; col++) {
         String cellContent = game.getCellContent(row, col);
-        if ((cellContent == "") == false) {
+        if ((cellContent.equals("")) == false) {
           g2d.setColor(Color.BLACK);
 
           FontMetrics fm = g2d.getFontMetrics();
@@ -120,9 +120,9 @@ public class Board extends JPanel {
     g2d.setStroke(new BasicStroke(3));
 
     for (SosGame.SosLine line : game.getSosLines()) {
-      if (line.player == "B") {
+      if (line.player.equals("B")) {
         g2d.setColor(Color.BLUE);
-      } else if  (line.player == "R") {
+      } else if  (line.player.equals("R")) {
         g2d.setColor(Color.RED);
       }
 

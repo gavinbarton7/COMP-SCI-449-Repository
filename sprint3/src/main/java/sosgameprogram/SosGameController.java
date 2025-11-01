@@ -33,7 +33,7 @@ public class SosGameController {
   public boolean setGameMode(String modeValue) {
     if (boardSize == -1) {
       return false;
-    } else if (modeValue == "S" || modeValue == "G") {
+    } else if (modeValue.equals("S") || modeValue.equals("G")) {
       this.gameMode = modeValue;
       return true;
     } else {

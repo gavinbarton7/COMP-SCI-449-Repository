@@ -7,7 +7,7 @@ public class GeneralGame extends SosGame {
   // Updates the content of an unoccupied cell when either play makes on move on it, but returns
   // false if the cell is occupied
   public boolean setCellContent(int row, int column) {
-    if (gameBoard[row][column] == "") {
+    if (gameBoard[row][column].equals("")) {
       playerValidMove(row, column);
       return true;
     }
@@ -15,16 +15,16 @@ public class GeneralGame extends SosGame {
   }
 
   public void playerValidMove(int row, int column) {
-    if (currentPlayer == "B") {
+    if (currentPlayer.equals("B")) {
       bluePlayerValidMove(row, column);
-    } else if (currentPlayer == "R") {
+    } else if (currentPlayer.equals("R")) {
       redPlayerValidMove(row, column);
     }
   }
 
   @Override
   public void bluePlayerValidMove(int row, int column) {
-    if (bluePlayerLetterSelection == "S") {
+    if (bluePlayerLetterSelection.equals("S")) {
       gameBoard[row][column] = "S";
       if (checkForSosFormation(row, column) > 0) {
         bluePlayerScore += checkForSosFormation(row, column);
@@ -36,7 +36,7 @@ public class GeneralGame extends SosGame {
         gameInProgress = false;
         return;
       }
-    } else if (bluePlayerLetterSelection == "O") {
+    } else if (bluePlayerLetterSelection.equals("O")) {
       gameBoard[row][column] = "O";
       if (checkForSosFormation(row, column) > 0) {
         bluePlayerScore += checkForSosFormation(row, column);
@@ -53,7 +53,7 @@ public class GeneralGame extends SosGame {
 
   @Override
   public void redPlayerValidMove(int row, int column) {
-    if (redPlayerLetterSelection == "S") {
+    if (redPlayerLetterSelection.equals("S")) {
       gameBoard[row][column] = "S";
       if (checkForSosFormation(row, column) > 0) {
         redPlayerScore += checkForSosFormation(row, column);
@@ -65,7 +65,7 @@ public class GeneralGame extends SosGame {
         gameInProgress = false;
         return;
       }
-    } else if (redPlayerLetterSelection == "O") {
+    } else if (redPlayerLetterSelection.equals("O")) {
       gameBoard[row][column] = "O";
       if (checkForSosFormation(row, column) > 0) {
         redPlayerScore += checkForSosFormation(row, column);
