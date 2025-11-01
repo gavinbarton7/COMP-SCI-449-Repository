@@ -2,7 +2,8 @@ package sosgameprogram;
 
 // This class manages the controls for the game, such as selecting the simple/general radio
 // buttons, the S and O radio buttons, the current player's turn etc. It essentially acts
-// as an intermediary between the GUI and the main game internal logic in SosGame
+// as an intermediary between the GUI and the main game internal logic in SosGame since SosGame
+// is an abstract class, and games can only be instantiated as "SimpleGame" or "GeneralGame"
 public class SosGameController {
 
   private SosGame game;
@@ -71,10 +72,11 @@ public class SosGameController {
       return;
     }
 
-    // Create the appropriate game instance
+    // Creates the appropriate game instance based on whether simple or general game mode is
+    // selected
     if (gameMode.equals("S")) {
       game = new SimpleGame();
-    } else {
+    } else if (gameMode.equals("G")) {
       game = new GeneralGame();
     }
 

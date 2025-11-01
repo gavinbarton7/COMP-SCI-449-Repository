@@ -25,7 +25,7 @@ public class SimpleGame extends SosGame {
     if (bluePlayerLetterSelection == "S") {
       gameBoard[row][column] = "S";
       if (simpleGameOver(row, column) == true){
-        if (checkForSosFormation(row, column) == true) {
+        if (checkForSosFormation(row, column) > 0) {
           gameResult = "BV";
           return;
         } else {
@@ -37,7 +37,7 @@ public class SimpleGame extends SosGame {
     } else if (bluePlayerLetterSelection == "O") {
       gameBoard[row][column] = "O";
       if (simpleGameOver(row, column) == true){
-        if (checkForSosFormation(row, column) == true) {
+        if (checkForSosFormation(row, column) > 0) {
           gameResult = "BV";
           return;
         } else {
@@ -54,7 +54,7 @@ public class SimpleGame extends SosGame {
     if (redPlayerLetterSelection == "S") {
       gameBoard[row][column] = "S";
       if (simpleGameOver(row, column) == true){
-        if (checkForSosFormation(row, column) == true) {
+        if (checkForSosFormation(row, column) > 0) {
           gameResult = "RV";
           return;
         } else {
@@ -66,7 +66,7 @@ public class SimpleGame extends SosGame {
     } else if (redPlayerLetterSelection == "O") {
       gameBoard[row][column] = "O";
       if (simpleGameOver(row, column) == true){
-        if (checkForSosFormation(row, column) == true) {
+        if (checkForSosFormation(row, column) > 0) {
           gameResult = "RV";
           return;
         } else {
@@ -80,7 +80,7 @@ public class SimpleGame extends SosGame {
 
 
   public boolean simpleGameOver(int row, int column) {
-    if (checkForSosFormation(row, column) == true) {
+    if (checkForSosFormation(row, column) > 0) {
       gameInProgress = false;
       return true;
     }

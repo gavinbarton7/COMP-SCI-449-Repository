@@ -147,7 +147,8 @@ public abstract class SosGame {
   }
 
   // Checks to see if an SOS sequence has been formed after every move
-  public boolean checkForSosFormation(int row, int column) {
+  public int checkForSosFormation(int row, int column) {
+    int scoreIncrement = 0;
 
     // Detects and SOS formation in the form of
     // S O S
@@ -156,7 +157,7 @@ public abstract class SosGame {
       if (gameBoard[row][column] == "S" && gameBoard[row][column + 1] == "O" &&
           gameBoard[row][column + 2] == "S") {
         sosLines.add(new SosLine(row, column, row, column + 2, currentPlayer));
-        return true;
+        scoreIncrement++;
       }
     }
 
@@ -168,7 +169,7 @@ public abstract class SosGame {
           gameBoard[row][column + 1] == "S") {
         sosLines.add(new SosLine(row, column - 1, row, column + 1,
             currentPlayer));
-        return true;
+        scoreIncrement++;
       }
     }
 
@@ -179,7 +180,7 @@ public abstract class SosGame {
       if (gameBoard[row][column - 2] == "S" && gameBoard[row][column - 1] == "O" &&
           gameBoard[row][column] == "S") {
         sosLines.add(new SosLine(row, column - 2, row, column, currentPlayer));
-        return true;
+        scoreIncrement++;
       }
     }
 
@@ -192,7 +193,7 @@ public abstract class SosGame {
       if (gameBoard[row][column] == "S" &&  gameBoard[row + 1][column] == "O" &&
           gameBoard[row + 2][column] == "S") {
         sosLines.add(new SosLine(row, column, row + 2, column, currentPlayer));
-        return true;
+        scoreIncrement++;
       }
     }
 
@@ -205,7 +206,7 @@ public abstract class SosGame {
       if (gameBoard[row - 1][column] == "S" && gameBoard[row][column] == "O" &&
           gameBoard[row + 1][column] == "S") {
         sosLines.add(new SosLine(row - 1, column, row + 1, column, currentPlayer));
-        return true;
+        scoreIncrement++;
       }
     }
 
@@ -218,7 +219,7 @@ public abstract class SosGame {
       if (gameBoard[row - 2][column] == "S" && gameBoard[row - 1][column] == "O" &&
           gameBoard[row][column] == "S") {
         sosLines.add(new SosLine(row - 2, column, row, column, currentPlayer));
-        return true;
+        scoreIncrement++;
       }
     }
 
@@ -232,7 +233,7 @@ public abstract class SosGame {
           gameBoard[row + 2][column + 2] == "S") {
         sosLines.add(new SosLine(row, column, row + 2, column + 2,
             currentPlayer));
-        return true;
+        scoreIncrement++;
       }
     }
 
@@ -246,7 +247,7 @@ public abstract class SosGame {
           gameBoard[row + 1][column + 1] == "S") {
         sosLines.add(new SosLine(row - 1, column - 1, row + 1,
             column + 1, currentPlayer));
-        return true;
+        scoreIncrement++;
       }
     }
 
@@ -260,7 +261,7 @@ public abstract class SosGame {
           gameBoard[row][column] == "S") {
         sosLines.add(new SosLine(row - 2, column - 2, row, column,
             currentPlayer));
-        return true;
+        scoreIncrement++;
       }
     }
 
@@ -274,7 +275,7 @@ public abstract class SosGame {
           gameBoard[row + 2][column - 2] == "S") {
         sosLines.add(new SosLine(row, column, row + 2, column - 2,
             currentPlayer));
-        return true;
+        scoreIncrement++;
       }
     }
 
@@ -288,7 +289,7 @@ public abstract class SosGame {
           gameBoard[row + 1][column - 1].equals("S")) {
         sosLines.add(new SosLine(row - 1, column + 1, row + 1,
             column - 1, currentPlayer));
-        return true;
+        scoreIncrement++;
       }
     }
 
@@ -302,11 +303,11 @@ public abstract class SosGame {
           gameBoard[row][column] == "S") {
         sosLines.add(new SosLine(row - 2, column + 2, row, column,
             currentPlayer));
-        return true;
+        scoreIncrement++;
       }
     }
 
-    return false;
+    return scoreIncrement;
   }
 
   // Checks to see if the game board is full

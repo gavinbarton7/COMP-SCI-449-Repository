@@ -26,8 +26,8 @@ public class GeneralGame extends SosGame {
   public void bluePlayerValidMove(int row, int column) {
     if (bluePlayerLetterSelection == "S") {
       gameBoard[row][column] = "S";
-      if (checkForSosFormation(row, column) == true) {
-        bluePlayerScore++;
+      if (checkForSosFormation(row, column) > 0) {
+        bluePlayerScore += checkForSosFormation(row, column);
       } else {
         changeTurns();
       }
@@ -38,8 +38,8 @@ public class GeneralGame extends SosGame {
       }
     } else if (bluePlayerLetterSelection == "O") {
       gameBoard[row][column] = "O";
-      if (checkForSosFormation(row, column) == true) {
-        bluePlayerScore++;
+      if (checkForSosFormation(row, column) > 0) {
+        bluePlayerScore += checkForSosFormation(row, column);
       } else {
         changeTurns();
       }
@@ -55,8 +55,8 @@ public class GeneralGame extends SosGame {
   public void redPlayerValidMove(int row, int column) {
     if (redPlayerLetterSelection == "S") {
       gameBoard[row][column] = "S";
-      if (checkForSosFormation(row, column) == true) {
-        redPlayerScore++;
+      if (checkForSosFormation(row, column) > 0) {
+        redPlayerScore += checkForSosFormation(row, column);
       } else {
         changeTurns();
       }
@@ -67,8 +67,8 @@ public class GeneralGame extends SosGame {
       }
     } else if (redPlayerLetterSelection == "O") {
       gameBoard[row][column] = "O";
-      if (checkForSosFormation(row, column) == true) {
-        redPlayerScore++;
+      if (checkForSosFormation(row, column) > 0) {
+        redPlayerScore += checkForSosFormation(row, column);
       } else {
         changeTurns();
       }
