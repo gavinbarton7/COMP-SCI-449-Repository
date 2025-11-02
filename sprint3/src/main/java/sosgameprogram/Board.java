@@ -12,7 +12,6 @@ public class Board extends JPanel {
   private int cellSize = 40;
   private int boardOffset = 10;
 
-
   public Board(SosGameController controller, SosGuiFrame gameGui) {
     this.controller = controller;
     this.gameGui = gameGui;

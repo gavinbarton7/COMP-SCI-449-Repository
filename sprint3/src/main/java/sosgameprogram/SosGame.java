@@ -5,12 +5,12 @@ import java.util.ArrayList;
 
 public abstract class SosGame {
 
-  protected int boardSize;
+  private int boardSize;
   // gameMode holds "S" for simple game or "G" for general game
   protected String gameMode;
   // currentPlayer holds "B" for blue player or "R" for red player
-  protected String currentPlayer;
-  protected String[][] gameBoard;
+  private String currentPlayer;
+  private String[][] gameBoard;
   protected String redPlayerLetterSelection;
   protected String bluePlayerLetterSelection;
   // Stores the result of the SOS game ("BV" for blue player victory, "RV" for red playe victory,
@@ -66,7 +66,7 @@ public abstract class SosGame {
     this.currentPlayer = currentPlayer;
   }
 
-  public String getCurrentPlayer() {
+  protected String getCurrentPlayer() {
     return currentPlayer;
   }
 
@@ -144,6 +144,10 @@ public abstract class SosGame {
 
   public boolean isGameInProgress() {
     return gameInProgress;
+  }
+
+  protected void makeMove(int row, int column, String playerLetterSelection) {
+    gameBoard[row][column] = playerLetterSelection;
   }
 
   // Checks to see if an SOS sequence has been formed after every move

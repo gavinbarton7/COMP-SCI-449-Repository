@@ -1,84 +1,21 @@
 package sosgameprogram;
 
 public class GeneralGame extends SosGame {
-  protected int bluePlayerScore = 0;
-  protected int redPlayerScore = 0;
-
-  // Updates the content of an unoccupied cell when either play makes on move on it, but returns
-  // false if the cell is occupied
-  public boolean setCellContent(int row, int column) {
-    if (gameBoard[row][column].equals("")) {
-      playerValidMove(row, column);
-      return true;
-    }
-    return false;
-  }
-
-  public void playerValidMove(int row, int column) {
-    if (currentPlayer.equals("B")) {
-      bluePlayerValidMove(row, column);
-    } else if (currentPlayer.equals("R")) {
-      redPlayerValidMove(row, column);
-    }
-  }
+  private int bluePlayerScore = 0;
+  private int redPlayerScore = 0;
 
   @Override
   public void bluePlayerValidMove(int row, int column) {
-    if (bluePlayerLetterSelection.equals("S")) {
-      gameBoard[row][column] = "S";
-      if (checkForSosFormation(row, column) > 0) {
-        bluePlayerScore += checkForSosFormation(row, column);
-      } else {
-        changeTurns();
-      }
-      if (isBoardFull() == true) {
-        setGeneralGameResult(bluePlayerScore, redPlayerScore);
-        gameInProgress = false;
-        return;
-      }
-    } else if (bluePlayerLetterSelection.equals("O")) {
-      gameBoard[row][column] = "O";
-      if (checkForSosFormation(row, column) > 0) {
-        bluePlayerScore += checkForSosFormation(row, column);
-      } else {
-        changeTurns();
-      }
-      if (isBoardFull() == true) {
-        setGeneralGameResult(bluePlayerScore, redPlayerScore);
-        gameInProgress = false;
-        return;
-      }
-    }
+    makeMove(row, column, bluePlayerLetterSelection);
+    bluePlayerScore = handleScoring(row, column, bluePlayerScore);
+    generalGameOver();
   }
 
   @Override
   public void redPlayerValidMove(int row, int column) {
-    if (redPlayerLetterSelection.equals("S")) {
-      gameBoard[row][column] = "S";
-      if (checkForSosFormation(row, column) > 0) {
-        redPlayerScore += checkForSosFormation(row, column);
-      } else {
-        changeTurns();
-      }
-      if (isBoardFull() == true) {
-        setGeneralGameResult(bluePlayerScore, redPlayerScore);
-        gameInProgress = false;
-        return;
-      }
-    } else if (redPlayerLetterSelection.equals("O")) {
-      gameBoard[row][column] = "O";
-      if (checkForSosFormation(row, column) > 0) {
-        redPlayerScore += checkForSosFormation(row, column);
-      } else {
-        changeTurns();
-      }
-      if (isBoardFull() == true) {
-        setGeneralGameResult(bluePlayerScore, redPlayerScore);
-        gameInProgress = false;
-        return;
-      }
-
-    }
+    makeMove(row, column, redPlayerLetterSelection);
+    redPlayerScore = handleScoring(row, column, redPlayerScore);
+    generalGameOver();
   }
 
   public int getBluePlayerScore() {
@@ -87,6 +24,23 @@ public class GeneralGame extends SosGame {
 
   public int getRedPlayerScore() {
     return redPlayerScore;
+  }
+
+  private int handleScoring(int row, int column, int playerScore) {
+    int sosCount = checkForSosFormation(row, column);
+    if (sosCount > 0) {
+      playerScore += sosCount;
+    } else {
+      changeTurns();
+    }
+    return playerScore;
+  }
+
+  private void generalGameOver() {
+    if (isBoardFull()) {
+      setGeneralGameResult(bluePlayerScore, redPlayerScore);
+      gameInProgress = false;
+    }
   }
 
   public void setGeneralGameResult(int bluePlayerScore, int redPlayerScore) {
