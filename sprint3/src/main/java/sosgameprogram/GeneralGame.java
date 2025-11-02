@@ -9,6 +9,10 @@ public class GeneralGame extends SosGame {
     makeMove(row, column, getBluePlayerLetterSelection());
     bluePlayerScore = handleScoring(row, column, bluePlayerScore);
     generalGameOver();
+    if (isGameInProgress() == true && getCellContent(row, column).equals("") == false &&
+        checkForSosFormation(row, column) == 0) {
+      changeTurns();
+    }
   }
 
   @Override
@@ -16,14 +20,16 @@ public class GeneralGame extends SosGame {
     makeMove(row, column, getRedPlayerLetterSelection());
     redPlayerScore = handleScoring(row, column, redPlayerScore);
     generalGameOver();
+    if (isGameInProgress() == true && getCellContent(row, column).equals("") == false &&
+        checkForSosFormation(row, column) == 0) {
+      changeTurns();
+    }
   }
 
   private int handleScoring(int row, int column, int playerScore) {
     int sosCount = checkForSosFormation(row, column);
     if (sosCount > 0) {
       playerScore += sosCount;
-    } else {
-      changeTurns();
     }
     return playerScore;
   }

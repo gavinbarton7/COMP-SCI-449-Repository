@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class SosGuiFrame extends JFrame {
+public class SosGuiFrame extends JFrame implements GameStateListener {
   private SosGameController controller;
   private Board board;
   private JLabel currentPlayerLabel;
@@ -16,6 +16,16 @@ public class SosGuiFrame extends JFrame {
   private JButton newGameButton;
   ButtonGroup bluePlayerSOGroup;
   ButtonGroup redPlayerSOGroup;
+
+  @Override
+  public void onGameStateChanged() {
+    updateCurrentPlayerLabel();
+  }
+
+  @Override
+  public void onGameEnded() {
+    endOfGameMessage();
+  }
 
   public SosGuiFrame() {
     this.controller = new SosGameController();

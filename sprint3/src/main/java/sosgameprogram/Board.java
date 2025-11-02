@@ -8,13 +8,13 @@ import java.awt.event.MouseEvent;
 public class Board extends JPanel {
 
   private SosGameController controller;
-  private SosGuiFrame gameGui;
+  private GameStateListener listener;
   private int cellSize = 40;
   private int boardOffset = 10;
 
-  public Board(SosGameController controller, SosGuiFrame gameGui) {
+  public Board(SosGameController controller, GameStateListener listener) {
     this.controller = controller;
-    this.gameGui = gameGui;
+    this.listener = listener;
 
     // Adds listener for clicks on the SOS game GUI
     addMouseListener(new MouseAdapter() {
@@ -60,7 +60,7 @@ public class Board extends JPanel {
       }
 
       if (game.isGameInProgress() == false) {
-        gameGui.endOfGameMessage();
+        listener.onGameEnded();
       }
     }
   }
@@ -105,7 +105,7 @@ public class Board extends JPanel {
           int textY = boardOffset + row * cellSize + (cellSize + textHeight) / 2;
 
           g2d.drawString(cellContent, textX, textY);
-          gameGui.updateCurrentPlayerLabel();
+          listener.onGameStateChanged();
         }
       }
     }
@@ -116,7 +116,7 @@ public class Board extends JPanel {
     SosGame game = controller.getGame();
 
     Graphics2D g2d = (Graphics2D) board;
-    g2d.setStroke(new BasicStroke(3));
+    g2d.setStroke(new BasicStroke(1));
 
     for (SosGame.SosLine line : game.getSosLines()) {
       if (line.player.equals("B")) {

@@ -6,14 +6,18 @@ public class SimpleGame extends SosGame {
   protected void bluePlayerValidMove(int row, int column) {
     makeMove(row, column, getBluePlayerLetterSelection());
     simpleGameOver(row, column);
-    changeTurns();
+    if (isGameInProgress() == true && getCellContent(row, column).equals("") == false) {
+      changeTurns();
+    }
   }
 
   @Override
   protected void redPlayerValidMove(int row, int column) {
     makeMove(row, column, getRedPlayerLetterSelection());
     simpleGameOver(row, column);
-    changeTurns();
+    if (isGameInProgress() == true && getCellContent(row, column).equals("") == false) {
+      changeTurns();
+    }
   }
 
 
