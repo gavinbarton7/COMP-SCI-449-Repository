@@ -107,11 +107,10 @@ class SosGameTest {
     controller.setBoardSize(5);
     controller.setGameMode("S");
     controller.startOfANewGame();
-    controller.setBluePlayerLetterSelection("S"); // Red player chooses "S"
+    controller.setCurrentPlayer("B");
+    controller.setBluePlayerLetterSelection("S");
 
     SosGame game = controller.getGame();
-    game.setUpForNewGame();
-    game.setCurrentPlayer("B"); // Set to red player's turn
 
     // Ensure the target cell is unoccupied
     int testRow = 3;

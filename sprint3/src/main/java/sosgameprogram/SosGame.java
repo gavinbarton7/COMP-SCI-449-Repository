@@ -16,7 +16,7 @@ public abstract class SosGame {
   private String gameResult;
   private boolean gameInProgress;
   // This list stores the red and blue lines for the SOS formation
-  protected List<SosLine> sosLines;
+  private List<SosLine> sosLines;
 
   public SosGame() {
     // Note: -1 is used as an initial value to tell if the board size has been set yet
@@ -32,7 +32,7 @@ public abstract class SosGame {
 
   // Sets the size of the board if inputted size is between 3 and 10, but returns false if inputted
   // size is outside the range of 3-10
-  public boolean setBoardSize(int sizeInput) {
+  protected boolean setBoardSize(int sizeInput) {
     if (sizeInput >= 3 && sizeInput <= 10) {
       this.boardSize = sizeInput;
       return true;
@@ -40,13 +40,13 @@ public abstract class SosGame {
     return false;
   }
 
-  public int getBoardSize() {
+  protected int getBoardSize() {
     return boardSize;
   }
 
   // Sets up an empty board of the selected board size and sets the current player to the
   // blue player since the blue player moves first in every game
-  public void setUpForNewGame() {
+  protected void setUpForNewGame() {
     gameBoard = new String[boardSize][boardSize];
     for (int i = 0; i < boardSize; i++) {
       for (int j = 0; j < boardSize; j++) {
@@ -59,7 +59,7 @@ public abstract class SosGame {
     sosLines.clear();
   }
 
-  public void setCurrentPlayer(String currentPlayer) {
+  protected void setCurrentPlayer(String currentPlayer) {
     this.currentPlayer = currentPlayer;
   }
 
@@ -67,7 +67,7 @@ public abstract class SosGame {
     return currentPlayer;
   }
 
-  public void changeTurns() {
+  protected void changeTurns() {
     if (currentPlayer.equals("B")) {
       setCurrentPlayer("R");
     } else if (currentPlayer.equals("R")) {
@@ -76,7 +76,7 @@ public abstract class SosGame {
   }
 
   // Sets the letter selection for the red player
-  public void setRedPlayerLetterSelection(String letterSelection) {
+  protected void setRedPlayerLetterSelection(String letterSelection) {
     if (letterSelection.equals("S")) {
       redPlayerLetterSelection = "S";
     } else if (letterSelection.equals("O")) {
@@ -84,12 +84,12 @@ public abstract class SosGame {
     }
   }
 
-  public String getRedPlayerLetterSelection() {
+  protected String getRedPlayerLetterSelection() {
     return redPlayerLetterSelection;
   }
 
   // Sets the letter selection for the blue player
-  public void setBluePlayerLetterSelection(String letterSelection) {
+  protected void setBluePlayerLetterSelection(String letterSelection) {
     if (letterSelection.equals("S")) {
       bluePlayerLetterSelection = "S";
     } else if (letterSelection.equals("O")) {
@@ -97,21 +97,13 @@ public abstract class SosGame {
     }
   }
 
-  public String getBluePlayerLetterSelection() {
+  protected String getBluePlayerLetterSelection() {
     return bluePlayerLetterSelection;
-  }
-
-  protected String getCellContent(int row, int column) {
-    if(row >= 0 && row < boardSize && column >= 0 && column < boardSize) {
-      return gameBoard[row][column];
-    } else {
-      return "Invalid cell reference";
-    }
   }
 
   // Updates the content of an unoccupied cell when either play makes on move on it, but returns
   // false if the cell is occupied
-  protected boolean setCellContent(int row, int column) {
+  public boolean setCellContent(int row, int column) {
     if (gameBoard[row][column].equals("")) {
       playerValidMove(row, column);
       return true;
@@ -119,7 +111,15 @@ public abstract class SosGame {
     return false;
   }
 
-  public void playerValidMove(int row, int column) {
+  public String getCellContent(int row, int column) {
+    if(row >= 0 && row < boardSize && column >= 0 && column < boardSize) {
+      return gameBoard[row][column];
+    } else {
+      return "Invalid cell reference";
+    }
+  }
+
+  private void playerValidMove(int row, int column) {
     if (currentPlayer.equals("B")) {
       bluePlayerValidMove(row, column);
     } else if (currentPlayer.equals("R")) {
@@ -127,15 +127,15 @@ public abstract class SosGame {
     }
   }
 
-  public abstract void bluePlayerValidMove(int row, int column);
+  protected abstract void bluePlayerValidMove(int row, int column);
 
-  public abstract void redPlayerValidMove(int row, int column);
+  protected abstract void redPlayerValidMove(int row, int column);
 
-  public void setGameResult(String gameResult) {
+  protected void setGameResult(String gameResult) {
     this.gameResult = gameResult;
   }
 
-  public String getGameResult() {
+  protected String getGameResult() {
     return gameResult;
   }
 
@@ -151,8 +151,12 @@ public abstract class SosGame {
     gameBoard[row][column] = playerLetterSelection;
   }
 
+  protected String[][] getGameBoard () {
+    return gameBoard;
+  }
+
   // Checks to see if an SOS sequence has been formed after every move
-  public int checkForSosFormation(int row, int column) {
+  protected int checkForSosFormation(int row, int column) {
     int scoreIncrement = 0;
 
     // Detects and SOS formation in the form of
@@ -316,7 +320,7 @@ public abstract class SosGame {
   }
 
   // Checks to see if the game board is full
-  public boolean isBoardFull() {
+  protected boolean isBoardFull() {
     for (int i = 0; i < boardSize; i++) {
       for (int j = 0; j < boardSize; j++) {
         if (gameBoard[i][j].equals("")) {

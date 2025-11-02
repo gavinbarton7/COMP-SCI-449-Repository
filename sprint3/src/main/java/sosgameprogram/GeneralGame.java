@@ -5,25 +5,17 @@ public class GeneralGame extends SosGame {
   private int redPlayerScore = 0;
 
   @Override
-  public void bluePlayerValidMove(int row, int column) {
+  protected void bluePlayerValidMove(int row, int column) {
     makeMove(row, column, getBluePlayerLetterSelection());
     bluePlayerScore = handleScoring(row, column, bluePlayerScore);
     generalGameOver();
   }
 
   @Override
-  public void redPlayerValidMove(int row, int column) {
+  protected void redPlayerValidMove(int row, int column) {
     makeMove(row, column, getRedPlayerLetterSelection());
     redPlayerScore = handleScoring(row, column, redPlayerScore);
     generalGameOver();
-  }
-
-  public int getBluePlayerScore() {
-    return bluePlayerScore;
-  }
-
-  public int getRedPlayerScore() {
-    return redPlayerScore;
   }
 
   private int handleScoring(int row, int column, int playerScore) {
@@ -43,7 +35,7 @@ public class GeneralGame extends SosGame {
     }
   }
 
-  public void setGeneralGameResult(int bluePlayerScore, int redPlayerScore) {
+  private void setGeneralGameResult(int bluePlayerScore, int redPlayerScore) {
     if (bluePlayerScore > redPlayerScore) {
       setGameResult("BV");
     } else if (bluePlayerScore < redPlayerScore) {
