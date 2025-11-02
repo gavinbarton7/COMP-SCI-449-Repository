@@ -59,7 +59,7 @@ public class SosGameController {
     game.setBluePlayerLetterSelection(letterSelection);
   }
 
-  public void  setCurrentPlayer(String player) {
+  public void setCurrentPlayer(String player) {
     game.setCurrentPlayer(player);
   }
 

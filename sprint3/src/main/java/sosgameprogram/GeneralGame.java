@@ -6,14 +6,14 @@ public class GeneralGame extends SosGame {
 
   @Override
   public void bluePlayerValidMove(int row, int column) {
-    makeMove(row, column, bluePlayerLetterSelection);
+    makeMove(row, column, getBluePlayerLetterSelection());
     bluePlayerScore = handleScoring(row, column, bluePlayerScore);
     generalGameOver();
   }
 
   @Override
   public void redPlayerValidMove(int row, int column) {
-    makeMove(row, column, redPlayerLetterSelection);
+    makeMove(row, column, getRedPlayerLetterSelection());
     redPlayerScore = handleScoring(row, column, redPlayerScore);
     generalGameOver();
   }
@@ -39,7 +39,7 @@ public class GeneralGame extends SosGame {
   private void generalGameOver() {
     if (isBoardFull()) {
       setGeneralGameResult(bluePlayerScore, redPlayerScore);
-      gameInProgress = false;
+      setGameInProgress(false);
     }
   }
 

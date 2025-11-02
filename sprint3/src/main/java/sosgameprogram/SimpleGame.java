@@ -4,14 +4,14 @@ public class SimpleGame extends SosGame {
 
   @Override
   public void bluePlayerValidMove(int row, int column) {
-    makeMove(row, column, bluePlayerLetterSelection);
+    makeMove(row, column, getBluePlayerLetterSelection());
     simpleGameOver(row, column);
     changeTurns();
   }
 
   @Override
   public void redPlayerValidMove(int row, int column) {
-    makeMove(row, column, redPlayerLetterSelection);
+    makeMove(row, column, getRedPlayerLetterSelection());
     simpleGameOver(row, column);
     changeTurns();
   }
@@ -19,17 +19,17 @@ public class SimpleGame extends SosGame {
 
   public void simpleGameOver(int row, int column) {
     if (checkForSosFormation(row, column) > 0) {
-      gameInProgress = false;
+      setGameInProgress(false);
       if (getCurrentPlayer().equals("B")) {
-        gameResult = "BV";
+        setGameResult("BV");
       } else if (getCurrentPlayer().equals("R")) {
-        gameResult = "RV";
+        setGameResult("RV");
       }
     }
 
     if (isBoardFull() == true) {
-      gameInProgress = false;
-      gameResult = "D";
+      setGameInProgress(false);
+      setGameResult("D");
     }
   }
 }

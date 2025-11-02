@@ -6,24 +6,21 @@ import java.util.ArrayList;
 public abstract class SosGame {
 
   private int boardSize;
-  // gameMode holds "S" for simple game or "G" for general game
-  protected String gameMode;
   // currentPlayer holds "B" for blue player or "R" for red player
   private String currentPlayer;
   private String[][] gameBoard;
-  protected String redPlayerLetterSelection;
-  protected String bluePlayerLetterSelection;
+  private String redPlayerLetterSelection;
+  private String bluePlayerLetterSelection;
   // Stores the result of the SOS game ("BV" for blue player victory, "RV" for red playe victory,
   // and "D" for draw
-  protected String gameResult;
-  protected boolean gameInProgress;
+  private String gameResult;
+  private boolean gameInProgress;
   // This list stores the red and blue lines for the SOS formation
   protected List<SosLine> sosLines;
 
   public SosGame() {
     // Note: -1 is used as an initial value to tell if the board size has been set yet
     this.boardSize = -1;
-    this.gameMode = null;
     // currentPlayer is initialized to "B" since blue player moves first in every game
     this.currentPlayer = "B";
     this.redPlayerLetterSelection = "";
@@ -104,7 +101,7 @@ public abstract class SosGame {
     return bluePlayerLetterSelection;
   }
 
-  public String getCellContent(int row, int column) {
+  protected String getCellContent(int row, int column) {
     if(row >= 0 && row < boardSize && column >= 0 && column < boardSize) {
       return gameBoard[row][column];
     } else {
@@ -114,7 +111,7 @@ public abstract class SosGame {
 
   // Updates the content of an unoccupied cell when either play makes on move on it, but returns
   // false if the cell is occupied
-  public boolean setCellContent(int row, int column) {
+  protected boolean setCellContent(int row, int column) {
     if (gameBoard[row][column].equals("")) {
       playerValidMove(row, column);
       return true;
@@ -140,6 +137,10 @@ public abstract class SosGame {
 
   public String getGameResult() {
     return gameResult;
+  }
+
+  protected void setGameInProgress(boolean gameInProgress) {
+    this.gameInProgress = gameInProgress;
   }
 
   public boolean isGameInProgress() {
