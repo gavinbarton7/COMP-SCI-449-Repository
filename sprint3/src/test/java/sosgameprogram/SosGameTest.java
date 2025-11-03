@@ -277,7 +277,7 @@ class SosGameTest {
 
   @Test
   public void testAC5_1_BluePlayerVictory() {
-    // Given: an ongoing game with no SOS on the board
+    // Given an ongoing game with no SOS on the board
     controller.setBoardSize(3);
     controller.setGameMode("S");
     controller.startOfANewGame();
@@ -301,7 +301,7 @@ class SosGameTest {
     assertFalse(game.isGameInProgress());
 
     // And the blue player has won
-    assertEquals("BV", game.getGameResult());
+    assertEquals("BV", controller.getGameResult());
   }
 
   @Test
@@ -314,7 +314,7 @@ class SosGameTest {
 
     SosGame game = controller.getGame();
 
-    // When: the blue player makes a valid move
+    // When the blue player makes a valid move
     game.setCurrentPlayer("B");
     boolean result = game.setCellContent(0, 0);
     assertTrue(result);
@@ -326,12 +326,12 @@ class SosGameTest {
     assertTrue(game.isGameInProgress());
 
     // And it is the red player's turn
-    assertEquals("R", game.getCurrentPlayer());
+    assertEquals("R", controller.getCurrentPlayer());
   }
 
   @Test
   public void testAC5_3_RedPlayerVictory() {
-    // Given: an ongoing game with no SOS on the board
+    // Given an ongoing game with no SOS on the board
     controller.setBoardSize(5);
     controller.setGameMode("S");
     controller.startOfANewGame();
@@ -359,7 +359,7 @@ class SosGameTest {
     assertFalse(game.isGameInProgress());
 
     // And the red player has won
-    assertEquals("RV", game.getGameResult());
+    assertEquals("RV", controller.getGameResult());
   }
 
   @Test
@@ -388,13 +388,13 @@ class SosGameTest {
     assertTrue(game.isGameInProgress());
 
     // And it is the blue player's turn
-    assertEquals("B", game.getCurrentPlayer());
+    assertEquals("B", controller.getCurrentPlayer());
   }
 
   @Test
   public void testAC5_5_DrawGame() {
-    // Given: an ongoing game with no SOS on the board
-    // And: there is only one unoccupied space left on the board
+    // Given an ongoing game with no SOS on the board
+    // And there is only one unoccupied space left on the board
     controller.setBoardSize(3);
     controller.setGameMode("S");
     controller.startOfANewGame();
@@ -428,7 +428,7 @@ class SosGameTest {
     game.setCurrentPlayer("R");
     game.setCellContent(2, 1);
 
-    // When: either player makes a valid move
+    // When either player makes a valid move
     controller.setCurrentPlayer("B");
     controller.setBluePlayerLetterSelection("O");
     boolean result = game.setCellContent(2, 2);
@@ -441,7 +441,7 @@ class SosGameTest {
     assertFalse(game.isGameInProgress());
 
     // And it is a draw
-    assertEquals("D", game.getGameResult());
+    assertEquals("D", controller.getGameResult());
   }
 
 
@@ -531,7 +531,7 @@ class SosGameTest {
 
   @Test
   public void testAC6_2_GeneralGameValidRedPlayerMoveWithOLetterNoSOS() {
-    // Given: an ongoing game with the red player's turn, red player chooses "O"
+    // Given an ongoing game with the red player's turn, red player chooses "O"
     controller.setBoardSize(3);
     controller.setGameMode("G");
     controller.startOfANewGame();
@@ -615,4 +615,285 @@ class SosGameTest {
     // And the turn is not changed
     assertEquals("R", controller.getCurrentPlayer());
   }
+
+  @Test
+  public void testAC7_1_BluePlayerVictory() {
+    // Given an ongoing game where there is only one unoccupied cell left on the board
+    controller.setBoardSize(3);
+    controller.setGameMode("G");
+    controller.startOfANewGame();
+    controller.setBluePlayerLetterSelection("S");
+    controller.setRedPlayerLetterSelection("O");
+
+    SosGame game = controller.getGame();
+    GeneralGame generalGame = (GeneralGame) game;
+
+    controller.setCurrentPlayer("B");
+    game.setCellContent(0, 0);
+
+    controller.setCurrentPlayer("R");
+    game.setCellContent(0, 1);
+
+    // Blue player gets on point from forming an SOS
+    controller.setCurrentPlayer("B");
+    game.setCellContent(0, 2);
+
+    controller.setCurrentPlayer("B");
+    game.setCellContent(1, 0); // O
+
+    controller.setCurrentPlayer("R");
+    controller.setRedPlayerLetterSelection("S");
+    game.setCellContent(1, 1);
+
+    controller.setCurrentPlayer("B");
+    game.setCellContent(1, 2);
+
+    controller.setCurrentPlayer("R");
+    game.setCellContent(2, 0);
+
+    controller.setCurrentPlayer("B");
+    controller.setBluePlayerLetterSelection("S");
+    game.setCellContent(2, 1);
+
+    int blueScoreBeforeFinal = generalGame.getBluePlayerScore();
+    int redScoreBeforeFinal = generalGame.getRedPlayerScore();
+
+    // When the player whose turn it is makes a valid move
+    controller.setCurrentPlayer("R");
+    controller.setRedPlayerLetterSelection("S");
+    game.setCellContent(2, 2);
+
+    // And the blue player has formed more SOS's than the red player after the final cell is filled
+    assertTrue(generalGame.getBluePlayerScore() > generalGame.getRedPlayerScore());
+
+    // Then the game is over
+    assertFalse(game.isGameInProgress());
+
+    // And the blue player has won
+    assertEquals("BV", game.getGameResult());
+  }
+
+  @Test
+  public void testAC7_2_ContinuingGameAfterBluePlayerMoveNoSOS() {
+    // Given an ongoing game with more than one unoccupied space on the board
+    controller.setBoardSize(4);
+    controller.setGameMode("G");
+    controller.startOfANewGame();
+    controller.setBluePlayerLetterSelection("S");
+
+    SosGame game = controller.getGame();
+
+    // When the blue player makes a valid move
+    game.setCurrentPlayer("B");
+    boolean result = game.setCellContent(0, 0); // Blue places S
+    assertTrue(result);
+
+    // And the move doesn't result in the formation of an SOS sequence on the board
+    assertEquals(0, game.checkForSosFormation(0, 0));
+
+    // Then the game continues
+    assertTrue(game.isGameInProgress());
+
+    // And it becomes the red player's turn
+    assertEquals("R", game.getCurrentPlayer());
+  }
+
+  @Test
+  public void testAC7_3_ContinuingGameAfterBluePlayerMoveWithSOS() {
+    // Given an ongoing game with more than one unoccupied space on the board
+    controller.setBoardSize(4);
+    controller.setGameMode("G");
+    controller.startOfANewGame();
+
+    SosGame game = controller.getGame();
+
+    controller.setCurrentPlayer("B");
+    controller.setBluePlayerLetterSelection("S");
+    game.setCellContent(0, 0);
+
+    controller.setCurrentPlayer("R");
+    controller.setRedPlayerLetterSelection("O");
+    game.setCellContent(0, 1);
+
+    // When the blue player makes a valid move that results in the formation of an SOS sequence
+    controller.setCurrentPlayer("B");
+    controller.setBluePlayerLetterSelection("S");
+    boolean result = game.setCellContent(0, 2); // Blue places S to form SOS
+    assertTrue(result);
+
+    // Then the game continues
+    assertTrue(game.isGameInProgress());
+
+    // And the blue player gets another turn
+    assertEquals("B", game.getCurrentPlayer());
+  }
+
+  @Test
+  public void testAC7_4_RedPlayerVictory() {
+    // Given an ongoing game where there is only one unoccupied cell left on the board
+    controller.setBoardSize(3);
+    controller.setGameMode("G");
+    controller.startOfANewGame();
+    controller.setBluePlayerLetterSelection("S");
+    controller.setRedPlayerLetterSelection("S");
+
+    SosGame game = controller.getGame();
+    GeneralGame generalGame = (GeneralGame) game;
+
+    controller.setCurrentPlayer("B");
+    controller.setRedPlayerLetterSelection("S");
+    game.setCellContent(0, 0);
+
+    controller.setCurrentPlayer("R");
+    game.setCellContent(2, 0);
+
+    controller.setCurrentPlayer("B");
+    game.setCellContent(0, 1);
+
+    // Red player forms an SOS to score a point
+    controller.setCurrentPlayer("R");
+    controller.setRedPlayerLetterSelection("O");
+    game.setCellContent(1, 0);
+
+    controller.setCurrentPlayer("R");
+    controller.setRedPlayerLetterSelection("S");
+    game.setCellContent(1, 1);
+
+    controller.setCurrentPlayer("B");
+    game.setCellContent(0, 2);
+
+    controller.setCurrentPlayer("R");
+    game.setCellContent(1, 2);
+
+    controller.setCurrentPlayer("B");
+    game.setCellContent(2, 1);
+
+    // When the player whose turn it is makes a valid move
+    controller.setCurrentPlayer("R");
+    game.setCellContent(2, 2);
+
+    // And the red player has formed more SOS's than the blue player after the final cell is filled
+    assertTrue(generalGame.getRedPlayerScore() > generalGame.getBluePlayerScore());
+
+    // Then the game is over
+    assertFalse(game.isGameInProgress());
+
+    // And the red player has won
+    assertEquals("RV", game.getGameResult());
+  }
+
+  @Test
+  public void testAC7_5_ContinuingGameAfterRedPlayerMoveNoSOS() {
+    // Given an ongoing game with more than one unoccupied space on the board
+    controller.setBoardSize(4);
+    controller.setGameMode("G");
+    controller.startOfANewGame();
+    controller.setBluePlayerLetterSelection("S");
+    controller.setRedPlayerLetterSelection("O");
+
+    SosGame game = controller.getGame();
+
+    controller.setCurrentPlayer("B");
+    game.setCellContent(0, 0); // Blue places S
+
+    // When the red player makes a valid move that doesn't result in the formation of an SOS
+    // sequence on the board
+    controller.setCurrentPlayer("R");
+    boolean result = game.setCellContent(1, 1); // Red places O
+    assertTrue(result);
+    assertEquals(0, game.checkForSosFormation(1, 1));
+
+    // Then the game continues
+    assertTrue(game.isGameInProgress());
+
+    // And it becomes the blue player's turn
+    assertEquals("B", game.getCurrentPlayer());
+  }
+
+  @Test
+  public void testAC7_6_ContinuingGameAfterRedPlayerMoveWithSOS() {
+    // Given an ongoing game with more than one unoccupied space on the board
+    controller.setBoardSize(4);
+    controller.setGameMode("G");
+    controller.startOfANewGame();
+    controller.setBluePlayerLetterSelection("S");
+    controller.setRedPlayerLetterSelection("O");
+
+    SosGame game = controller.getGame();
+
+    controller.setCurrentPlayer("B");
+    game.setCellContent(1, 0);
+
+    controller.setCurrentPlayer("R");
+    game.setCellContent(1, 1);
+
+    controller.setCurrentPlayer("B");
+    game.setCellContent(0, 0);
+
+    // When the red player makes a valid move that results in the formation of an SOS sequence
+    // on the board
+    controller.setCurrentPlayer("R");
+    controller.setRedPlayerLetterSelection("S");
+    boolean result = game.setCellContent(1, 2);
+    assertTrue(result);
+
+    // Then the game continues
+    assertTrue(game.isGameInProgress());
+
+    // And the red player gets another turn
+    assertEquals("R", game.getCurrentPlayer());
+  }
+
+  @Test
+  public void testAC7_7_DrawGame() {
+    // Given an ongoing game where there is only one unoccupied cell left on the board
+    controller.setBoardSize(3);
+    controller.setGameMode("G");
+    controller.startOfANewGame();
+    controller.setBluePlayerLetterSelection("O");
+    controller.setRedPlayerLetterSelection("O");
+
+    SosGame game = controller.getGame();
+    GeneralGame generalGame = (GeneralGame) game;
+
+    game.setCurrentPlayer("B");
+    game.setCellContent(0, 0);
+
+    game.setCurrentPlayer("R");
+    game.setCellContent(0, 1);
+
+    game.setCurrentPlayer("B");
+    game.setCellContent(0, 2);
+
+    game.setCurrentPlayer("R");
+    game.setCellContent(1, 0);
+
+    game.setCurrentPlayer("B");
+    game.setCellContent(1, 1);
+
+    game.setCurrentPlayer("R");
+    game.setCellContent(1, 2);
+
+    game.setCurrentPlayer("B");
+    game.setCellContent(2, 0);
+
+    game.setCurrentPlayer("R");
+    game.setCellContent(2, 1);
+
+    // When either player makes a valid move
+    game.setCurrentPlayer("B");
+    controller.setBluePlayerLetterSelection("S");
+    game.setCellContent(2, 2);
+
+    // And the number of SOS's formed by the blue player after the final cell is filled is equal
+    // to the number of SOS's formed by the red player
+    assertEquals(generalGame.getBluePlayerScore(), generalGame.getRedPlayerScore());
+
+    // Then the game is over
+    assertFalse(game.isGameInProgress());
+
+    // And it is a draw
+    assertEquals("D", game.getGameResult());
+  }
 }
+

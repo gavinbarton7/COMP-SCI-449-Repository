@@ -4,12 +4,13 @@ public class GeneralGame extends SosGame {
   private int bluePlayerScore = 0;
   private int redPlayerScore = 0;
 
-  public int getRedPlayerScore() {
-    return redPlayerScore;
-  }
 
   public int getBluePlayerScore() {
     return bluePlayerScore;
+  }
+
+  public int getRedPlayerScore() {
+    return redPlayerScore;
   }
 
   @Override
