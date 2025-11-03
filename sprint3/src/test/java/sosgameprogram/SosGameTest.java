@@ -127,7 +127,7 @@ class SosGameTest {
     assertEquals("S", game.getCellContent(testRow, testCol));
 
     // And it becomes the red player's turn
-    assertEquals("R", game.getCurrentPlayer());
+    assertEquals("R", controller.getCurrentPlayer());
   }
 
   @Test
@@ -155,7 +155,7 @@ class SosGameTest {
     assertEquals("O", game.getCellContent(testRow, testCol));
 
     // And it becomes the red player's turn
-    assertEquals("R", game.getCurrentPlayer());
+    assertEquals("R", controller.getCurrentPlayer());
   }
 
   @Test
@@ -183,7 +183,7 @@ class SosGameTest {
     assertEquals("S", game.getCellContent(testRow, testCol));
 
     // And it becomes the blue player's turn
-    assertEquals("B", game.getCurrentPlayer());
+    assertEquals("B", controller.getCurrentPlayer());
   }
 
   @Test
@@ -210,7 +210,7 @@ class SosGameTest {
     assertEquals("O", game.getCellContent(testRow, testCol));
 
     // And it becomes the blue player's turn
-    assertEquals("B", game.getCurrentPlayer());
+    assertEquals("B", controller.getCurrentPlayer());
   }
 
 
@@ -229,8 +229,8 @@ class SosGameTest {
     game.setCellContent(testRow, testCol);
 
     // Given an ongoing game with the blue player's turn
-    game.setCurrentPlayer("B");
-    game.setBluePlayerLetterSelection("S");
+    controller.setCurrentPlayer("B");
+    controller.setBluePlayerLetterSelection("S");
 
     // When the blue player selects an occupied square
     assertEquals("O", game.getCellContent(testRow, testCol));
@@ -241,7 +241,7 @@ class SosGameTest {
     assertEquals("O", game.getCellContent(testRow, testCol));
 
     // And the turn is not changed
-    assertEquals("B", game.getCurrentPlayer());
+    assertEquals("B", controller.getCurrentPlayer());
   }
 
   @Test
@@ -260,8 +260,8 @@ class SosGameTest {
     game.setCellContent(testRow, testCol);
 
     // Given an ongoing game with the red player's turn
-    game.setCurrentPlayer("R");
-    game.setRedPlayerLetterSelection("O");
+    controller.setCurrentPlayer("R");
+    controller.setRedPlayerLetterSelection("O");
 
     // When the red player selects an occupied square
     assertEquals("S", game.getCellContent(testRow, testCol));
@@ -272,7 +272,7 @@ class SosGameTest {
     assertEquals("S", game.getCellContent(testRow, testCol));
 
     // And the turn is not changed
-    assertEquals("R", game.getCurrentPlayer());
+    assertEquals("R", controller.getCurrentPlayer());
   }
 
   @Test
@@ -299,7 +299,7 @@ class SosGameTest {
     assertEquals("S", game.getCellContent(testRow, testCol));
 
     // And it becomes the red player's turn
-    assertEquals("R", game.getCurrentPlayer());
+    assertEquals("R", controller.getCurrentPlayer());
   }
 
   @Test
@@ -327,7 +327,7 @@ class SosGameTest {
     assertEquals("O", game.getCellContent(testRow, testCol));
 
     // And it becomes the red player's turn
-    assertEquals("R", game.getCurrentPlayer());
+    assertEquals("R", controller.getCurrentPlayer());
   }
 
   @Test
@@ -355,7 +355,7 @@ class SosGameTest {
     assertEquals("S", game.getCellContent(testRow, testCol));
 
     // And it becomes the blue player's turn
-    assertEquals("B", game.getCurrentPlayer());
+    assertEquals("B", controller.getCurrentPlayer());
   }
 
   @Test
@@ -382,7 +382,7 @@ class SosGameTest {
     assertEquals("O", game.getCellContent(testRow, testCol));
 
     // And it becomes the blue player's turn
-    assertEquals("B", game.getCurrentPlayer());
+    assertEquals("B", controller.getCurrentPlayer());
   }
 
   @Test
@@ -412,7 +412,7 @@ class SosGameTest {
     assertEquals("O", game.getCellContent(testRow, testCol));
 
     // And the turn is not changed
-    assertEquals("B", game.getCurrentPlayer());
+    assertEquals("B", controller.getCurrentPlayer());
   }
 
   @Test
@@ -442,6 +442,6 @@ class SosGameTest {
     assertEquals("S", game.getCellContent(testRow, testCol));
 
     // And the turn is not changed
-    assertEquals("R", game.getCurrentPlayer());
+    assertEquals("R", controller.getCurrentPlayer());
   }
 }

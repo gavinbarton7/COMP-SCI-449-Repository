@@ -139,13 +139,14 @@ public abstract class SosGame {
     return gameResult;
   }
 
+  public boolean isGameInProgress() {
+    return gameInProgress;
+  }
+
   protected void setGameInProgress(boolean gameInProgress) {
     this.gameInProgress = gameInProgress;
   }
 
-  public boolean isGameInProgress() {
-    return gameInProgress;
-  }
 
   protected void makeMove(int row, int column, String playerLetterSelection) {
     gameBoard[row][column] = playerLetterSelection;
