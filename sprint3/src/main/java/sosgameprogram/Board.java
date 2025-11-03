@@ -25,6 +25,10 @@ public class Board extends JPanel {
     });
   }
 
+  public void newBoard() {
+    repaint();
+  }
+
   // Draws board
   protected void paintComponent(Graphics board) {
     super.paintComponent(board);
@@ -63,10 +67,6 @@ public class Board extends JPanel {
         listener.onGameEnded();
       }
     }
-  }
-
-  public void newBoard() {
-    repaint();
   }
 
   // This method draws the grid of the board of the users selected board size

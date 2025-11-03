@@ -30,6 +30,44 @@ public abstract class SosGame {
     this.sosLines = new ArrayList<>();
   }
 
+  public String getCellContent(int row, int column) {
+    if(row >= 0 && row < boardSize && column >= 0 && column < boardSize) {
+      return gameBoard[row][column];
+    } else {
+      return "Invalid cell reference";
+    }
+  }
+
+  // Updates the content of an unoccupied cell when either play makes on move on it, but returns
+  // false if the cell is occupied
+  public boolean setCellContent(int row, int column) {
+    if (gameBoard[row][column].equals("")) {
+      playerValidMove(row, column);
+      return true;
+    }
+    return false;
+  }
+
+  public List<SosLine> getSosLines() {
+    return sosLines;
+  }
+
+  public static class SosLine {
+    public int firstRow;
+    public int firstColumn;
+    public int lastRow;
+    public int lastColumn;
+    public String player;
+
+    public SosLine(int firstRow, int firstColumn, int lastRow, int lastColumn, String player) {
+      this.firstRow = firstRow;
+      this.firstColumn = firstColumn;
+      this.lastRow = lastRow;
+      this.lastColumn = lastColumn;
+      this.player = player;
+    }
+  }
+
   // Sets the size of the board if inputted size is between 3 and 10, but returns false if inputted
   // size is outside the range of 3-10
   protected boolean setBoardSize(int sizeInput) {
@@ -99,32 +137,6 @@ public abstract class SosGame {
 
   protected String getBluePlayerLetterSelection() {
     return bluePlayerLetterSelection;
-  }
-
-  // Updates the content of an unoccupied cell when either play makes on move on it, but returns
-  // false if the cell is occupied
-  public boolean setCellContent(int row, int column) {
-    if (gameBoard[row][column].equals("")) {
-      playerValidMove(row, column);
-      return true;
-    }
-    return false;
-  }
-
-  public String getCellContent(int row, int column) {
-    if(row >= 0 && row < boardSize && column >= 0 && column < boardSize) {
-      return gameBoard[row][column];
-    } else {
-      return "Invalid cell reference";
-    }
-  }
-
-  private void playerValidMove(int row, int column) {
-    if (currentPlayer.equals("B")) {
-      bluePlayerValidMove(row, column);
-    } else if (currentPlayer.equals("R")) {
-      redPlayerValidMove(row, column);
-    }
   }
 
   protected abstract void bluePlayerValidMove(int row, int column);
@@ -332,23 +344,11 @@ public abstract class SosGame {
     return true;
   }
 
-  public List<SosLine> getSosLines() {
-    return sosLines;
-  }
-
-  public static class SosLine {
-    public int firstRow;
-    public int firstColumn;
-    public int lastRow;
-    public int lastColumn;
-    public String player;
-
-    public SosLine(int firstRow, int firstColumn, int lastRow, int lastColumn, String player) {
-      this.firstRow = firstRow;
-      this.firstColumn = firstColumn;
-      this.lastRow = lastRow;
-      this.lastColumn = lastColumn;
-      this.player = player;
+  private void playerValidMove(int row, int column) {
+    if (currentPlayer.equals("B")) {
+      bluePlayerValidMove(row, column);
+    } else if (currentPlayer.equals("R")) {
+      redPlayerValidMove(row, column);
     }
   }
 }
