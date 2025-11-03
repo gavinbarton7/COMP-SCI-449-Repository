@@ -296,6 +296,7 @@ class SosGameTest {
     game.setCurrentPlayer("B");
     boolean result = game.setCellContent(0, 2);
     assertTrue(result);
+    assertEquals(1, game.checkForSosFormation(0,2));
 
     // Then the game is over
     assertFalse(game.isGameInProgress());
@@ -354,6 +355,7 @@ class SosGameTest {
     controller.setRedPlayerLetterSelection("S");
     boolean result = game.setCellContent(1, 2);
     assertTrue(result);
+    assertEquals(1, game.checkForSosFormation(1,2));
 
     // Then the game is over
     assertFalse(game.isGameInProgress());
@@ -655,13 +657,13 @@ class SosGameTest {
     controller.setBluePlayerLetterSelection("S");
     game.setCellContent(2, 1);
 
-    int blueScoreBeforeFinal = generalGame.getBluePlayerScore();
-    int redScoreBeforeFinal = generalGame.getRedPlayerScore();
-
     // When the player whose turn it is makes a valid move
     controller.setCurrentPlayer("R");
     controller.setRedPlayerLetterSelection("S");
     game.setCellContent(2, 2);
+
+    int blueScoreBeforeFinal = generalGame.getBluePlayerScore();
+    int redScoreBeforeFinal = generalGame.getRedPlayerScore();
 
     // And the blue player has formed more SOS's than the red player after the final cell is filled
     assertTrue(generalGame.getBluePlayerScore() > generalGame.getRedPlayerScore());
@@ -670,7 +672,7 @@ class SosGameTest {
     assertFalse(game.isGameInProgress());
 
     // And the blue player has won
-    assertEquals("BV", game.getGameResult());
+    assertEquals("BV", controller.getGameResult());
   }
 
   @Test
@@ -685,7 +687,7 @@ class SosGameTest {
 
     // When the blue player makes a valid move
     game.setCurrentPlayer("B");
-    boolean result = game.setCellContent(0, 0); // Blue places S
+    boolean result = game.setCellContent(0, 0);
     assertTrue(result);
 
     // And the move doesn't result in the formation of an SOS sequence on the board
@@ -695,13 +697,13 @@ class SosGameTest {
     assertTrue(game.isGameInProgress());
 
     // And it becomes the red player's turn
-    assertEquals("R", game.getCurrentPlayer());
+    assertEquals("R", controller.getCurrentPlayer());
   }
 
   @Test
   public void testAC7_3_ContinuingGameAfterBluePlayerMoveWithSOS() {
     // Given an ongoing game with more than one unoccupied space on the board
-    controller.setBoardSize(4);
+    controller.setBoardSize(5);
     controller.setGameMode("G");
     controller.startOfANewGame();
 
@@ -720,12 +722,13 @@ class SosGameTest {
     controller.setBluePlayerLetterSelection("S");
     boolean result = game.setCellContent(0, 2); // Blue places S to form SOS
     assertTrue(result);
+    assertEquals(1, game.checkForSosFormation(0,2));
 
     // Then the game continues
     assertTrue(game.isGameInProgress());
 
     // And the blue player gets another turn
-    assertEquals("B", game.getCurrentPlayer());
+    assertEquals("B", controller.getCurrentPlayer());
   }
 
   @Test
@@ -785,7 +788,7 @@ class SosGameTest {
   @Test
   public void testAC7_5_ContinuingGameAfterRedPlayerMoveNoSOS() {
     // Given an ongoing game with more than one unoccupied space on the board
-    controller.setBoardSize(4);
+    controller.setBoardSize(6);
     controller.setGameMode("G");
     controller.startOfANewGame();
     controller.setBluePlayerLetterSelection("S");
@@ -813,7 +816,7 @@ class SosGameTest {
   @Test
   public void testAC7_6_ContinuingGameAfterRedPlayerMoveWithSOS() {
     // Given an ongoing game with more than one unoccupied space on the board
-    controller.setBoardSize(4);
+    controller.setBoardSize(7);
     controller.setGameMode("G");
     controller.startOfANewGame();
     controller.setBluePlayerLetterSelection("S");
@@ -836,12 +839,13 @@ class SosGameTest {
     controller.setRedPlayerLetterSelection("S");
     boolean result = game.setCellContent(1, 2);
     assertTrue(result);
+    assertEquals(1, game.checkForSosFormation(1,2));
 
     // Then the game continues
     assertTrue(game.isGameInProgress());
 
     // And the red player gets another turn
-    assertEquals("R", game.getCurrentPlayer());
+    assertEquals("R", controller.getCurrentPlayer());
   }
 
   @Test
@@ -865,23 +869,23 @@ class SosGameTest {
     game.setCurrentPlayer("B");
     game.setCellContent(0, 2);
 
-    game.setCurrentPlayer("R");
+    game.setCurrentPlayer("B");
     game.setCellContent(1, 0);
 
-    game.setCurrentPlayer("B");
+    game.setCurrentPlayer("R");
     game.setCellContent(1, 1);
 
-    game.setCurrentPlayer("R");
+    game.setCurrentPlayer("B");
     game.setCellContent(1, 2);
 
-    game.setCurrentPlayer("B");
+    game.setCurrentPlayer("R");
     game.setCellContent(2, 0);
 
-    game.setCurrentPlayer("R");
+    game.setCurrentPlayer("B");
     game.setCellContent(2, 1);
 
     // When either player makes a valid move
-    game.setCurrentPlayer("B");
+    game.setCurrentPlayer("R");
     controller.setBluePlayerLetterSelection("S");
     game.setCellContent(2, 2);
 
@@ -893,7 +897,7 @@ class SosGameTest {
     assertFalse(game.isGameInProgress());
 
     // And it is a draw
-    assertEquals("D", game.getGameResult());
+    assertEquals("D", controller.getGameResult());
   }
 }
 

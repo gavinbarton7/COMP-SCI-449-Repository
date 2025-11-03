@@ -4,7 +4,8 @@ public class GeneralGame extends SosGame {
   private int bluePlayerScore = 0;
   private int redPlayerScore = 0;
 
-
+  // These two getter methods are for the purpose of comparing the scores in automated unit testing
+  // only, they are not used anywhere else in the program
   public int getBluePlayerScore() {
     return bluePlayerScore;
   }
