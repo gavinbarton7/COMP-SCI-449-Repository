@@ -156,6 +156,16 @@ public class SosGuiFrame extends JFrame implements GameStateListener {
         controller.setRedPlayerLetterSelection("O")
     );
 
+    // Adds action listeners that set the player type for the red player based on which player
+    // type radio button they have selected
+    redPlayerHumanButton.addActionListener( e ->
+        controller.setRedPlayerType("H")
+    );
+
+    redPlayerComputerButton.addActionListener( e ->
+        controller.setRedPlayerType("C")
+    );
+
     // Creates a group for the player buttons and adds the buttons for the red player
     redPlayerSOGroup = new ButtonGroup();
     redPlayerSOGroup.add(redPlayerSButton);
@@ -209,6 +219,17 @@ public class SosGuiFrame extends JFrame implements GameStateListener {
     );
     bluePlayerOButton.addActionListener(e ->
         controller.setBluePlayerLetterSelection("O")
+    );
+
+
+    // Adds action listeners that set the player type for the blue player based on which player
+    // type radio button they have selected
+    bluePlayerHumanButton.addActionListener( e ->
+        controller.setBluePlayerType("H")
+    );
+
+    bluePlayerComputerButton.addActionListener( e ->
+        controller.setBluePlayerType("C")
     );
 
     // Creates a panel that holds the SO buttons for the blue player
