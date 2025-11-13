@@ -9,6 +9,8 @@ public class SosGameController {
   private SosGame game;
   private int boardSize;
   private String gameMode;
+  private String bluePlayerType;
+  private String redPlayerType;
 
   public SosGameController() {
     this.game = null;
@@ -86,5 +88,21 @@ public class SosGameController {
 
   public String getGameResult() {
     return game.getGameResult();
+  }
+
+  public void setBluePlayerType(String playerTypeSelection) {
+    this.bluePlayerType = playerTypeSelection;
+  }
+
+  public void setRedPlayerType(String playerTypeSelection) {
+    this.redPlayerType = playerTypeSelection;
+  }
+
+  public String getbluePlayerType() {
+    return bluePlayerType;
+  }
+
+  public String getRedPlayerType() {
+    return redPlayerType;
   }
 }

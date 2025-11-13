@@ -16,6 +16,8 @@ public class SosGuiFrame extends JFrame implements GameStateListener {
   private JButton newGameButton;
   ButtonGroup bluePlayerSOGroup;
   ButtonGroup redPlayerSOGroup;
+  ButtonGroup bluePlayerHumanComputerGroup;
+  ButtonGroup redPlayerHumanComputerGroup;
 
   @Override
   public void onGameStateChanged() {
@@ -140,6 +142,11 @@ public class SosGuiFrame extends JFrame implements GameStateListener {
     JRadioButton redPlayerOButton = new JRadioButton();
     redPlayerOButton.setText("O");
 
+    JRadioButton redPlayerHumanButton = new JRadioButton();
+    redPlayerHumanButton.setText("Human");
+    JRadioButton redPlayerComputerButton = new JRadioButton();
+    redPlayerComputerButton.setText("Computer");
+
     // Adds action listener that set the letter selection for the red player based on which
     // letter radio button they have selected
     redPlayerSButton.addActionListener(e ->
@@ -154,12 +161,18 @@ public class SosGuiFrame extends JFrame implements GameStateListener {
     redPlayerSOGroup.add(redPlayerSButton);
     redPlayerSOGroup.add(redPlayerOButton);
 
+    redPlayerHumanComputerGroup = new ButtonGroup();
+    redPlayerHumanComputerGroup.add(redPlayerHumanButton);
+    redPlayerHumanComputerGroup.add(redPlayerComputerButton);
+
     // Creates a panel that holds the SO buttons for the red player
     JPanel redPlayerPanel = new JPanel();
     redPlayerPanel.setLayout(new BoxLayout(redPlayerPanel, BoxLayout.Y_AXIS));
     redPlayerPanel.add(redPlayerLabel);
+    redPlayerPanel.add(redPlayerHumanButton);
     redPlayerPanel.add(redPlayerSButton);
     redPlayerPanel.add(redPlayerOButton);
+    redPlayerPanel.add(redPlayerComputerButton);
 
     this.add(redPlayerPanel, BorderLayout.EAST);
   }
@@ -171,6 +184,11 @@ public class SosGuiFrame extends JFrame implements GameStateListener {
     JRadioButton bluePlayerOButton = new JRadioButton();
     bluePlayerOButton.setText("O");
 
+    JRadioButton bluePlayerHumanButton = new JRadioButton();
+    bluePlayerHumanButton.setText("Human");
+    JRadioButton bluePlayerComputerButton = new JRadioButton();
+    bluePlayerComputerButton.setText("Computer");
+
     // Creates label for the Blue player
     JLabel bluePlayerLabel = new JLabel();
     bluePlayerLabel.setText(" Blue Player ");
@@ -179,6 +197,10 @@ public class SosGuiFrame extends JFrame implements GameStateListener {
     bluePlayerSOGroup = new ButtonGroup();
     bluePlayerSOGroup.add(bluePlayerSButton);
     bluePlayerSOGroup.add(bluePlayerOButton);
+
+    bluePlayerHumanComputerGroup = new ButtonGroup();
+    bluePlayerHumanComputerGroup.add(bluePlayerHumanButton);
+    bluePlayerHumanComputerGroup.add(bluePlayerComputerButton);
 
     // Adds action listeners that set the letter selection for the blue player based on which
     // letter radio button they have selected
@@ -193,8 +215,10 @@ public class SosGuiFrame extends JFrame implements GameStateListener {
     JPanel bluePlayerPanel = new JPanel();
     bluePlayerPanel.setLayout(new BoxLayout(bluePlayerPanel, BoxLayout.Y_AXIS));
     bluePlayerPanel.add(bluePlayerLabel);
+    bluePlayerPanel.add(bluePlayerHumanButton);
     bluePlayerPanel.add(bluePlayerSButton);
     bluePlayerPanel.add(bluePlayerOButton);
+    bluePlayerPanel.add(bluePlayerComputerButton);
 
     this.add(bluePlayerPanel, BorderLayout.WEST);
   }
