@@ -12,12 +12,12 @@ public abstract class Player {
     return controller.getGame();
   }
 
-  public static class playerMove {
+  public static class PlayerMove {
     public int row;
     public int column;
     public String letter;
 
-    public playerMove(int row, int column, String letter) {
+    public PlayerMove(int row, int column, String letter) {
       this.row = row;
       this.column = column;
       this.letter = letter;

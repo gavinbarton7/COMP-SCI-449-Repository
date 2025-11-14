@@ -18,20 +18,20 @@ public class ComputerPlayer extends Player {
   // SOS sequence on their next move. If the only valid moves left are ones that can't form an SOS
   // sequence nor prevent the other player from forming and SOS sequence on their next turn, then
   // the computer selects a random move of the moves that are left.
-  private playerMove moveSelection(SosGame game) {
+  private PlayerMove moveSelection(SosGame game) {
     int boardSize = game.getBoardSize();
 
-    playerMove formingSOSSequenceMove = findMoveThatFormsSOSSequence(game, boardSize);
+    PlayerMove formingSOSSequenceMove = findMoveThatFormsSOSSequence(game, boardSize);
     if (formingSOSSequenceMove != null) {
       return formingSOSSequenceMove;
     }
 
-    playerMove preventingOpponentSOSSequenceMove = findMoveToAvoidSOSSequenceByOtherPlayer(game, boardSize);
+    PlayerMove preventingOpponentSOSSequenceMove = findMoveToAvoidSOSSequenceByOtherPlayer(game, boardSize);
     if (preventingOpponentSOSSequenceMove != null) {
       return preventingOpponentSOSSequenceMove;
     }
 
-    playerMove randomMove = completelyRandomMove(game, boardSize);
+    PlayerMove randomMove = completelyRandomMove(game, boardSize);
     if (randomMove != null) {
       return randomMove;
     }
@@ -39,14 +39,14 @@ public class ComputerPlayer extends Player {
     return null;
   }
 
-  private playerMove findMoveThatFormsSOSSequence(SosGame game, int boardSize) {
+  private PlayerMove findMoveThatFormsSOSSequence(SosGame game, int boardSize) {
     for (int row = 0; row < boardSize; row++) {
       for (int column = 0; column < boardSize; column++) {
         if (game.getCellContent(row, column).equals("")) {
           if (moveWouldFormSOSSequence(game, row, column, "S")) {
-            return new playerMove(row, column, "S");
+            return new PlayerMove(row, column, "S");
           } else if (moveWouldFormSOSSequence(game, row, column, "O")) {
-            return new playerMove(row, column, "O");
+            return new PlayerMove(row, column, "O");
           }
         }
       }
@@ -55,22 +55,28 @@ public class ComputerPlayer extends Player {
     return null;
   }
 
-  private playerMove findMoveToAvoidSOSSequenceByOtherPlayer(SosGame game, int boardSize){
+  private PlayerMove findMoveToAvoidSOSSequenceByOtherPlayer(SosGame game, int boardSize){
+    List<PlayerMove> noOpponentSOSMoves = new ArrayList<>();
+
     for (int row = 0; row < boardSize; row++) {
       for (int column = 0; column < boardSize; column++) {
         if (game.getCellContent(row, column).equals("")) {
           // Tries placing 'S' on a particular space to see if it would allow other player to form
           // SOS on the next move
           if (moveThatWillAllowOtherPlayerSOS(game, row, column, "S") == false) {
-            return new playerMove(row, column, "S");
+            noOpponentSOSMoves.add(new PlayerMove(row, column, "S"));
           }
           // Tries placing 'O' on a particular space to see if it would allow other player to form
           // SOS on the next move
           if (moveThatWillAllowOtherPlayerSOS(game, row, column, "O") == false) {
-            return new playerMove(row, column, "O");
+            noOpponentSOSMoves.add(new PlayerMove(row, column, "O"));
           }
         }
       }
+    }
+
+    if (noOpponentSOSMoves.isEmpty() == false) {
+      return noOpponentSOSMoves.get(random.nextInt(noOpponentSOSMoves.size()));
     }
 
     return null;
@@ -79,14 +85,14 @@ public class ComputerPlayer extends Player {
   // This method implements functionality for selecting a completely random move in a scenario
   // where no move can be made to form an SOS, and any move made on the board will give the other
   // player an opportunity to form an SOS on the next turn
-  private playerMove completelyRandomMove(SosGame game, int boardSize) {
-    List<playerMove> validBoardMoves = new ArrayList<>();
+  private PlayerMove completelyRandomMove(SosGame game, int boardSize) {
+    List<PlayerMove> validBoardMoves = new ArrayList<>();
 
     for (int row = 0; row < boardSize; row++) {
       for (int col = 0; col < boardSize; col++) {
         if (game.getCellContent(row, col).equals("")) {
-          validBoardMoves.add(new playerMove(row, col, "S"));
-          validBoardMoves.add(new playerMove(row, col, "O"));
+          validBoardMoves.add(new PlayerMove(row, col, "S"));
+          validBoardMoves.add(new PlayerMove(row, col, "O"));
         }
       }
     }
