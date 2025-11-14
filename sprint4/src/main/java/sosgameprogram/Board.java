@@ -55,17 +55,41 @@ public class Board extends JPanel {
     int row = (y - boardOffset) / cellSize;
 
     if (game.isGameInProgress() == true) {
-      // Checks to see if the click is within the game board and paints S or O if the cell is
-      // unoccupied
-      if (row >= 0 && row < boardSize && col >= 0 && col < boardSize) {
-        if (game.setCellContent(row, col)) {
-          repaint();
+      if (controller.getCurrentPlayerType() == "H") {
+        // Checks to see if the click is within the game board and paints S or O if the cell is
+        // unoccupied
+        if (row >= 0 && row < boardSize && col >= 0 && col < boardSize) {
+          if (game.setCellContent(row, col)) {
+            repaint();
+          }
+        }
+
+        if (game.isGameInProgress() == false) {
+          listener.onGameEnded();
         }
       }
+    }
+  }
 
-      if (game.isGameInProgress() == false) {
-        listener.onGameEnded();
-      }
+  public void computerPlayerMoveExecution(int row, int column, String selectedletter) {
+    SosGame game = controller.getGame();
+
+    if (game == null || game.isGameInProgress() == false) {
+      return;
+    }
+
+    if (controller.getCurrentPlayer().equals("B")) {
+      controller.setBluePlayerLetterSelection(selectedletter);
+    } else {
+      controller.setRedPlayerLetterSelection(selectedletter);
+    }
+
+    if (game.setCellContent(row, column)) {
+      repaint();
+    }
+
+    if (game.isGameInProgress() == false) {
+      listener.onGameEnded();
     }
   }
 

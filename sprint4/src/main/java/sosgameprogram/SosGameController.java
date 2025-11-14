@@ -112,6 +112,24 @@ public class SosGameController {
     return redPlayerType;
   }
 
+  public String getCurrentPlayerType() {
+    if (getCurrentPlayer() == "B") {
+      if (bluePlayerType == "H") {
+        return "H";
+      } else if (bluePlayerType == "C") {
+        return "C";
+      }
+    } else if (getCurrentPlayer() == "R") {
+      if (redPlayerType == "H") {
+        return "H";
+      } else if (redPlayerType == "C") {
+        return "C";
+      }
+    }
+
+    return null;
+  }
+
   private void setUpPlayers() {
     if (bluePlayerType.equals("H")) {
       bluePlayer = new HumanPlayer();
