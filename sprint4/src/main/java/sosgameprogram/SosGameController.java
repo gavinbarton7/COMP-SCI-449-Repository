@@ -130,6 +130,16 @@ public class SosGameController {
     return null;
   }
 
+  public Player getObjectOfCurrentPlayer() {
+    if (getCurrentPlayer().equals("B")) {
+      return bluePlayer;
+    } else if (getCurrentPlayer().equals("R")) {
+      return redPlayer;
+    }
+
+    return null;
+  }
+
   private void setUpPlayers() {
     if (bluePlayerType.equals("H")) {
       bluePlayer = new HumanPlayer();
@@ -142,6 +152,13 @@ public class SosGameController {
     } else if (redPlayerType.equals("C")) {
       redPlayer = new ComputerPlayer();
     }
+  }
 
+  public Player.PlayerMove moveByComputerPlayer() {
+    if (getCurrentPlayerType().equals("C")) {
+      Player currentPlayer = getObjectOfCurrentPlayer();
+      return currentPlayer.moveSelection(game);
+    }
+    return null;
   }
 }

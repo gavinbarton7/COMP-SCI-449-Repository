@@ -18,7 +18,7 @@ public class ComputerPlayer extends Player {
   // SOS sequence on their next move. If the only valid moves left are ones that can't form an SOS
   // sequence nor prevent the other player from forming and SOS sequence on their next turn, then
   // the computer selects a random move of the moves that are left.
-  private PlayerMove moveSelection(SosGame game) {
+  protected PlayerMove moveSelection(SosGame game) {
     int boardSize = game.getBoardSize();
 
     PlayerMove formingSOSSequenceMove = findMoveThatFormsSOSSequence(game, boardSize);

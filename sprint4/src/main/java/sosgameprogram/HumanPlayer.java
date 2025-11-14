@@ -6,4 +6,8 @@ public class HumanPlayer extends Player {
   private void setLetterSelection() {
     playerLetterSelection = gui.selectLetter();
   }
+
+  protected PlayerMove moveSelection(SosGame game) {
+    return null;
+  }
 }

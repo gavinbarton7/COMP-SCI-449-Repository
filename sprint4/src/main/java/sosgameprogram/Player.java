@@ -12,6 +12,8 @@ public abstract class Player {
     return controller.getGame();
   }
 
+  protected abstract PlayerMove moveSelection(SosGame game);
+
   public static class PlayerMove {
     public int row;
     public int column;
