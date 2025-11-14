@@ -68,6 +68,74 @@ public class ComputerPlayer extends Player {
       }
     }
 
+    // Checks for potential SOS formation by placing an S to the top left of an "OS" to form a
+    // diagonal sequence in the form of
+    // S
+    //   O
+    //     S
+    if (row + 2 < boardSize && column + 2 < boardSize && letter.equals("S")) {
+      if (board[row + 1][column + 1].equals("O") && board[row + 2][column + 2].equals("S")) {
+        formsSosSequence = true;
+      }
+    }
+
+    // Checks for potential SOS formation by placing an O between two Ss to form a
+    // diagonal sequence in the form of
+    // S
+    //   O
+    //     S
+    if (row >= 1 && row + 1 < boardSize && column >= 1 && column + 1 < boardSize &&
+        letter.equals("O")) {
+      if (board[row - 1][column - 1].equals("S") && board[row + 1][column + 1].equals("S")) {
+        formsSosSequence = true;
+      }
+    }
+
+    // Checks for potential SOS formation by placing an S to the bottom of an "SO" to form a
+    // diagonal sequence in the form of
+    // S
+    //   O
+    //     S
+    if (row >= 2 && column >= 2 && letter.equals("S")) {
+      if (board[row - 2][column - 2].equals("S") && board[row - 1][column - 1].equals("O")) {
+        formsSosSequence = true;
+      }
+    }
+
+    // Checks for potential SOS formation by placing an S to the top right of an "OS" to form a
+    // diagonal sequence in the form of
+    //     S
+    //   O
+    // S
+    if (row + 2 < boardSize && column >= 2 && letter.equals("S")) {
+      if (board[row + 1][column - 1].equals("O") && board[row + 2][column - 2].equals("S")) {
+        formsSosSequence = true;
+      }
+    }
+
+    // Checks for potential SOS formation by placing an O between two Ss to form a
+    // diagonal sequence in the form of
+    //     S
+    //   O
+    // S
+    if (row >= 1 && row + 1 < boardSize && column >= 1 && column + 1 < boardSize &&
+        letter.equals("O")) {
+      if (board[row - 1][column + 1].equals("S") && board[row + 1][column - 1].equals("S")) {
+        formsSosSequence = true;
+      }
+    }
+
+    // Checks for potential SOS formation by placing an S to the  bottom left of an "SO" to form a
+    // diagonal sequence in the form of
+    //     S
+    //   O
+    // S
+    if (row >= 2 && column + 2 < boardSize && letter.equals("S")) {
+      if (board[row - 2][column + 2].equals("S") && board[row - 1][column + 1].equals("O")) {
+        formsSosSequence = true;
+      }
+    }
+
     return formsSosSequence;
   }
 }
