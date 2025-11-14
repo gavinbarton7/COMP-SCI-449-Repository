@@ -159,7 +159,6 @@ public abstract class SosGame {
     this.gameInProgress = gameInProgress;
   }
 
-
   protected void makeMove(int row, int column, String playerLetterSelection) {
     gameBoard[row][column] = playerLetterSelection;
   }

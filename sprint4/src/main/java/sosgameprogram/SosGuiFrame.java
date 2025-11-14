@@ -265,6 +265,11 @@ public class SosGuiFrame extends JFrame implements GameStateListener {
           "You must choose a game mode to play a game",
           "No Game Mode",
           JOptionPane.WARNING_MESSAGE);
+    } else if (controller.getbluePlayerType() == null || controller.getRedPlayerType() == null) {
+      JOptionPane.showMessageDialog(this,
+          "Please select player type for both players",
+          "Player Type Not Selected",
+          JOptionPane.WARNING_MESSAGE);
     } else {
       bluePlayerSOGroup.clearSelection();
       redPlayerSOGroup.clearSelection();

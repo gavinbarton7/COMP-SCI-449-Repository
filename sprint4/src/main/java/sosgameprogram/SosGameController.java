@@ -16,6 +16,8 @@ public class SosGameController {
     this.game = null;
     this.boardSize = -1;
     this.gameMode = null;
+    this.bluePlayerType = null;
+    this.redPlayerType = null;
   }
 
   // Sets the size of the board if inputted size is between 3 and 10, but returns false if inputted
