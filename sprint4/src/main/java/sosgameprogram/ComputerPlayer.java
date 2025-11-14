@@ -1,7 +1,22 @@
 package sosgameprogram;
 
 public class ComputerPlayer extends Player {
-  private SosGameController controller;
+
+  private playerMove findMoveThatFormsSosSequence(SosGame game, int boardSize) {
+    for (int row = 0; row < boardSize; row++) {
+      for (int column = 0; column < boardSize; column++) {
+        if (game.getCellContent(row, column).equals("")) {
+          if (moveWouldFormSOSSequence(game, row, column, "S")) {
+            return new playerMove(row, column, "S");
+          } else if (moveWouldFormSOSSequence(game, row, column, "O")) {
+            return new playerMove(row, column, "O");
+          }
+        }
+      }
+    }
+
+    return null;
+  }
 
   private boolean moveWouldFormSOSSequence(SosGame game, int row, int column, String letter) {
     int boardSize = game.getBoardSize();
