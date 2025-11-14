@@ -11,6 +11,8 @@ public class SosGameController {
   private String gameMode;
   private String bluePlayerType;
   private String redPlayerType;
+  private Player bluePlayer;
+  private Player redPlayer;
 
   public SosGameController() {
     this.game = null;
@@ -84,6 +86,8 @@ public class SosGameController {
       game = new GeneralGame();
     }
 
+    setUpPlayers();
+
     game.setBoardSize(boardSize);
     game.setUpForNewGame();
   }
@@ -106,5 +110,20 @@ public class SosGameController {
 
   public String getRedPlayerType() {
     return redPlayerType;
+  }
+
+  private void setUpPlayers() {
+    if (bluePlayerType.equals("H")) {
+      bluePlayer = new HumanPlayer();
+    } else if (bluePlayerType.equals("C")) {
+      bluePlayer = new ComputerPlayer();
+    }
+
+    if (redPlayerType.equals("H")) {
+      redPlayer = new HumanPlayer();
+    } else if (redPlayerType.equals("C")) {
+      redPlayer = new ComputerPlayer();
+    }
+
   }
 }
