@@ -1,11 +1,11 @@
 package sosgameprogram;
 
 public abstract class Player {
-  protected String playerLetterSelction;
+  protected String playerLetterSelection;
   protected SosGameController controller;
 
-  protected void setPlayerLetterSelction(String selectedLetter) {
-    playerLetterSelction = selectedLetter;
+  public String getPlayerLetterSelection() {
+    return playerLetterSelection;
   }
 
   protected SosGame getCurrentGame() {

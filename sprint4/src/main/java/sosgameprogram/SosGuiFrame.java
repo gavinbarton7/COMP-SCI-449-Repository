@@ -15,10 +15,14 @@ public class SosGuiFrame extends JFrame implements GameStateListener {
   private ButtonGroup simpleGeneralGroup;
   private JTextField boardSizeInput;
   private JButton newGameButton;
-  ButtonGroup bluePlayerSOGroup;
-  ButtonGroup redPlayerSOGroup;
-  ButtonGroup bluePlayerHumanComputerGroup;
-  ButtonGroup redPlayerHumanComputerGroup;
+  private ButtonGroup bluePlayerSOGroup;
+  private ButtonGroup redPlayerSOGroup;
+  private ButtonGroup bluePlayerHumanComputerGroup;
+  private ButtonGroup redPlayerHumanComputerGroup;
+  private JRadioButton bluePlayerSButton;
+  private JRadioButton bluePlayerOButton;
+  private JRadioButton redPlayerSButton;
+  private JRadioButton redPlayerOButton;
 
   @Override
   public void onGameStateChanged() {
@@ -138,10 +142,10 @@ public class SosGuiFrame extends JFrame implements GameStateListener {
     redPlayerLabel.setText(" Red Player ");
 
     // Creates radio S and O buttons for red player
-    JRadioButton redPlayerSButton = new JRadioButton();
+    redPlayerSButton = new JRadioButton();
     redPlayerSButton.setText("S");
     redPlayerSButton.setBorder(new EmptyBorder(10, 20, 5, 0));
-    JRadioButton redPlayerOButton = new JRadioButton();
+    redPlayerOButton = new JRadioButton();
     redPlayerOButton.setText("O");
     redPlayerOButton.setBorder(new EmptyBorder(5, 20, 10, 0));
 
@@ -196,10 +200,10 @@ public class SosGuiFrame extends JFrame implements GameStateListener {
 
   public void createBluePlayerPanel () {
     // Creates radio S and O buttons for the blue player
-    JRadioButton bluePlayerSButton = new JRadioButton();
+    bluePlayerSButton = new JRadioButton();
     bluePlayerSButton.setText("S");
     bluePlayerSButton.setBorder(new EmptyBorder(10, 20, 5, 0));
-    JRadioButton bluePlayerOButton = new JRadioButton();
+    bluePlayerOButton = new JRadioButton();
     bluePlayerOButton.setBorder(new EmptyBorder(5, 20, 10, 0));
     bluePlayerOButton.setText("O");
 
@@ -354,5 +358,32 @@ public class SosGuiFrame extends JFrame implements GameStateListener {
 
     JOptionPane.showMessageDialog(this, message, "Game Over",
         JOptionPane.INFORMATION_MESSAGE);
+  }
+
+  public String selectLetter() {
+    if (controller.getCurrentPlayer().equals("B")) {
+      return bluePlayerSOSelctionReturner();
+    } else if (controller.getCurrentPlayer().equals("R")) {
+      return redPlayerSOSelctionReturner();
+    }
+    return null;
+  }
+
+  private String bluePlayerSOSelctionReturner() {
+    if (bluePlayerSButton.isSelected()) {
+      return "S";
+    } else if (bluePlayerOButton.isSelected()) {
+      return "O";
+    }
+    return null;
+  }
+
+  private String redPlayerSOSelctionReturner() {
+    if (redPlayerSButton.isSelected()) {
+      return "S";
+    } else if (redPlayerOButton.isSelected()) {
+      return "O";
+    }
+    return null;
   }
 }
