@@ -18,12 +18,30 @@ public class ComputerPlayer extends Player {
     return null;
   }
 
+  private playerMove findMoveToAvoidSOSSequenceByOtherPlayer(SosGame game, int boardSize){
+    for (int row = 0; row < boardSize; row++) {
+      for (int column = 0; column < boardSize; column++) {
+        if (game.getCellContent(row, column).equals("")) {
+          // Try placing 'S'
+          if (moveThatWillAllowOtherPlayerSOS(game, row, column, "S") == false) {
+            return new playerMove(row, column, "S");
+          }
+          // Try placing 'O'
+          if (moveThatWillAllowOtherPlayerSOS(game, row, column, "O") == false) {
+            return new playerMove(row, column, "O");
+          }
+        }
+      }
+    }
+    return null;
+  }
+
   // If there is no way the computer player can form an SOS on the move, this
   // method implements the functionality for avoiding moves that would give the other player an
   // opportunity to form and SOS sequence on the next move (avoid "SO" and "OS" with an empty space
   // the other player could place an S in to form an SOS sequence, and avoid having to Ss with an
   // empty space between where the other player could place an O to form an SOS sequence)
-  private boolean moveThatWontAllowOtherPlayerSOS(SosGame game, int row, int column,
+  private boolean moveThatWillAllowOtherPlayerSOS(SosGame game, int row, int column,
                                                      String letterSelected) {
     int boardSize = game.getBoardSize();
     String[][] board = game.getGameBoard();
