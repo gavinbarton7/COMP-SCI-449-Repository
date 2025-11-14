@@ -1,6 +1,43 @@
 package sosgameprogram;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 public class ComputerPlayer extends Player {
+  private Random random;
+
+  public ComputerPlayer() {
+    this.random = new Random();
+  }
+
+  // This method implements the computer players strategy for determining it's next move.
+  // It first prioritizes forming an SOS on the move so it can win a simple game or get a point
+  // and another turn in a general game. If forming an SOS isn't possible, it attempts to avoid
+  // any moves that would give its opponenet, the other player, an opportunity to form an
+  // SOS sequence on their next move. If the only valid moves left are ones that can't form an SOS
+  // sequence nor prevent the other player from forming and SOS sequence on their next turn, then
+  // the computer selects a random move of the moves that are left.
+  private playerMove moveSelection(SosGame game) {
+    int boardSize = game.getBoardSize();
+
+    playerMove formingSOSSequenceMove = findMoveThatFormsSOSSequence(game, boardSize);
+    if (formingSOSSequenceMove != null) {
+      return formingSOSSequenceMove;
+    }
+
+    playerMove preventingOpponentSOSSequenceMove = findMoveToAvoidSOSSequenceByOtherPlayer(game, boardSize);
+    if (preventingOpponentSOSSequenceMove != null) {
+      return preventingOpponentSOSSequenceMove;
+    }
+
+    playerMove randomMove = completelyRandomMove(game, boardSize);
+    if (randomMove != null) {
+      return randomMove;
+    }
+
+    return null;
+  }
 
   private playerMove findMoveThatFormsSOSSequence(SosGame game, int boardSize) {
     for (int row = 0; row < boardSize; row++) {
@@ -22,17 +59,42 @@ public class ComputerPlayer extends Player {
     for (int row = 0; row < boardSize; row++) {
       for (int column = 0; column < boardSize; column++) {
         if (game.getCellContent(row, column).equals("")) {
-          // Try placing 'S'
+          // Tries placing 'S' on a particular space to see if it would allow other player to form
+          // SOS on the next move
           if (moveThatWillAllowOtherPlayerSOS(game, row, column, "S") == false) {
             return new playerMove(row, column, "S");
           }
-          // Try placing 'O'
+          // Tries placing 'O' on a particular space to see if it would allow other player to form
+          // SOS on the next move
           if (moveThatWillAllowOtherPlayerSOS(game, row, column, "O") == false) {
             return new playerMove(row, column, "O");
           }
         }
       }
     }
+
+    return null;
+  }
+
+  // This method implements functionality for selecting a completely random move in a scenario
+  // where no move can be made to form an SOS, and any move made on the board will give the other
+  // player an opportunity to form an SOS on the next turn
+  private playerMove completelyRandomMove(SosGame game, int boardSize) {
+    List<playerMove> validBoardMoves = new ArrayList<>();
+
+    for (int row = 0; row < boardSize; row++) {
+      for (int col = 0; col < boardSize; col++) {
+        if (game.getCellContent(row, col).equals("")) {
+          validBoardMoves.add(new playerMove(row, col, "S"));
+          validBoardMoves.add(new playerMove(row, col, "O"));
+        }
+      }
+    }
+
+    if (validBoardMoves.isEmpty() == false) {
+      return validBoardMoves.get(random.nextInt(validBoardMoves.size()));
+    }
+
     return null;
   }
 
