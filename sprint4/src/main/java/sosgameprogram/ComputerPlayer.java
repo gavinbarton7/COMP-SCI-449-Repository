@@ -35,6 +35,39 @@ public class ComputerPlayer extends Player {
       }
     }
 
+    // Checks for potential SOS formation by placing an S above an "OS" to form a
+    // vertical sequence in the form of
+    // S
+    // O
+    // S
+    if (row + 2 < boardSize && letter.equals("S")) {
+      if (board[row + 1][column].equals("O") && board[row + 2][column].equals("S")) {
+        formsSosSequence = true;
+      }
+    }
+
+    // Checks for potential SOS formation by placing an O between two Ss to form a
+    // vertical sequence in the form of
+    // S
+    // O
+    // S
+    if (row >= 1 && row + 1 < boardSize && letter.equals("O")) {
+      if (board[row - 1][column].equals("S") && board[row + 1][column].equals("S")) {
+        formsSosSequence = true;
+      }
+    }
+
+    // Checks for potential SOS formation by placing an S below an "OS" to form a
+    // vertical sequence in the form of
+    // S
+    // O
+    // S
+    if (row >= 2 && letter.equals("S")) {
+      if (board[row - 2][column].equals("S") && board[row - 1][column].equals("O")) {
+        formsSosSequence = true;
+      }
+    }
+
     return formsSosSequence;
   }
 }
