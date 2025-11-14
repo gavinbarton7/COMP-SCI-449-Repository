@@ -2,7 +2,7 @@ package sosgameprogram;
 
 public class ComputerPlayer extends Player {
 
-  private playerMove findMoveThatFormsSosSequence(SosGame game, int boardSize) {
+  private playerMove findMoveThatFormsSOSSequence(SosGame game, int boardSize) {
     for (int row = 0; row < boardSize; row++) {
       for (int column = 0; column < boardSize; column++) {
         if (game.getCellContent(row, column).equals("")) {
@@ -16,6 +16,44 @@ public class ComputerPlayer extends Player {
     }
 
     return null;
+  }
+
+  // If there is no way the computer player can form an SOS on the move, this
+  // method implements the functionality for avoiding moves that would give the other player an
+  // opportunity to form and SOS sequence on the next move (avoid "SO" and "OS" with an empty space
+  // the other player could place an S in to form an SOS sequence, and avoid having to Ss with an
+  // empty space between where the other player could place an O to form an SOS sequence)
+  private boolean moveThatWontAllowOtherPlayerSOS(SosGame game, int row, int column,
+                                                     String letterSelected) {
+    int boardSize = game.getBoardSize();
+    String[][] board = game.getGameBoard();
+
+    // Temporarily places a letter in the board space for the purpose of testing potential
+    // next moves by the other player after the given move by the computer player
+    board[row][column] = letterSelected;
+
+    boolean otherPlayerPotentialSOS = false;
+
+    // Checks all the empty cells on the board to see if the other player could form an SOS
+    // sequence after the potential move by the computer player.
+    for (int r = 0; r < boardSize && otherPlayerPotentialSOS == false; r++) {
+      for (int c = 0; c < boardSize && otherPlayerPotentialSOS == false; c++) {
+        if (board[r][c].equals("")) {
+          if (moveWouldFormSOSSequence(game, r, c, "S")) {
+            otherPlayerPotentialSOS = true;
+          }
+          if (moveWouldFormSOSSequence(game, r, c, "O")) {
+            otherPlayerPotentialSOS = true;
+          }
+        }
+      }
+    }
+
+    // Removes the temporary letter placement from the board after checking for potential next
+    // moves by the other player is over
+    board[row][column] = "";
+
+    return otherPlayerPotentialSOS;
   }
 
   private boolean moveWouldFormSOSSequence(SosGame game, int row, int column, String letter) {
