@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.border.EmptyBorder;
 
 public class SosGuiFrame extends JFrame implements GameStateListener {
   private SosGameController controller;
@@ -134,13 +135,16 @@ public class SosGuiFrame extends JFrame implements GameStateListener {
   public void createRedPlayerPanel() {
     // Creates label for the Red player
     JLabel redPlayerLabel = new JLabel();
-    redPlayerLabel.setText(" Red Player");
+    redPlayerLabel.setText(" Red Player ");
 
     // Creates radio S and O buttons for red player
     JRadioButton redPlayerSButton = new JRadioButton();
     redPlayerSButton.setText("S");
+    redPlayerSButton.setBorder(new EmptyBorder(10, 20, 5, 0));
     JRadioButton redPlayerOButton = new JRadioButton();
     redPlayerOButton.setText("O");
+    redPlayerOButton.setBorder(new EmptyBorder(5, 20, 10, 0));
+
 
     JRadioButton redPlayerHumanButton = new JRadioButton();
     redPlayerHumanButton.setText("Human");
@@ -171,6 +175,9 @@ public class SosGuiFrame extends JFrame implements GameStateListener {
     redPlayerSOGroup.add(redPlayerSButton);
     redPlayerSOGroup.add(redPlayerOButton);
 
+    JLabel spacingLabel = new JLabel();
+    spacingLabel.setText(" ");
+
     redPlayerHumanComputerGroup = new ButtonGroup();
     redPlayerHumanComputerGroup.add(redPlayerHumanButton);
     redPlayerHumanComputerGroup.add(redPlayerComputerButton);
@@ -191,7 +198,9 @@ public class SosGuiFrame extends JFrame implements GameStateListener {
     // Creates radio S and O buttons for the blue player
     JRadioButton bluePlayerSButton = new JRadioButton();
     bluePlayerSButton.setText("S");
+    bluePlayerSButton.setBorder(new EmptyBorder(10, 20, 5, 0));
     JRadioButton bluePlayerOButton = new JRadioButton();
+    bluePlayerOButton.setBorder(new EmptyBorder(5, 20, 10, 0));
     bluePlayerOButton.setText("O");
 
     JRadioButton bluePlayerHumanButton = new JRadioButton();
