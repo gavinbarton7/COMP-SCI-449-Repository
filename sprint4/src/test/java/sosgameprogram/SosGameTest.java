@@ -76,6 +76,8 @@ class SosGameTest {
     // Given a board of size nxn, with n being the chosen board size
     controller.setBoardSize(7);
     controller.setGameMode("S");
+    controller.setBluePlayerType("H");
+    controller.setRedPlayerType("H");
     controller.startOfANewGame();
     int row = 7;
     int col = 5;
@@ -91,6 +93,8 @@ class SosGameTest {
     // Given a board of size nxn, with n being the chosen board size
     controller.setBoardSize(6);
     controller.setGameMode("S");
+    controller.setBluePlayerType("H");
+    controller.setRedPlayerType("H");
     controller.startOfANewGame();
     int row = 3;
     int col = 6;
@@ -106,8 +110,10 @@ class SosGameTest {
     // Given an ongoing game with the blue player's turn
     controller.setBoardSize(5);
     controller.setGameMode("S");
+    controller.setBluePlayerType("H");
+    controller.setRedPlayerType("H");
     controller.startOfANewGame();
-    controller.setCurrentPlayer("B");
+    controller.setCurrentPlayerColor("B");
     controller.setBluePlayerLetterSelection("S");
 
     SosGame game = controller.getGame();
@@ -127,7 +133,7 @@ class SosGameTest {
     assertEquals("S", game.getCellContent(testRow, testCol));
 
     // And it becomes the red player's turn
-    assertEquals("R", controller.getCurrentPlayer());
+    assertEquals("R", controller.getCurrentPlayerColor());
   }
 
   @Test
@@ -135,8 +141,10 @@ class SosGameTest {
     // Given an ongoing game with the red player's turn, red player chooses "O"
     controller.setBoardSize(5);
     controller.setGameMode("S");
+    controller.setBluePlayerType("H");
+    controller.setRedPlayerType("H");
     controller.startOfANewGame();
-    controller.setCurrentPlayer("B");
+    controller.setCurrentPlayerColor("B");
     controller.setBluePlayerLetterSelection("O");
 
 
@@ -155,7 +163,7 @@ class SosGameTest {
     assertEquals("O", game.getCellContent(testRow, testCol));
 
     // And it becomes the red player's turn
-    assertEquals("R", controller.getCurrentPlayer());
+    assertEquals("R", controller.getCurrentPlayerColor());
   }
 
   @Test
@@ -163,8 +171,10 @@ class SosGameTest {
     // Given an ongoing game with the red player's turn
     controller.setBoardSize(3);
     controller.setGameMode("S");
+    controller.setBluePlayerType("H");
+    controller.setRedPlayerType("H");
     controller.startOfANewGame();
-    controller.setCurrentPlayer("R");
+    controller.setCurrentPlayerColor("R");
     controller.setRedPlayerLetterSelection("S");
 
     SosGame game = controller.getGame();
@@ -183,7 +193,7 @@ class SosGameTest {
     assertEquals("S", game.getCellContent(testRow, testCol));
 
     // And it becomes the blue player's turn
-    assertEquals("B", controller.getCurrentPlayer());
+    assertEquals("B", controller.getCurrentPlayerColor());
   }
 
   @Test
@@ -191,8 +201,10 @@ class SosGameTest {
     // Given an ongoing game with the red player's turn
     controller.setBoardSize(3);
     controller.setGameMode("S");
+    controller.setBluePlayerType("H");
+    controller.setRedPlayerType("H");
     controller.startOfANewGame();
-    controller.setCurrentPlayer("R");
+    controller.setCurrentPlayerColor("R");
     controller.setRedPlayerLetterSelection("O");
 
     SosGame game = controller.getGame();
@@ -210,7 +222,7 @@ class SosGameTest {
     assertEquals("O", game.getCellContent(testRow, testCol));
 
     // And it becomes the blue player's turn
-    assertEquals("B", controller.getCurrentPlayer());
+    assertEquals("B", controller.getCurrentPlayerColor());
   }
 
 
@@ -218,8 +230,10 @@ class SosGameTest {
   public void testAC4_3_SimpleGameInvalidBluePlayerMoveOnBoard() {
     controller.setBoardSize(5);
     controller.setGameMode("S");
+    controller.setBluePlayerType("H");
+    controller.setRedPlayerType("H");
     controller.startOfANewGame();
-    controller.setCurrentPlayer("R");
+    controller.setCurrentPlayerColor("R");
     controller.setRedPlayerLetterSelection("O");
 
     SosGame game = controller.getGame();
@@ -229,7 +243,7 @@ class SosGameTest {
     game.setCellContent(testRow, testCol);
 
     // Given an ongoing game with the blue player's turn
-    controller.setCurrentPlayer("B");
+    controller.setCurrentPlayerColor("B");
     controller.setBluePlayerLetterSelection("S");
 
     // When the blue player selects an occupied square
@@ -241,7 +255,7 @@ class SosGameTest {
     assertEquals("O", game.getCellContent(testRow, testCol));
 
     // And the turn is not changed
-    assertEquals("B", controller.getCurrentPlayer());
+    assertEquals("B", controller.getCurrentPlayerColor());
   }
 
   @Test
@@ -249,8 +263,10 @@ class SosGameTest {
     // Given an ongoing game with the red player's turn
     controller.setBoardSize(7);
     controller.setGameMode("S");
+    controller.setBluePlayerType("H");
+    controller.setRedPlayerType("H");
     controller.startOfANewGame();
-    controller.setCurrentPlayer("B");
+    controller.setCurrentPlayerColor("B");
     controller.setBluePlayerLetterSelection("S");
 
     SosGame game = controller.getGame();
@@ -260,7 +276,7 @@ class SosGameTest {
     game.setCellContent(testRow, testCol);
 
     // Given an ongoing game with the red player's turn
-    controller.setCurrentPlayer("R");
+    controller.setCurrentPlayerColor("R");
     controller.setRedPlayerLetterSelection("O");
 
     // When the red player selects an occupied square
@@ -272,7 +288,7 @@ class SosGameTest {
     assertEquals("S", game.getCellContent(testRow, testCol));
 
     // And the turn is not changed
-    assertEquals("R", controller.getCurrentPlayer());
+    assertEquals("R", controller.getCurrentPlayerColor());
   }
 
   @Test
@@ -280,20 +296,22 @@ class SosGameTest {
     // Given an ongoing game with no SOS on the board
     controller.setBoardSize(3);
     controller.setGameMode("S");
+    controller.setBluePlayerType("H");
+    controller.setRedPlayerType("H");
     controller.startOfANewGame();
     controller.setBluePlayerLetterSelection("S");
     controller.setRedPlayerLetterSelection("O");
 
     SosGame game = controller.getGame();
 
-    game.setCurrentPlayer("B");
+    game.setCurrentPlayerColor("B");
     game.setCellContent(0, 0);
 
-    game.setCurrentPlayer("R");
+    game.setCurrentPlayerColor("R");
     game.setCellContent(0, 1);
 
     // When the blue player makes a valid move to form an SOS
-    game.setCurrentPlayer("B");
+    game.setCurrentPlayerColor("B");
     boolean result = game.setCellContent(0, 2);
     assertTrue(result);
     assertEquals(1, game.checkForSosFormation(0,2));
@@ -310,13 +328,15 @@ class SosGameTest {
     // Given an ongoing game with no SOS on the board
     controller.setBoardSize(4);
     controller.setGameMode("S");
+    controller.setBluePlayerType("H");
+    controller.setRedPlayerType("H");
     controller.startOfANewGame();
     controller.setBluePlayerLetterSelection("S");
 
     SosGame game = controller.getGame();
 
     // When the blue player makes a valid move
-    game.setCurrentPlayer("B");
+    game.setCurrentPlayerColor("B");
     boolean result = game.setCellContent(0, 0);
     assertTrue(result);
 
@@ -327,7 +347,7 @@ class SosGameTest {
     assertTrue(game.isGameInProgress());
 
     // And it is the red player's turn
-    assertEquals("R", controller.getCurrentPlayer());
+    assertEquals("R", controller.getCurrentPlayerColor());
   }
 
   @Test
@@ -335,23 +355,25 @@ class SosGameTest {
     // Given an ongoing game with no SOS on the board
     controller.setBoardSize(5);
     controller.setGameMode("S");
+    controller.setBluePlayerType("H");
+    controller.setRedPlayerType("H");
     controller.startOfANewGame();
     controller.setBluePlayerLetterSelection("S");
     controller.setRedPlayerLetterSelection("O");
 
     SosGame game = controller.getGame();
 
-    game.setCurrentPlayer("B");
+    game.setCurrentPlayerColor("B");
     game.setCellContent(1, 0);
 
-    game.setCurrentPlayer("R");
+    game.setCurrentPlayerColor("R");
     game.setCellContent(1, 1);
 
-    game.setCurrentPlayer("B");
+    game.setCurrentPlayerColor("B");
     game.setCellContent(2, 1);
 
     // When the red player makes a valid move to form an SOS
-    game.setCurrentPlayer("R");
+    game.setCurrentPlayerColor("R");
     controller.setRedPlayerLetterSelection("S");
     boolean result = game.setCellContent(1, 2);
     assertTrue(result);
@@ -369,17 +391,19 @@ class SosGameTest {
     // Given an ongoing game with no SOS on the board
     controller.setBoardSize(6);
     controller.setGameMode("S");
+    controller.setBluePlayerType("H");
+    controller.setRedPlayerType("H");
     controller.startOfANewGame();
     controller.setBluePlayerLetterSelection("S");
     controller.setRedPlayerLetterSelection("O");
 
     SosGame game = controller.getGame();
 
-    game.setCurrentPlayer("B");
+    game.setCurrentPlayerColor("B");
     game.setCellContent(0, 0);
 
     // When the red player makes a valid move
-    game.setCurrentPlayer("R");
+    game.setCurrentPlayerColor("R");
     boolean result = game.setCellContent(1, 1);
     assertTrue(result);
 
@@ -390,7 +414,7 @@ class SosGameTest {
     assertTrue(game.isGameInProgress());
 
     // And it is the blue player's turn
-    assertEquals("B", controller.getCurrentPlayer());
+    assertEquals("B", controller.getCurrentPlayerColor());
   }
 
   @Test
@@ -399,6 +423,8 @@ class SosGameTest {
     // And there is only one unoccupied space left on the board
     controller.setBoardSize(3);
     controller.setGameMode("S");
+    controller.setBluePlayerType("H");
+    controller.setRedPlayerType("H");
     controller.startOfANewGame();
     controller.setBluePlayerLetterSelection("S");
     controller.setRedPlayerLetterSelection("S");
@@ -406,32 +432,32 @@ class SosGameTest {
     SosGame game = controller.getGame();
 
     // Fills the board with Ss except for the bottom right cell
-    game.setCurrentPlayer("B");
+    game.setCurrentPlayerColor("B");
     game.setCellContent(0, 0);
 
-    game.setCurrentPlayer("R");
+    game.setCurrentPlayerColor("R");
     game.setCellContent(0, 1);
 
-    game.setCurrentPlayer("B");
+    game.setCurrentPlayerColor("B");
     game.setCellContent(0, 2);
 
-    game.setCurrentPlayer("R");
+    game.setCurrentPlayerColor("R");
     game.setCellContent(1, 0);
 
-    game.setCurrentPlayer("B");
+    game.setCurrentPlayerColor("B");
     game.setCellContent(1, 1);
 
-    game.setCurrentPlayer("R");
+    game.setCurrentPlayerColor("R");
     game.setCellContent(1, 2);
 
-    game.setCurrentPlayer("B");
+    game.setCurrentPlayerColor("B");
     game.setCellContent(2, 0);
 
-    game.setCurrentPlayer("R");
+    game.setCurrentPlayerColor("R");
     game.setCellContent(2, 1);
 
     // When either player makes a valid move
-    controller.setCurrentPlayer("B");
+    controller.setCurrentPlayerColor("B");
     controller.setBluePlayerLetterSelection("O");
     boolean result = game.setCellContent(2, 2);
     assertTrue(result);
@@ -453,8 +479,10 @@ class SosGameTest {
     // Given an ongoing game with the blue player's turn
     controller.setBoardSize(5);
     controller.setGameMode("G");
+    controller.setBluePlayerType("H");
+    controller.setRedPlayerType("H");
     controller.startOfANewGame();
-    controller.setCurrentPlayer("B"); // Set to red player's turn
+    controller.setCurrentPlayerColor("B"); // Set to red player's turn
     controller.setBluePlayerLetterSelection("S"); // Red player chooses "S"
 
     SosGame game = controller.getGame();
@@ -472,7 +500,7 @@ class SosGameTest {
     assertEquals("S", game.getCellContent(testRow, testCol));
 
     // And it becomes the red player's turn
-    assertEquals("R", controller.getCurrentPlayer());
+    assertEquals("R", controller.getCurrentPlayerColor());
   }
 
   @Test
@@ -480,8 +508,10 @@ class SosGameTest {
     // Given an ongoing game with the red player's turn, red player chooses "O"
     controller.setBoardSize(5);
     controller.setGameMode("G");
+    controller.setBluePlayerType("H");
+    controller.setRedPlayerType("H");
     controller.startOfANewGame();
-    controller.setCurrentPlayer("B");
+    controller.setCurrentPlayerColor("B");
     controller.setBluePlayerLetterSelection("O");
 
     SosGame game = controller.getGame();
@@ -500,7 +530,7 @@ class SosGameTest {
     assertEquals("O", game.getCellContent(testRow, testCol));
 
     // And it becomes the red player's turn
-    assertEquals("R", controller.getCurrentPlayer());
+    assertEquals("R", controller.getCurrentPlayerColor());
   }
 
   @Test
@@ -508,8 +538,10 @@ class SosGameTest {
     // Given an ongoing game with the red player's turn
     controller.setBoardSize(3);
     controller.setGameMode("G");
+    controller.setBluePlayerType("H");
+    controller.setRedPlayerType("H");
     controller.startOfANewGame();
-    controller.setCurrentPlayer("R"); // Set to red player's turn
+    controller.setCurrentPlayerColor("R"); // Set to red player's turn
     controller.setRedPlayerLetterSelection("S"); // Red player chooses "S"
 
     SosGame game = controller.getGame();
@@ -528,7 +560,7 @@ class SosGameTest {
     assertEquals("S", game.getCellContent(testRow, testCol));
 
     // And it becomes the blue player's turn
-    assertEquals("B", controller.getCurrentPlayer());
+    assertEquals("B", controller.getCurrentPlayerColor());
   }
 
   @Test
@@ -536,8 +568,10 @@ class SosGameTest {
     // Given an ongoing game with the red player's turn, red player chooses "O"
     controller.setBoardSize(3);
     controller.setGameMode("G");
+    controller.setBluePlayerType("H");
+    controller.setRedPlayerType("H");
     controller.startOfANewGame();
-    controller.setCurrentPlayer("R");
+    controller.setCurrentPlayerColor("R");
     controller.setRedPlayerLetterSelection("O");
 
     SosGame game = controller.getGame();
@@ -555,15 +589,17 @@ class SosGameTest {
     assertEquals("O", game.getCellContent(testRow, testCol));
 
     // And it becomes the blue player's turn
-    assertEquals("B", controller.getCurrentPlayer());
+    assertEquals("B", controller.getCurrentPlayerColor());
   }
 
   @Test
   public void testAC6_3_GeneralGameInvalidBluePlayerMoveOnBoard() {
     controller.setBoardSize(9);
     controller.setGameMode("G");
+    controller.setBluePlayerType("H");
+    controller.setRedPlayerType("H");
     controller.startOfANewGame();
-    controller.setCurrentPlayer("R");
+    controller.setCurrentPlayerColor("R");
     controller.setRedPlayerLetterSelection("O");
 
     SosGame game = controller.getGame();
@@ -573,7 +609,7 @@ class SosGameTest {
     game.setCellContent(testRow, testCol);
 
     // Given an ongoing game with the blue player's turn
-    controller.setCurrentPlayer("B");
+    controller.setCurrentPlayerColor("B");
     controller.setBluePlayerLetterSelection("S");
 
     // When the blue player selects an occupied square
@@ -585,15 +621,17 @@ class SosGameTest {
     assertEquals("O", game.getCellContent(testRow, testCol));
 
     // And the turn is not changed
-    assertEquals("B", controller.getCurrentPlayer());
+    assertEquals("B", controller.getCurrentPlayerColor());
   }
 
   @Test
   public void testAC6_4_GeneralGameInvalidRedPlayerMoveOnBoard() {
     controller.setBoardSize(4);
     controller.setGameMode("G");
+    controller.setBluePlayerType("H");
+    controller.setRedPlayerType("H");
     controller.startOfANewGame();
-    controller.setCurrentPlayer("B");
+    controller.setCurrentPlayerColor("B");
     controller.setBluePlayerLetterSelection("S");
 
     SosGame game = controller.getGame();
@@ -603,7 +641,7 @@ class SosGameTest {
     game.setCellContent(testRow, testCol);
 
     // Given an ongoing game with the red player's turn
-    controller.setCurrentPlayer("R");
+    controller.setCurrentPlayerColor("R");
     controller.setRedPlayerLetterSelection("O");
 
     // When the red player selects an occupied square
@@ -615,7 +653,7 @@ class SosGameTest {
     assertEquals("S", game.getCellContent(testRow, testCol));
 
     // And the turn is not changed
-    assertEquals("R", controller.getCurrentPlayer());
+    assertEquals("R", controller.getCurrentPlayerColor());
   }
 
   @Test
@@ -623,6 +661,8 @@ class SosGameTest {
     // Given an ongoing game where there is only one unoccupied cell left on the board
     controller.setBoardSize(3);
     controller.setGameMode("G");
+    controller.setBluePlayerType("H");
+    controller.setRedPlayerType("H");
     controller.startOfANewGame();
     controller.setBluePlayerLetterSelection("S");
     controller.setRedPlayerLetterSelection("O");
@@ -630,35 +670,35 @@ class SosGameTest {
     SosGame game = controller.getGame();
     GeneralGame generalGame = (GeneralGame) game;
 
-    controller.setCurrentPlayer("B");
+    controller.setCurrentPlayerColor("B");
     game.setCellContent(0, 0);
 
-    controller.setCurrentPlayer("R");
+    controller.setCurrentPlayerColor("R");
     game.setCellContent(0, 1);
 
     // Blue player gets on point from forming an SOS
-    controller.setCurrentPlayer("B");
+    controller.setCurrentPlayerColor("B");
     game.setCellContent(0, 2);
 
-    controller.setCurrentPlayer("B");
+    controller.setCurrentPlayerColor("B");
     game.setCellContent(1, 0); // O
 
-    controller.setCurrentPlayer("R");
+    controller.setCurrentPlayerColor("R");
     controller.setRedPlayerLetterSelection("S");
     game.setCellContent(1, 1);
 
-    controller.setCurrentPlayer("B");
+    controller.setCurrentPlayerColor("B");
     game.setCellContent(1, 2);
 
-    controller.setCurrentPlayer("R");
+    controller.setCurrentPlayerColor("R");
     game.setCellContent(2, 0);
 
-    controller.setCurrentPlayer("B");
+    controller.setCurrentPlayerColor("B");
     controller.setBluePlayerLetterSelection("S");
     game.setCellContent(2, 1);
 
     // When the player whose turn it is makes a valid move
-    controller.setCurrentPlayer("R");
+    controller.setCurrentPlayerColor("R");
     controller.setRedPlayerLetterSelection("S");
     game.setCellContent(2, 2);
 
@@ -680,13 +720,15 @@ class SosGameTest {
     // Given an ongoing game with more than one unoccupied space on the board
     controller.setBoardSize(4);
     controller.setGameMode("G");
+    controller.setBluePlayerType("H");
+    controller.setRedPlayerType("H");
     controller.startOfANewGame();
     controller.setBluePlayerLetterSelection("S");
 
     SosGame game = controller.getGame();
 
     // When the blue player makes a valid move
-    game.setCurrentPlayer("B");
+    game.setCurrentPlayerColor("B");
     boolean result = game.setCellContent(0, 0);
     assertTrue(result);
 
@@ -697,7 +739,7 @@ class SosGameTest {
     assertTrue(game.isGameInProgress());
 
     // And it becomes the red player's turn
-    assertEquals("R", controller.getCurrentPlayer());
+    assertEquals("R", controller.getCurrentPlayerColor());
   }
 
   @Test
@@ -705,20 +747,22 @@ class SosGameTest {
     // Given an ongoing game with more than one unoccupied space on the board
     controller.setBoardSize(5);
     controller.setGameMode("G");
+    controller.setBluePlayerType("H");
+    controller.setRedPlayerType("H");
     controller.startOfANewGame();
 
     SosGame game = controller.getGame();
 
-    controller.setCurrentPlayer("B");
+    controller.setCurrentPlayerColor("B");
     controller.setBluePlayerLetterSelection("S");
     game.setCellContent(0, 0);
 
-    controller.setCurrentPlayer("R");
+    controller.setCurrentPlayerColor("R");
     controller.setRedPlayerLetterSelection("O");
     game.setCellContent(0, 1);
 
     // When the blue player makes a valid move that results in the formation of an SOS sequence
-    controller.setCurrentPlayer("B");
+    controller.setCurrentPlayerColor("B");
     controller.setBluePlayerLetterSelection("S");
     boolean result = game.setCellContent(0, 2); // Blue places S to form SOS
     assertTrue(result);
@@ -728,7 +772,7 @@ class SosGameTest {
     assertTrue(game.isGameInProgress());
 
     // And the blue player gets another turn
-    assertEquals("B", controller.getCurrentPlayer());
+    assertEquals("B", controller.getCurrentPlayerColor());
   }
 
   @Test
@@ -736,6 +780,8 @@ class SosGameTest {
     // Given an ongoing game where there is only one unoccupied cell left on the board
     controller.setBoardSize(3);
     controller.setGameMode("G");
+    controller.setBluePlayerType("H");
+    controller.setRedPlayerType("H");
     controller.startOfANewGame();
     controller.setBluePlayerLetterSelection("S");
     controller.setRedPlayerLetterSelection("S");
@@ -743,36 +789,36 @@ class SosGameTest {
     SosGame game = controller.getGame();
     GeneralGame generalGame = (GeneralGame) game;
 
-    controller.setCurrentPlayer("B");
+    controller.setCurrentPlayerColor("B");
     controller.setRedPlayerLetterSelection("S");
     game.setCellContent(0, 0);
 
-    controller.setCurrentPlayer("R");
+    controller.setCurrentPlayerColor("R");
     game.setCellContent(2, 0);
 
-    controller.setCurrentPlayer("B");
+    controller.setCurrentPlayerColor("B");
     game.setCellContent(0, 1);
 
     // Red player forms an SOS to score a point
-    controller.setCurrentPlayer("R");
+    controller.setCurrentPlayerColor("R");
     controller.setRedPlayerLetterSelection("O");
     game.setCellContent(1, 0);
 
-    controller.setCurrentPlayer("R");
+    controller.setCurrentPlayerColor("R");
     controller.setRedPlayerLetterSelection("S");
     game.setCellContent(1, 1);
 
-    controller.setCurrentPlayer("B");
+    controller.setCurrentPlayerColor("B");
     game.setCellContent(0, 2);
 
-    controller.setCurrentPlayer("R");
+    controller.setCurrentPlayerColor("R");
     game.setCellContent(1, 2);
 
-    controller.setCurrentPlayer("B");
+    controller.setCurrentPlayerColor("B");
     game.setCellContent(2, 1);
 
     // When the player whose turn it is makes a valid move
-    controller.setCurrentPlayer("R");
+    controller.setCurrentPlayerColor("R");
     game.setCellContent(2, 2);
 
     // And the red player has formed more SOS's than the blue player after the final cell is filled
@@ -790,18 +836,20 @@ class SosGameTest {
     // Given an ongoing game with more than one unoccupied space on the board
     controller.setBoardSize(6);
     controller.setGameMode("G");
+    controller.setBluePlayerType("H");
+    controller.setRedPlayerType("H");
     controller.startOfANewGame();
     controller.setBluePlayerLetterSelection("S");
     controller.setRedPlayerLetterSelection("O");
 
     SosGame game = controller.getGame();
 
-    controller.setCurrentPlayer("B");
+    controller.setCurrentPlayerColor("B");
     game.setCellContent(0, 0); // Blue places S
 
     // When the red player makes a valid move that doesn't result in the formation of an SOS
     // sequence on the board
-    controller.setCurrentPlayer("R");
+    controller.setCurrentPlayerColor("R");
     boolean result = game.setCellContent(1, 1); // Red places O
     assertTrue(result);
     assertEquals(0, game.checkForSosFormation(1, 1));
@@ -810,7 +858,7 @@ class SosGameTest {
     assertTrue(game.isGameInProgress());
 
     // And it becomes the blue player's turn
-    assertEquals("B", game.getCurrentPlayer());
+    assertEquals("B", game.getCurrentPlayerColor());
   }
 
   @Test
@@ -818,24 +866,26 @@ class SosGameTest {
     // Given an ongoing game with more than one unoccupied space on the board
     controller.setBoardSize(7);
     controller.setGameMode("G");
+    controller.setBluePlayerType("H");
+    controller.setRedPlayerType("H");
     controller.startOfANewGame();
     controller.setBluePlayerLetterSelection("S");
     controller.setRedPlayerLetterSelection("O");
 
     SosGame game = controller.getGame();
 
-    controller.setCurrentPlayer("B");
+    controller.setCurrentPlayerColor("B");
     game.setCellContent(1, 0);
 
-    controller.setCurrentPlayer("R");
+    controller.setCurrentPlayerColor("R");
     game.setCellContent(1, 1);
 
-    controller.setCurrentPlayer("B");
+    controller.setCurrentPlayerColor("B");
     game.setCellContent(0, 0);
 
     // When the red player makes a valid move that results in the formation of an SOS sequence
     // on the board
-    controller.setCurrentPlayer("R");
+    controller.setCurrentPlayerColor("R");
     controller.setRedPlayerLetterSelection("S");
     boolean result = game.setCellContent(1, 2);
     assertTrue(result);
@@ -845,7 +895,7 @@ class SosGameTest {
     assertTrue(game.isGameInProgress());
 
     // And the red player gets another turn
-    assertEquals("R", controller.getCurrentPlayer());
+    assertEquals("R", controller.getCurrentPlayerColor());
   }
 
   @Test
@@ -853,6 +903,8 @@ class SosGameTest {
     // Given an ongoing game where there is only one unoccupied cell left on the board
     controller.setBoardSize(3);
     controller.setGameMode("G");
+    controller.setBluePlayerType("H");
+    controller.setRedPlayerType("H");
     controller.startOfANewGame();
     controller.setBluePlayerLetterSelection("O");
     controller.setRedPlayerLetterSelection("O");
@@ -860,32 +912,32 @@ class SosGameTest {
     SosGame game = controller.getGame();
     GeneralGame generalGame = (GeneralGame) game;
 
-    game.setCurrentPlayer("B");
+    game.setCurrentPlayerColor("B");
     game.setCellContent(0, 0);
 
-    game.setCurrentPlayer("R");
+    game.setCurrentPlayerColor("R");
     game.setCellContent(0, 1);
 
-    game.setCurrentPlayer("B");
+    game.setCurrentPlayerColor("B");
     game.setCellContent(0, 2);
 
-    game.setCurrentPlayer("B");
+    game.setCurrentPlayerColor("B");
     game.setCellContent(1, 0);
 
-    game.setCurrentPlayer("R");
+    game.setCurrentPlayerColor("R");
     game.setCellContent(1, 1);
 
-    game.setCurrentPlayer("B");
+    game.setCurrentPlayerColor("B");
     game.setCellContent(1, 2);
 
-    game.setCurrentPlayer("R");
+    game.setCurrentPlayerColor("R");
     game.setCellContent(2, 0);
 
-    game.setCurrentPlayer("B");
+    game.setCurrentPlayerColor("B");
     game.setCellContent(2, 1);
 
     // When either player makes a valid move
-    game.setCurrentPlayer("R");
+    game.setCurrentPlayerColor("R");
     controller.setBluePlayerLetterSelection("S");
     game.setCellContent(2, 2);
 

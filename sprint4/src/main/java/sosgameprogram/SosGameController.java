@@ -65,12 +65,12 @@ public class SosGameController {
     game.setBluePlayerLetterSelection(letterSelection);
   }
 
-  public void setCurrentPlayer(String player) {
-    game.setCurrentPlayer(player);
+  public void setCurrentPlayerColor(String playerColor) {
+    game.setCurrentPlayerColor(playerColor);
   }
 
-  public String getCurrentPlayer() {
-    return game.getCurrentPlayer();
+  public String getCurrentPlayerColor() {
+    return game.getCurrentPlayerColor();
   }
 
   public void startOfANewGame() {
@@ -113,13 +113,13 @@ public class SosGameController {
   }
 
   public String getCurrentPlayerType() {
-    if (getCurrentPlayer() == "B") {
+    if (getCurrentPlayerColor() == "B") {
       if (bluePlayerType == "H") {
         return "H";
       } else if (bluePlayerType == "C") {
         return "C";
       }
-    } else if (getCurrentPlayer() == "R") {
+    } else if (getCurrentPlayerColor() == "R") {
       if (redPlayerType == "H") {
         return "H";
       } else if (redPlayerType == "C") {
@@ -131,9 +131,9 @@ public class SosGameController {
   }
 
   public Player getObjectOfCurrentPlayer() {
-    if (getCurrentPlayer().equals("B")) {
+    if (getCurrentPlayerColor().equals("B")) {
       return bluePlayer;
-    } else if (getCurrentPlayer().equals("R")) {
+    } else if (getCurrentPlayerColor().equals("R")) {
       return redPlayer;
     }
 
@@ -142,15 +142,15 @@ public class SosGameController {
 
   private void setUpPlayers() {
     if (bluePlayerType.equals("H")) {
-      bluePlayer = new HumanPlayer();
+      bluePlayer = new HumanPlayer("B");
     } else if (bluePlayerType.equals("C")) {
-      bluePlayer = new ComputerPlayer();
+      bluePlayer = new ComputerPlayer("B");
     }
 
     if (redPlayerType.equals("H")) {
-      redPlayer = new HumanPlayer();
+      redPlayer = new HumanPlayer("R");
     } else if (redPlayerType.equals("C")) {
-      redPlayer = new ComputerPlayer();
+      redPlayer = new ComputerPlayer("R");
     }
   }
 

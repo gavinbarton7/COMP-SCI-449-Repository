@@ -299,11 +299,11 @@ public class SosGuiFrame extends JFrame implements GameStateListener {
 
   // Changes the label for the current player after each move
   public void updateCurrentPlayerLabel() {
-    String currentPlayer = controller.getCurrentPlayer();
-    if (currentPlayer.equals("B")) {
+    String currentPlayerColor = controller.getCurrentPlayerColor();
+    if (currentPlayerColor.equals("B")) {
       currentPlayerLabel.setText("Current turn: Blue");
       currentPlayerLabel.setForeground(Color.BLUE);
-    } else if (currentPlayer.equals("R")) {
+    } else if (currentPlayerColor.equals("R")) {
       currentPlayerLabel.setText("Current turn: Red");
       currentPlayerLabel.setForeground(Color.RED);
     }
@@ -366,9 +366,9 @@ public class SosGuiFrame extends JFrame implements GameStateListener {
   }
 
   public String selectLetter() {
-    if (controller.getCurrentPlayer().equals("B")) {
+    if (controller.getCurrentPlayerColor().equals("B")) {
       return bluePlayerSOSelectionReturner();
-    } else if (controller.getCurrentPlayer().equals("R")) {
+    } else if (controller.getCurrentPlayerColor().equals("R")) {
       return redPlayerSOSelectionReturner();
     }
     return null;

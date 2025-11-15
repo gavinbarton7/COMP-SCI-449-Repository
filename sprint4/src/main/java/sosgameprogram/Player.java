@@ -2,7 +2,18 @@ package sosgameprogram;
 
 public abstract class Player {
   protected String playerLetterSelection;
+  protected String playerType;
+  protected String playerColor;
   protected SosGameController controller;
+
+  public Player(String type, String color) {
+    this.playerType = type;
+    this.playerColor = color;
+  }
+
+  public String getPlayerColor() {
+    return playerColor;
+  }
 
   public String getPlayerLetterSelection() {
     return playerLetterSelection;

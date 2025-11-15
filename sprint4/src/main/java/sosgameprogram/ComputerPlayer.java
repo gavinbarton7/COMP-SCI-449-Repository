@@ -7,7 +7,8 @@ import java.util.Random;
 public class ComputerPlayer extends Player {
   private Random random;
 
-  public ComputerPlayer() {
+  public ComputerPlayer(String color) {
+    super("C", color);
     this.random = new Random();
   }
 
