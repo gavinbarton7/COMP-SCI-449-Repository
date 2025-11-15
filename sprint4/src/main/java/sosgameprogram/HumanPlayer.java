@@ -7,8 +7,8 @@ public class HumanPlayer extends Player {
     super("H", color);
   }
 
-  private void setLetterSelection() {
-    playerLetterSelection = gui.selectLetter();
+  protected void setPlayerLetterSelection() {
+    playerLetterSelection = gui.selectLetterHumanPlayer();
   }
 
   protected PlayerMove moveSelection(SosGame game) {

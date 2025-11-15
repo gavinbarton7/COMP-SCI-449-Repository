@@ -80,7 +80,7 @@ public class Board extends JPanel {
 
     if (controller.getCurrentPlayerColor().equals("B")) {
       controller.setBluePlayerLetterSelection(selectedletter);
-    } else {
+    } else if (controller.getCurrentPlayerColor().equals("R")) {
       controller.setRedPlayerLetterSelection(selectedletter);
     }
 

@@ -76,8 +76,8 @@ class SosGameTest {
     // Given a board of size nxn, with n being the chosen board size
     controller.setBoardSize(7);
     controller.setGameMode("S");
-    controller.setBluePlayerType("H");
-    controller.setRedPlayerType("H");
+    controller.setBluePlayerTypeSelection("H");
+    controller.setRedPlayerTypeSelection("H");
     controller.startOfANewGame();
     int row = 7;
     int col = 5;
@@ -93,8 +93,8 @@ class SosGameTest {
     // Given a board of size nxn, with n being the chosen board size
     controller.setBoardSize(6);
     controller.setGameMode("S");
-    controller.setBluePlayerType("H");
-    controller.setRedPlayerType("H");
+    controller.setBluePlayerTypeSelection("H");
+    controller.setRedPlayerTypeSelection("H");
     controller.startOfANewGame();
     int row = 3;
     int col = 6;
@@ -110,8 +110,8 @@ class SosGameTest {
     // Given an ongoing game with the blue player's turn
     controller.setBoardSize(5);
     controller.setGameMode("S");
-    controller.setBluePlayerType("H");
-    controller.setRedPlayerType("H");
+    controller.setBluePlayerTypeSelection("H");
+    controller.setRedPlayerTypeSelection("H");
     controller.startOfANewGame();
     controller.setCurrentPlayerColor("B");
     controller.setBluePlayerLetterSelection("S");
@@ -141,8 +141,8 @@ class SosGameTest {
     // Given an ongoing game with the red player's turn, red player chooses "O"
     controller.setBoardSize(5);
     controller.setGameMode("S");
-    controller.setBluePlayerType("H");
-    controller.setRedPlayerType("H");
+    controller.setBluePlayerTypeSelection("H");
+    controller.setRedPlayerTypeSelection("H");
     controller.startOfANewGame();
     controller.setCurrentPlayerColor("B");
     controller.setBluePlayerLetterSelection("O");
@@ -171,8 +171,8 @@ class SosGameTest {
     // Given an ongoing game with the red player's turn
     controller.setBoardSize(3);
     controller.setGameMode("S");
-    controller.setBluePlayerType("H");
-    controller.setRedPlayerType("H");
+    controller.setBluePlayerTypeSelection("H");
+    controller.setRedPlayerTypeSelection("H");
     controller.startOfANewGame();
     controller.setCurrentPlayerColor("R");
     controller.setRedPlayerLetterSelection("S");
@@ -201,8 +201,8 @@ class SosGameTest {
     // Given an ongoing game with the red player's turn
     controller.setBoardSize(3);
     controller.setGameMode("S");
-    controller.setBluePlayerType("H");
-    controller.setRedPlayerType("H");
+    controller.setBluePlayerTypeSelection("H");
+    controller.setRedPlayerTypeSelection("H");
     controller.startOfANewGame();
     controller.setCurrentPlayerColor("R");
     controller.setRedPlayerLetterSelection("O");
@@ -230,8 +230,8 @@ class SosGameTest {
   public void testAC4_3_SimpleGameInvalidBluePlayerMoveOnBoard() {
     controller.setBoardSize(5);
     controller.setGameMode("S");
-    controller.setBluePlayerType("H");
-    controller.setRedPlayerType("H");
+    controller.setBluePlayerTypeSelection("H");
+    controller.setRedPlayerTypeSelection("H");
     controller.startOfANewGame();
     controller.setCurrentPlayerColor("R");
     controller.setRedPlayerLetterSelection("O");
@@ -263,8 +263,8 @@ class SosGameTest {
     // Given an ongoing game with the red player's turn
     controller.setBoardSize(7);
     controller.setGameMode("S");
-    controller.setBluePlayerType("H");
-    controller.setRedPlayerType("H");
+    controller.setBluePlayerTypeSelection("H");
+    controller.setRedPlayerTypeSelection("H");
     controller.startOfANewGame();
     controller.setCurrentPlayerColor("B");
     controller.setBluePlayerLetterSelection("S");
@@ -296,8 +296,8 @@ class SosGameTest {
     // Given an ongoing game with no SOS on the board
     controller.setBoardSize(3);
     controller.setGameMode("S");
-    controller.setBluePlayerType("H");
-    controller.setRedPlayerType("H");
+    controller.setBluePlayerTypeSelection("H");
+    controller.setRedPlayerTypeSelection("H");
     controller.startOfANewGame();
     controller.setBluePlayerLetterSelection("S");
     controller.setRedPlayerLetterSelection("O");
@@ -328,8 +328,8 @@ class SosGameTest {
     // Given an ongoing game with no SOS on the board
     controller.setBoardSize(4);
     controller.setGameMode("S");
-    controller.setBluePlayerType("H");
-    controller.setRedPlayerType("H");
+    controller.setBluePlayerTypeSelection("H");
+    controller.setRedPlayerTypeSelection("H");
     controller.startOfANewGame();
     controller.setBluePlayerLetterSelection("S");
 
@@ -355,8 +355,8 @@ class SosGameTest {
     // Given an ongoing game with no SOS on the board
     controller.setBoardSize(5);
     controller.setGameMode("S");
-    controller.setBluePlayerType("H");
-    controller.setRedPlayerType("H");
+    controller.setBluePlayerTypeSelection("H");
+    controller.setRedPlayerTypeSelection("H");
     controller.startOfANewGame();
     controller.setBluePlayerLetterSelection("S");
     controller.setRedPlayerLetterSelection("O");
@@ -391,8 +391,8 @@ class SosGameTest {
     // Given an ongoing game with no SOS on the board
     controller.setBoardSize(6);
     controller.setGameMode("S");
-    controller.setBluePlayerType("H");
-    controller.setRedPlayerType("H");
+    controller.setBluePlayerTypeSelection("H");
+    controller.setRedPlayerTypeSelection("H");
     controller.startOfANewGame();
     controller.setBluePlayerLetterSelection("S");
     controller.setRedPlayerLetterSelection("O");
@@ -423,8 +423,8 @@ class SosGameTest {
     // And there is only one unoccupied space left on the board
     controller.setBoardSize(3);
     controller.setGameMode("S");
-    controller.setBluePlayerType("H");
-    controller.setRedPlayerType("H");
+    controller.setBluePlayerTypeSelection("H");
+    controller.setRedPlayerTypeSelection("H");
     controller.startOfANewGame();
     controller.setBluePlayerLetterSelection("S");
     controller.setRedPlayerLetterSelection("S");
@@ -479,8 +479,8 @@ class SosGameTest {
     // Given an ongoing game with the blue player's turn
     controller.setBoardSize(5);
     controller.setGameMode("G");
-    controller.setBluePlayerType("H");
-    controller.setRedPlayerType("H");
+    controller.setBluePlayerTypeSelection("H");
+    controller.setRedPlayerTypeSelection("H");
     controller.startOfANewGame();
     controller.setCurrentPlayerColor("B"); // Set to red player's turn
     controller.setBluePlayerLetterSelection("S"); // Red player chooses "S"
@@ -508,8 +508,8 @@ class SosGameTest {
     // Given an ongoing game with the red player's turn, red player chooses "O"
     controller.setBoardSize(5);
     controller.setGameMode("G");
-    controller.setBluePlayerType("H");
-    controller.setRedPlayerType("H");
+    controller.setBluePlayerTypeSelection("H");
+    controller.setRedPlayerTypeSelection("H");
     controller.startOfANewGame();
     controller.setCurrentPlayerColor("B");
     controller.setBluePlayerLetterSelection("O");
@@ -538,8 +538,8 @@ class SosGameTest {
     // Given an ongoing game with the red player's turn
     controller.setBoardSize(3);
     controller.setGameMode("G");
-    controller.setBluePlayerType("H");
-    controller.setRedPlayerType("H");
+    controller.setBluePlayerTypeSelection("H");
+    controller.setRedPlayerTypeSelection("H");
     controller.startOfANewGame();
     controller.setCurrentPlayerColor("R"); // Set to red player's turn
     controller.setRedPlayerLetterSelection("S"); // Red player chooses "S"
@@ -568,8 +568,8 @@ class SosGameTest {
     // Given an ongoing game with the red player's turn, red player chooses "O"
     controller.setBoardSize(3);
     controller.setGameMode("G");
-    controller.setBluePlayerType("H");
-    controller.setRedPlayerType("H");
+    controller.setBluePlayerTypeSelection("H");
+    controller.setRedPlayerTypeSelection("H");
     controller.startOfANewGame();
     controller.setCurrentPlayerColor("R");
     controller.setRedPlayerLetterSelection("O");
@@ -596,8 +596,8 @@ class SosGameTest {
   public void testAC6_3_GeneralGameInvalidBluePlayerMoveOnBoard() {
     controller.setBoardSize(9);
     controller.setGameMode("G");
-    controller.setBluePlayerType("H");
-    controller.setRedPlayerType("H");
+    controller.setBluePlayerTypeSelection("H");
+    controller.setRedPlayerTypeSelection("H");
     controller.startOfANewGame();
     controller.setCurrentPlayerColor("R");
     controller.setRedPlayerLetterSelection("O");
@@ -628,8 +628,8 @@ class SosGameTest {
   public void testAC6_4_GeneralGameInvalidRedPlayerMoveOnBoard() {
     controller.setBoardSize(4);
     controller.setGameMode("G");
-    controller.setBluePlayerType("H");
-    controller.setRedPlayerType("H");
+    controller.setBluePlayerTypeSelection("H");
+    controller.setRedPlayerTypeSelection("H");
     controller.startOfANewGame();
     controller.setCurrentPlayerColor("B");
     controller.setBluePlayerLetterSelection("S");
@@ -661,8 +661,8 @@ class SosGameTest {
     // Given an ongoing game where there is only one unoccupied cell left on the board
     controller.setBoardSize(3);
     controller.setGameMode("G");
-    controller.setBluePlayerType("H");
-    controller.setRedPlayerType("H");
+    controller.setBluePlayerTypeSelection("H");
+    controller.setRedPlayerTypeSelection("H");
     controller.startOfANewGame();
     controller.setBluePlayerLetterSelection("S");
     controller.setRedPlayerLetterSelection("O");
@@ -720,8 +720,8 @@ class SosGameTest {
     // Given an ongoing game with more than one unoccupied space on the board
     controller.setBoardSize(4);
     controller.setGameMode("G");
-    controller.setBluePlayerType("H");
-    controller.setRedPlayerType("H");
+    controller.setBluePlayerTypeSelection("H");
+    controller.setRedPlayerTypeSelection("H");
     controller.startOfANewGame();
     controller.setBluePlayerLetterSelection("S");
 
@@ -747,8 +747,8 @@ class SosGameTest {
     // Given an ongoing game with more than one unoccupied space on the board
     controller.setBoardSize(5);
     controller.setGameMode("G");
-    controller.setBluePlayerType("H");
-    controller.setRedPlayerType("H");
+    controller.setBluePlayerTypeSelection("H");
+    controller.setRedPlayerTypeSelection("H");
     controller.startOfANewGame();
 
     SosGame game = controller.getGame();
@@ -780,8 +780,8 @@ class SosGameTest {
     // Given an ongoing game where there is only one unoccupied cell left on the board
     controller.setBoardSize(3);
     controller.setGameMode("G");
-    controller.setBluePlayerType("H");
-    controller.setRedPlayerType("H");
+    controller.setBluePlayerTypeSelection("H");
+    controller.setRedPlayerTypeSelection("H");
     controller.startOfANewGame();
     controller.setBluePlayerLetterSelection("S");
     controller.setRedPlayerLetterSelection("S");
@@ -836,8 +836,8 @@ class SosGameTest {
     // Given an ongoing game with more than one unoccupied space on the board
     controller.setBoardSize(6);
     controller.setGameMode("G");
-    controller.setBluePlayerType("H");
-    controller.setRedPlayerType("H");
+    controller.setBluePlayerTypeSelection("H");
+    controller.setRedPlayerTypeSelection("H");
     controller.startOfANewGame();
     controller.setBluePlayerLetterSelection("S");
     controller.setRedPlayerLetterSelection("O");
@@ -866,8 +866,8 @@ class SosGameTest {
     // Given an ongoing game with more than one unoccupied space on the board
     controller.setBoardSize(7);
     controller.setGameMode("G");
-    controller.setBluePlayerType("H");
-    controller.setRedPlayerType("H");
+    controller.setBluePlayerTypeSelection("H");
+    controller.setRedPlayerTypeSelection("H");
     controller.startOfANewGame();
     controller.setBluePlayerLetterSelection("S");
     controller.setRedPlayerLetterSelection("O");
@@ -903,8 +903,8 @@ class SosGameTest {
     // Given an ongoing game where there is only one unoccupied cell left on the board
     controller.setBoardSize(3);
     controller.setGameMode("G");
-    controller.setBluePlayerType("H");
-    controller.setRedPlayerType("H");
+    controller.setBluePlayerTypeSelection("H");
+    controller.setRedPlayerTypeSelection("H");
     controller.startOfANewGame();
     controller.setBluePlayerLetterSelection("O");
     controller.setRedPlayerLetterSelection("O");

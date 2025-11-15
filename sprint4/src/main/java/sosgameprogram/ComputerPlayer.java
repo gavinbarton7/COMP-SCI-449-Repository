@@ -12,6 +12,10 @@ public class ComputerPlayer extends Player {
     this.random = new Random();
   }
 
+  protected void setPlayerLetterSelection() {
+
+  }
+
   // This method implements the computer players strategy for determining it's next move.
   // It first prioritizes forming an SOS on the move so it can win a simple game or get a point
   // and another turn in a general game. If forming an SOS isn't possible, it attempts to avoid

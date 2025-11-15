@@ -4,7 +4,6 @@ public abstract class Player {
   protected String playerLetterSelection;
   protected String playerType;
   protected String playerColor;
-  protected SosGameController controller;
 
   public Player(String type, String color) {
     this.playerType = type;
@@ -15,13 +14,15 @@ public abstract class Player {
     return playerColor;
   }
 
+  public String getPlayerType() {
+    return playerType;
+  }
+
   public String getPlayerLetterSelection() {
     return playerLetterSelection;
   }
 
-  protected SosGame getCurrentGame() {
-    return controller.getGame();
-  }
+  protected abstract void setPlayerLetterSelection();
 
   protected abstract PlayerMove moveSelection(SosGame game);
 

@@ -9,8 +9,8 @@ public class SosGameController {
   private SosGame game;
   private int boardSize;
   private String gameMode;
-  private String bluePlayerType;
-  private String redPlayerType;
+  private String bluePlayerTypeSelection;
+  private String redPlayerTypeSelection;
   private Player bluePlayer;
   private Player redPlayer;
 
@@ -18,8 +18,8 @@ public class SosGameController {
     this.game = null;
     this.boardSize = -1;
     this.gameMode = null;
-    this.bluePlayerType = null;
-    this.redPlayerType = null;
+    this.bluePlayerTypeSelection = null;
+    this.redPlayerTypeSelection = null;
   }
 
   // Sets the size of the board if inputted size is between 3 and 10, but returns false if inputted
@@ -96,35 +96,35 @@ public class SosGameController {
     return game.getGameResult();
   }
 
-  public void setBluePlayerType(String playerTypeSelection) {
-    this.bluePlayerType = playerTypeSelection;
+  public void setBluePlayerTypeSelection(String playerTypeSelection) {
+    this.bluePlayerTypeSelection = playerTypeSelection;
   }
 
-  public void setRedPlayerType(String playerTypeSelection) {
-    this.redPlayerType = playerTypeSelection;
+  public String getBluePlayerTypeSelection() {
+    return bluePlayerTypeSelection;
   }
 
-  public String getbluePlayerType() {
-    return bluePlayerType;
+  public void setRedPlayerTypeSelection(String playerTypeSelection) {
+    this.redPlayerTypeSelection = playerTypeSelection;
+  }
+
+  public String getRedPlayerTypeSelection() {
+    return redPlayerTypeSelection;
+  }
+
+  public String getBluePlayerType() {
+    return bluePlayer.getPlayerType();
   }
 
   public String getRedPlayerType() {
-    return redPlayerType;
+    return redPlayer.getPlayerType();
   }
 
   public String getCurrentPlayerType() {
     if (getCurrentPlayerColor() == "B") {
-      if (bluePlayerType == "H") {
-        return "H";
-      } else if (bluePlayerType == "C") {
-        return "C";
-      }
+      return getBluePlayerType();
     } else if (getCurrentPlayerColor() == "R") {
-      if (redPlayerType == "H") {
-        return "H";
-      } else if (redPlayerType == "C") {
-        return "C";
-      }
+      return  getRedPlayerType();
     }
 
     return null;
@@ -141,21 +141,21 @@ public class SosGameController {
   }
 
   private void setUpPlayers() {
-    if (bluePlayerType.equals("H")) {
+    if (bluePlayerTypeSelection.equals("H")) {
       bluePlayer = new HumanPlayer("B");
-    } else if (bluePlayerType.equals("C")) {
+    } else if (bluePlayerTypeSelection.equals("C")) {
       bluePlayer = new ComputerPlayer("B");
     }
 
-    if (redPlayerType.equals("H")) {
+    if (redPlayerTypeSelection.equals("H")) {
       redPlayer = new HumanPlayer("R");
-    } else if (redPlayerType.equals("C")) {
+    } else if (redPlayerTypeSelection.equals("C")) {
       redPlayer = new ComputerPlayer("R");
     }
   }
 
   public Player.PlayerMove moveByComputerPlayer() {
-    if (getCurrentPlayerType().equals("C")) {
+    if (getObjectOfCurrentPlayer() instanceof ComputerPlayer) {
       Player currentPlayer = getObjectOfCurrentPlayer();
       return currentPlayer.moveSelection(game);
     }

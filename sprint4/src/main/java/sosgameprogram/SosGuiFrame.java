@@ -170,11 +170,11 @@ public class SosGuiFrame extends JFrame implements GameStateListener {
     // Adds action listeners that set the player type for the red player based on which player
     // type radio button they have selected
     redPlayerHumanButton.addActionListener( e ->
-        controller.setRedPlayerType("H")
+        controller.setRedPlayerTypeSelection("H")
     );
 
     redPlayerComputerButton.addActionListener( e ->
-        controller.setRedPlayerType("C")
+        controller.setRedPlayerTypeSelection("C")
     );
 
     // Creates a group for the player buttons and adds the buttons for the red player
@@ -241,11 +241,11 @@ public class SosGuiFrame extends JFrame implements GameStateListener {
     // Adds action listeners that set the player type for the blue player based on which player
     // type radio button they have selected
     bluePlayerHumanButton.addActionListener( e ->
-        controller.setBluePlayerType("H")
+        controller.setBluePlayerTypeSelection("H")
     );
 
     bluePlayerComputerButton.addActionListener( e ->
-        controller.setBluePlayerType("C")
+        controller.setBluePlayerTypeSelection("C")
     );
 
     // Creates a panel that holds the SO buttons for the blue player
@@ -272,7 +272,8 @@ public class SosGuiFrame extends JFrame implements GameStateListener {
           "You must choose a game mode to play a game",
           "No Game Mode",
           JOptionPane.WARNING_MESSAGE);
-    } else if (controller.getbluePlayerType() == null || controller.getRedPlayerType() == null) {
+    } else if (controller.getBluePlayerTypeSelection() == null ||
+        controller.getRedPlayerTypeSelection() == null) {
       JOptionPane.showMessageDialog(this,
           "Please select player type for both players",
           "Player Type Not Selected",
@@ -365,7 +366,7 @@ public class SosGuiFrame extends JFrame implements GameStateListener {
         JOptionPane.INFORMATION_MESSAGE);
   }
 
-  public String selectLetter() {
+  public String selectLetterHumanPlayer() {
     if (controller.getCurrentPlayerColor().equals("B")) {
       return bluePlayerSOSelectionReturner();
     } else if (controller.getCurrentPlayerColor().equals("R")) {
