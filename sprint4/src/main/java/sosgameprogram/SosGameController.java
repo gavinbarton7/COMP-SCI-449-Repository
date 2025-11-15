@@ -65,12 +65,12 @@ public class SosGameController {
     game.setBluePlayerLetterSelection(letterSelection);
   }
 
-  public void setCurrentPlayerColor(String playerColor) {
-    game.setCurrentPlayerColor(playerColor);
+  public void setCurrentPlayer(String player) {
+    game.setCurrentPlayer(player);
   }
 
-  public String getCurrentPlayerColor() {
-    return game.getCurrentPlayerColor();
+  public String getCurrentPlayer() {
+    return game.getCurrentPlayer();
   }
 
   public void startOfANewGame() {
@@ -112,31 +112,30 @@ public class SosGameController {
     return redPlayerTypeSelection;
   }
 
-  public String getBluePlayerType() {
-    return bluePlayer.getPlayerType();
-  }
-
-  public String getRedPlayerType() {
-    return redPlayer.getPlayerType();
-  }
-
   public String getCurrentPlayerType() {
-    if (getCurrentPlayerColor() == "B") {
-      return getBluePlayerType();
-    } else if (getCurrentPlayerColor() == "R") {
-      return  getRedPlayerType();
+    if (getObjectOfCurrentPlayer() == bluePlayer) {
+      return bluePlayer.getPlayerType();
+    } else if (getObjectOfCurrentPlayer() == redPlayer) {
+      return  redPlayer.getPlayerType();
     }
+    return null;
+  }
 
+  public String getCurrentPlayerColor() {
+    if (getObjectOfCurrentPlayer() == bluePlayer) {
+      return bluePlayer.getPlayerColor();
+    } else if (getObjectOfCurrentPlayer() == redPlayer) {
+      return  redPlayer.getPlayerColor();
+    }
     return null;
   }
 
   public Player getObjectOfCurrentPlayer() {
-    if (getCurrentPlayerColor().equals("B")) {
+    if (getCurrentPlayer().equals("B")) {
       return bluePlayer;
-    } else if (getCurrentPlayerColor().equals("R")) {
+    } else if (getCurrentPlayer().equals("R")) {
       return redPlayer;
     }
-
     return null;
   }
 

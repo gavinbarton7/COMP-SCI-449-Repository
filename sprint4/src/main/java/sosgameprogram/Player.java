@@ -18,13 +18,9 @@ public abstract class Player {
     return playerType;
   }
 
-  public String getPlayerLetterSelection() {
-    return playerLetterSelection;
+  protected PlayerMove moveSelection(SosGame game) {
+    return null;
   }
-
-  protected abstract void setPlayerLetterSelection();
-
-  protected abstract PlayerMove moveSelection(SosGame game);
 
   public static class PlayerMove {
     public int row;

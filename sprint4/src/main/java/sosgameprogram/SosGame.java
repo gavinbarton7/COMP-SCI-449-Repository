@@ -7,7 +7,7 @@ public abstract class SosGame {
 
   private int boardSize;
   // currentPlayer holds "B" for blue player or "R" for red player
-  private String currentPlayerColor;
+  private String currentPlayer;
   private String[][] gameBoard;
   private String redPlayerLetterSelection;
   private String bluePlayerLetterSelection;
@@ -22,7 +22,7 @@ public abstract class SosGame {
     // Note: -1 is used as an initial value to tell if the board size has been set yet
     this.boardSize = -1;
     // currentPlayer is initialized to "B" since blue player moves first in every game
-    this.currentPlayerColor = "B";
+    this.currentPlayer = "B";
     this.redPlayerLetterSelection = "";
     this.bluePlayerLetterSelection = "";
     this.gameResult = null;
@@ -91,25 +91,25 @@ public abstract class SosGame {
         gameBoard[i][j] = "";
       }
     }
-    setCurrentPlayerColor("B");
+    setCurrentPlayer("B");
     gameResult = null;
     gameInProgress = true;
     sosLines.clear();
   }
 
-  protected void setCurrentPlayerColor(String currentPlayerColor) {
-    this.currentPlayerColor = currentPlayerColor;
+  protected void setCurrentPlayer(String currentPlayer) {
+    this.currentPlayer = currentPlayer;
   }
 
-  protected String getCurrentPlayerColor() {
-    return currentPlayerColor;
+  protected String getCurrentPlayer() {
+    return currentPlayer;
   }
 
   protected void changeTurns() {
-    if (currentPlayerColor.equals("B")) {
-      setCurrentPlayerColor("R");
-    } else if (currentPlayerColor.equals("R")) {
-      setCurrentPlayerColor("B");
+    if (currentPlayer.equals("B")) {
+      setCurrentPlayer("R");
+    } else if (currentPlayer.equals("R")) {
+      setCurrentPlayer("B");
     }
   }
 
@@ -177,7 +177,7 @@ public abstract class SosGame {
     if (column >= 0 && column + 2 < boardSize) {
       if (gameBoard[row][column].equals("S") && gameBoard[row][column + 1].equals("O") &&
           gameBoard[row][column + 2].equals("S")) {
-        sosLines.add(new SosLine(row, column, row, column + 2, currentPlayerColor));
+        sosLines.add(new SosLine(row, column, row, column + 2, currentPlayer));
         scoreIncrement++;
       }
     }
@@ -189,7 +189,7 @@ public abstract class SosGame {
       if (gameBoard[row][column - 1].equals("S") && gameBoard[row][column].equals("O") &&
           gameBoard[row][column + 1].equals("S")) {
         sosLines.add(new SosLine(row, column - 1, row, column + 1,
-            currentPlayerColor));
+            currentPlayer));
         scoreIncrement++;
       }
     }
@@ -200,7 +200,7 @@ public abstract class SosGame {
     if (column >= 2) {
       if (gameBoard[row][column - 2].equals("S") && gameBoard[row][column - 1].equals("O") &&
           gameBoard[row][column].equals("S")) {
-        sosLines.add(new SosLine(row, column - 2, row, column, currentPlayerColor));
+        sosLines.add(new SosLine(row, column - 2, row, column, currentPlayer));
         scoreIncrement++;
       }
     }
@@ -213,7 +213,7 @@ public abstract class SosGame {
     if (row >= 0 && row + 2 < boardSize) {
       if (gameBoard[row][column].equals("S") &&  gameBoard[row + 1][column].equals("O") &&
           gameBoard[row + 2][column].equals("S")) {
-        sosLines.add(new SosLine(row, column, row + 2, column, currentPlayerColor));
+        sosLines.add(new SosLine(row, column, row + 2, column, currentPlayer));
         scoreIncrement++;
       }
     }
@@ -226,7 +226,7 @@ public abstract class SosGame {
     if (row >= 1 && row + 1 < boardSize) {
       if (gameBoard[row - 1][column].equals("S") && gameBoard[row][column].equals("O") &&
           gameBoard[row + 1][column].equals("S")) {
-        sosLines.add(new SosLine(row - 1, column, row + 1, column, currentPlayerColor));
+        sosLines.add(new SosLine(row - 1, column, row + 1, column, currentPlayer));
         scoreIncrement++;
       }
     }
@@ -239,7 +239,7 @@ public abstract class SosGame {
     if (row >= 2) {
       if (gameBoard[row - 2][column].equals("S") && gameBoard[row - 1][column].equals("O") &&
           gameBoard[row][column].equals("S")) {
-        sosLines.add(new SosLine(row - 2, column, row, column, currentPlayerColor));
+        sosLines.add(new SosLine(row - 2, column, row, column, currentPlayer));
         scoreIncrement++;
       }
     }
@@ -253,7 +253,7 @@ public abstract class SosGame {
       if (gameBoard[row][column].equals("S") && gameBoard[row + 1][column + 1].equals("O") &&
           gameBoard[row + 2][column + 2].equals("S")) {
         sosLines.add(new SosLine(row, column, row + 2, column + 2,
-            currentPlayerColor));
+            currentPlayer));
         scoreIncrement++;
       }
     }
@@ -267,7 +267,7 @@ public abstract class SosGame {
       if (gameBoard[row - 1][column - 1].equals("S") && gameBoard[row][column].equals("O") &&
           gameBoard[row + 1][column + 1].equals("S")) {
         sosLines.add(new SosLine(row - 1, column - 1, row + 1,
-            column + 1, currentPlayerColor));
+            column + 1, currentPlayer));
         scoreIncrement++;
       }
     }
@@ -281,7 +281,7 @@ public abstract class SosGame {
       if (gameBoard[row - 2][column - 2].equals("S") &&
           gameBoard[row - 1][column - 1].equals("O") && gameBoard[row][column].equals("S")) {
         sosLines.add(new SosLine(row - 2, column - 2, row, column,
-            currentPlayerColor));
+            currentPlayer));
         scoreIncrement++;
       }
     }
@@ -295,7 +295,7 @@ public abstract class SosGame {
       if (gameBoard[row][column].equals("S") && gameBoard[row + 1][column - 1].equals("O") &&
           gameBoard[row + 2][column - 2].equals("S")) {
         sosLines.add(new SosLine(row, column, row + 2, column - 2,
-            currentPlayerColor));
+            currentPlayer));
         scoreIncrement++;
       }
     }
@@ -309,7 +309,7 @@ public abstract class SosGame {
       if (gameBoard[row - 1][column + 1].equals("S") && gameBoard[row][column].equals("O") &&
           gameBoard[row + 1][column - 1].equals("S")) {
         sosLines.add(new SosLine(row - 1, column + 1, row + 1,
-            column - 1, currentPlayerColor));
+            column - 1, currentPlayer));
         scoreIncrement++;
       }
     }
@@ -323,7 +323,7 @@ public abstract class SosGame {
       if (gameBoard[row - 2][column + 2].equals("S") &&
           gameBoard[row - 1][column + 1].equals("O") && gameBoard[row][column].equals("S")) {
         sosLines.add(new SosLine(row - 2, column + 2, row, column,
-            currentPlayerColor));
+            currentPlayer));
         scoreIncrement++;
       }
     }
@@ -344,9 +344,9 @@ public abstract class SosGame {
   }
 
   private void playerValidMove(int row, int column) {
-    if (currentPlayerColor.equals("B")) {
+    if (currentPlayer.equals("B")) {
       bluePlayerValidMove(row, column);
-    } else if (currentPlayerColor.equals("R")) {
+    } else if (currentPlayer.equals("R")) {
       redPlayerValidMove(row, column);
     }
   }

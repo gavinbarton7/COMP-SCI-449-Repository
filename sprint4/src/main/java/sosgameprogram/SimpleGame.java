@@ -24,9 +24,9 @@ public class SimpleGame extends SosGame {
   private void simpleGameOver(int row, int column) {
     if (checkForSosFormation(row, column) > 0) {
       setGameInProgress(false);
-      if (getCurrentPlayerColor().equals("B")) {
+      if (getCurrentPlayer().equals("B")) {
         setGameResult("BV");
-      } else if (getCurrentPlayerColor().equals("R")) {
+      } else if (getCurrentPlayer().equals("R")) {
         setGameResult("RV");
       }
     }

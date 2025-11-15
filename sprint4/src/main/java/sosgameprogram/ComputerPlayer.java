@@ -12,17 +12,19 @@ public class ComputerPlayer extends Player {
     this.random = new Random();
   }
 
-  protected void setPlayerLetterSelection() {
-
-  }
-
   // This method implements the computer players strategy for determining it's next move.
+  // It overrides the PlayerMove method in the PlayerMove class because while human players,
+  // or other potential player types that might be implemented in future changes to this program,
+  // have there move logic implemented as part of the game logic and the click handler in the GUI,
+  // computer player moves have logic that is exclusive to only computer players, which is what
+  // this method implements
   // It first prioritizes forming an SOS on the move so it can win a simple game or get a point
   // and another turn in a general game. If forming an SOS isn't possible, it attempts to avoid
   // any moves that would give its opponenet, the other player, an opportunity to form an
   // SOS sequence on their next move. If the only valid moves left are ones that can't form an SOS
   // sequence nor prevent the other player from forming and SOS sequence on their next turn, then
   // the computer selects a random move of the moves that are left.
+  @Override
   protected PlayerMove moveSelection(SosGame game) {
     int boardSize = game.getBoardSize();
 

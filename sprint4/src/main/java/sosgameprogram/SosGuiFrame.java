@@ -300,7 +300,7 @@ public class SosGuiFrame extends JFrame implements GameStateListener {
 
   // Changes the label for the current player after each move
   public void updateCurrentPlayerLabel() {
-    String currentPlayerColor = controller.getCurrentPlayerColor();
+    String currentPlayerColor = controller.getCurrentPlayer();
     if (currentPlayerColor.equals("B")) {
       currentPlayerLabel.setText("Current turn: Blue");
       currentPlayerLabel.setForeground(Color.BLUE);
@@ -367,9 +367,9 @@ public class SosGuiFrame extends JFrame implements GameStateListener {
   }
 
   public String selectLetterHumanPlayer() {
-    if (controller.getCurrentPlayerColor().equals("B")) {
+    if (controller.getCurrentPlayer().equals("B")) {
       return bluePlayerSOSelectionReturner();
-    } else if (controller.getCurrentPlayerColor().equals("R")) {
+    } else if (controller.getCurrentPlayer().equals("R")) {
       return redPlayerSOSelectionReturner();
     }
     return null;
@@ -398,7 +398,8 @@ public class SosGuiFrame extends JFrame implements GameStateListener {
       return;
     }
 
-    if (controller.getCurrentPlayerType().equals("C") && computerMoveInProgress == false) {
+    if (controller.getObjectOfCurrentPlayer() instanceof ComputerPlayer &&
+        computerMoveInProgress == false) {
       computerMoveInProgress = true;
 
       SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
