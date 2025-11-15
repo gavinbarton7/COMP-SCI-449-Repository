@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.border.EmptyBorder;
+import java.util.concurrent.TimeUnit;
 
 public class SosGuiFrame extends JFrame implements GameStateListener {
   private SosGameController controller;
@@ -23,10 +24,12 @@ public class SosGuiFrame extends JFrame implements GameStateListener {
   private JRadioButton bluePlayerOButton;
   private JRadioButton redPlayerSButton;
   private JRadioButton redPlayerOButton;
+  private boolean computerMoveInProgress;
 
   @Override
   public void onGameStateChanged() {
     updateCurrentPlayerLabel();
+    computerTurnHandler();
   }
 
   @Override
@@ -280,6 +283,8 @@ public class SosGuiFrame extends JFrame implements GameStateListener {
       board.newBoard();
       controller.startOfANewGame();
       updateCurrentPlayerLabel();
+      computerMoveInProgress = false;
+      computerTurnHandler();
     }
   }
 
@@ -362,14 +367,14 @@ public class SosGuiFrame extends JFrame implements GameStateListener {
 
   public String selectLetter() {
     if (controller.getCurrentPlayer().equals("B")) {
-      return bluePlayerSOSelctionReturner();
+      return bluePlayerSOSelectionReturner();
     } else if (controller.getCurrentPlayer().equals("R")) {
-      return redPlayerSOSelctionReturner();
+      return redPlayerSOSelectionReturner();
     }
     return null;
   }
 
-  private String bluePlayerSOSelctionReturner() {
+  private String bluePlayerSOSelectionReturner() {
     if (bluePlayerSButton.isSelected()) {
       return "S";
     } else if (bluePlayerOButton.isSelected()) {
@@ -378,12 +383,42 @@ public class SosGuiFrame extends JFrame implements GameStateListener {
     return null;
   }
 
-  private String redPlayerSOSelctionReturner() {
+  private String redPlayerSOSelectionReturner() {
     if (redPlayerSButton.isSelected()) {
       return "S";
     } else if (redPlayerOButton.isSelected()) {
       return "O";
     }
     return null;
+  }
+
+  private void computerTurnHandler() {
+    if (controller.getGame() == null || !controller.getGame().isGameInProgress()) {
+      return;
+    }
+
+    if (controller.getCurrentPlayerType().equals("C") && computerMoveInProgress == false) {
+      computerMoveInProgress = true;
+
+      SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+        @Override
+        protected Void doInBackground() throws Exception {
+          TimeUnit.SECONDS.sleep(1);
+          return null;
+        }
+
+        @Override
+        protected void done() {
+          if (controller.getGame().isGameInProgress() == true) {
+            Player.PlayerMove move = controller.moveByComputerPlayer();
+            if (move != null) {
+              board.computerPlayerMoveExecution(move.row, move.column, move.letter);
+            }
+          }
+          computerMoveInProgress = false;
+        }
+      };
+      worker.execute();
+    }
   }
 }
