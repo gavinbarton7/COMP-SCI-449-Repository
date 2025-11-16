@@ -1,7 +1,6 @@
 package sosgameprogram;
 
 public abstract class Player {
-  protected String playerLetterSelection;
   protected String playerType;
   protected String playerColor;
 
