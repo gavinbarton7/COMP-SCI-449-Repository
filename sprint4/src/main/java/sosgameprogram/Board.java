@@ -29,6 +29,28 @@ public class Board extends JPanel {
     repaint();
   }
 
+  public void computerPlayerMoveExecution(int row, int column, String selectedletter) {
+    SosGame game = controller.getGame();
+
+    if (game == null || game.isGameInProgress() == false) {
+      return;
+    }
+
+    if (controller.getCurrentPlayer().equals("B")) {
+      controller.setBluePlayerLetterSelection(selectedletter);
+    } else if (controller.getCurrentPlayer().equals("R")) {
+      controller.setRedPlayerLetterSelection(selectedletter);
+    }
+
+    if (game.setCellContent(row, column)) {
+      repaint();
+    }
+
+    if (game.isGameInProgress() == false) {
+      listener.onGameEnded();
+    }
+  }
+
   // Draws board
   protected void paintComponent(Graphics board) {
     super.paintComponent(board);
@@ -68,28 +90,6 @@ public class Board extends JPanel {
           listener.onGameEnded();
         }
       }
-    }
-  }
-
-  public void computerPlayerMoveExecution(int row, int column, String selectedletter) {
-    SosGame game = controller.getGame();
-
-    if (game == null || game.isGameInProgress() == false) {
-      return;
-    }
-
-    if (controller.getCurrentPlayer().equals("B")) {
-      controller.setBluePlayerLetterSelection(selectedletter);
-    } else if (controller.getCurrentPlayer().equals("R")) {
-      controller.setRedPlayerLetterSelection(selectedletter);
-    }
-
-    if (game.setCellContent(row, column)) {
-      repaint();
-    }
-
-    if (game.isGameInProgress() == false) {
-      listener.onGameEnded();
     }
   }
 

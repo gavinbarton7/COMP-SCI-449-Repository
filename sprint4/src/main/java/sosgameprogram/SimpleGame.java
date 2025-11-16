@@ -29,9 +29,7 @@ public class SimpleGame extends SosGame {
       } else if (getCurrentPlayer().equals("R")) {
         setGameResult("RV");
       }
-    }
-
-    if (isBoardFull() == true) {
+    } else if (isBoardFull() == true) {
       setGameInProgress(false);
       setGameResult("D");
     }
