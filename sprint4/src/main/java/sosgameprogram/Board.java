@@ -29,7 +29,7 @@ public class Board extends JPanel {
     repaint();
   }
 
-  public void computerPlayerMoveExecution(int row, int column, String selectedletter) {
+  public void computerPlayerMoveExecution(int row, int column, String selectedLetter) {
     SosGame game = controller.getGame();
 
     if (game == null || game.isGameInProgress() == false) {
@@ -37,9 +37,9 @@ public class Board extends JPanel {
     }
 
     if (controller.getCurrentPlayer().equals("B")) {
-      controller.setBluePlayerLetterSelection(selectedletter);
+      controller.setBluePlayerLetterSelection(selectedLetter);
     } else if (controller.getCurrentPlayer().equals("R")) {
-      controller.setRedPlayerLetterSelection(selectedletter);
+      controller.setRedPlayerLetterSelection(selectedLetter);
     }
 
     if (game.setCellContent(row, column)) {
@@ -77,7 +77,7 @@ public class Board extends JPanel {
     int row = (y - boardOffset) / cellSize;
 
     if (game.isGameInProgress() == true) {
-      if (controller.getObjectOfCurrentPlayer() instanceof HumanPlayer) {
+      if (controller.getObjectOfCurrentPlayer().getPlayerType().equals("H")) {
         // Checks to see if the click is within the game board and paints S or O if the cell is
         // unoccupied
         if (row >= 0 && row < boardSize && col >= 0 && col < boardSize) {

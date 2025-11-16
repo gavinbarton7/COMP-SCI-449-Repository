@@ -371,7 +371,7 @@ public class SosGuiFrame extends JFrame implements GameStateListener {
       return;
     }
 
-    if (controller.getObjectOfCurrentPlayer() instanceof ComputerPlayer &&
+    if (controller.getObjectOfCurrentPlayer().getPlayerType().equals("C") &&
         computerMoveInProgress == false) {
       computerMoveInProgress = true;
 
