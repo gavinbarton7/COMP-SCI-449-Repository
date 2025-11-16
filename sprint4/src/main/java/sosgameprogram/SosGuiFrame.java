@@ -139,6 +139,65 @@ public class SosGuiFrame extends JFrame implements GameStateListener {
     this.add(bottomPanel, BorderLayout.SOUTH);
   }
 
+  public void createBluePlayerPanel () {
+    // Creates radio S and O buttons for the blue player
+    bluePlayerSButton = new JRadioButton();
+    bluePlayerSButton.setText("S");
+    bluePlayerSButton.setBorder(new EmptyBorder(10, 20, 5, 0));
+    bluePlayerOButton = new JRadioButton();
+    bluePlayerOButton.setBorder(new EmptyBorder(5, 20, 10, 0));
+    bluePlayerOButton.setText("O");
+
+    JRadioButton bluePlayerHumanButton = new JRadioButton();
+    bluePlayerHumanButton.setText("Human");
+    JRadioButton bluePlayerComputerButton = new JRadioButton();
+    bluePlayerComputerButton.setText("Computer");
+
+    // Creates label for the Blue player
+    JLabel bluePlayerLabel = new JLabel();
+    bluePlayerLabel.setText(" Blue Player ");
+
+    // Creates a group for the player buttons and adds the buttons for the blue player
+    bluePlayerSOGroup = new ButtonGroup();
+    bluePlayerSOGroup.add(bluePlayerSButton);
+    bluePlayerSOGroup.add(bluePlayerOButton);
+
+    bluePlayerHumanComputerGroup = new ButtonGroup();
+    bluePlayerHumanComputerGroup.add(bluePlayerHumanButton);
+    bluePlayerHumanComputerGroup.add(bluePlayerComputerButton);
+
+    // Adds action listeners that set the letter selection for the blue player based on which
+    // letter radio button they have selected
+    bluePlayerSButton.addActionListener(e ->
+        controller.setBluePlayerLetterSelection("S")
+    );
+    bluePlayerOButton.addActionListener(e ->
+        controller.setBluePlayerLetterSelection("O")
+    );
+
+
+    // Adds action listeners that set the player type for the blue player based on which player
+    // type radio button they have selected
+    bluePlayerHumanButton.addActionListener( e ->
+        controller.setBluePlayerTypeSelection("H")
+    );
+
+    bluePlayerComputerButton.addActionListener( e ->
+        controller.setBluePlayerTypeSelection("C")
+    );
+
+    // Creates a panel that holds the SO buttons for the blue player
+    JPanel bluePlayerPanel = new JPanel();
+    bluePlayerPanel.setLayout(new BoxLayout(bluePlayerPanel, BoxLayout.Y_AXIS));
+    bluePlayerPanel.add(bluePlayerLabel);
+    bluePlayerPanel.add(bluePlayerHumanButton);
+    bluePlayerPanel.add(bluePlayerSButton);
+    bluePlayerPanel.add(bluePlayerOButton);
+    bluePlayerPanel.add(bluePlayerComputerButton);
+
+    this.add(bluePlayerPanel, BorderLayout.WEST);
+  }
+
   public void createRedPlayerPanel() {
     // Creates label for the Red player
     JLabel redPlayerLabel = new JLabel();
@@ -199,65 +258,6 @@ public class SosGuiFrame extends JFrame implements GameStateListener {
     redPlayerPanel.add(redPlayerComputerButton);
 
     this.add(redPlayerPanel, BorderLayout.EAST);
-  }
-
-  public void createBluePlayerPanel () {
-    // Creates radio S and O buttons for the blue player
-    bluePlayerSButton = new JRadioButton();
-    bluePlayerSButton.setText("S");
-    bluePlayerSButton.setBorder(new EmptyBorder(10, 20, 5, 0));
-    bluePlayerOButton = new JRadioButton();
-    bluePlayerOButton.setBorder(new EmptyBorder(5, 20, 10, 0));
-    bluePlayerOButton.setText("O");
-
-    JRadioButton bluePlayerHumanButton = new JRadioButton();
-    bluePlayerHumanButton.setText("Human");
-    JRadioButton bluePlayerComputerButton = new JRadioButton();
-    bluePlayerComputerButton.setText("Computer");
-
-    // Creates label for the Blue player
-    JLabel bluePlayerLabel = new JLabel();
-    bluePlayerLabel.setText(" Blue Player ");
-
-    // Creates a group for the player buttons and adds the buttons for the blue player
-    bluePlayerSOGroup = new ButtonGroup();
-    bluePlayerSOGroup.add(bluePlayerSButton);
-    bluePlayerSOGroup.add(bluePlayerOButton);
-
-    bluePlayerHumanComputerGroup = new ButtonGroup();
-    bluePlayerHumanComputerGroup.add(bluePlayerHumanButton);
-    bluePlayerHumanComputerGroup.add(bluePlayerComputerButton);
-
-    // Adds action listeners that set the letter selection for the blue player based on which
-    // letter radio button they have selected
-    bluePlayerSButton.addActionListener(e ->
-        controller.setBluePlayerLetterSelection("S")
-    );
-    bluePlayerOButton.addActionListener(e ->
-        controller.setBluePlayerLetterSelection("O")
-    );
-
-
-    // Adds action listeners that set the player type for the blue player based on which player
-    // type radio button they have selected
-    bluePlayerHumanButton.addActionListener( e ->
-        controller.setBluePlayerTypeSelection("H")
-    );
-
-    bluePlayerComputerButton.addActionListener( e ->
-        controller.setBluePlayerTypeSelection("C")
-    );
-
-    // Creates a panel that holds the SO buttons for the blue player
-    JPanel bluePlayerPanel = new JPanel();
-    bluePlayerPanel.setLayout(new BoxLayout(bluePlayerPanel, BoxLayout.Y_AXIS));
-    bluePlayerPanel.add(bluePlayerLabel);
-    bluePlayerPanel.add(bluePlayerHumanButton);
-    bluePlayerPanel.add(bluePlayerSButton);
-    bluePlayerPanel.add(bluePlayerOButton);
-    bluePlayerPanel.add(bluePlayerComputerButton);
-
-    this.add(bluePlayerPanel, BorderLayout.WEST);
   }
 
   public void startNewGame() {
@@ -364,33 +364,6 @@ public class SosGuiFrame extends JFrame implements GameStateListener {
 
     JOptionPane.showMessageDialog(this, message, "Game Over",
         JOptionPane.INFORMATION_MESSAGE);
-  }
-
-  public String selectLetterHumanPlayer() {
-    if (controller.getCurrentPlayer().equals("B")) {
-      return bluePlayerSOSelectionReturner();
-    } else if (controller.getCurrentPlayer().equals("R")) {
-      return redPlayerSOSelectionReturner();
-    }
-    return null;
-  }
-
-  private String bluePlayerSOSelectionReturner() {
-    if (bluePlayerSButton.isSelected()) {
-      return "S";
-    } else if (bluePlayerOButton.isSelected()) {
-      return "O";
-    }
-    return null;
-  }
-
-  private String redPlayerSOSelectionReturner() {
-    if (redPlayerSButton.isSelected()) {
-      return "S";
-    } else if (redPlayerOButton.isSelected()) {
-      return "O";
-    }
-    return null;
   }
 
   private void computerTurnHandler() {

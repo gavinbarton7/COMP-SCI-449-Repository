@@ -55,14 +55,14 @@ public class SosGameController {
     return game;
   }
 
-  // Sets the letter selection for the red player
-  public void setRedPlayerLetterSelection(String letterSelection) {
-    game.setRedPlayerLetterSelection(letterSelection);
-  }
-
   // Sets the letter selection for the blue player
   public void setBluePlayerLetterSelection(String letterSelection) {
     game.setBluePlayerLetterSelection(letterSelection);
+  }
+
+  // Sets the letter selection for the red player
+  public void setRedPlayerLetterSelection(String letterSelection) {
+    game.setRedPlayerLetterSelection(letterSelection);
   }
 
   public void setCurrentPlayer(String player) {

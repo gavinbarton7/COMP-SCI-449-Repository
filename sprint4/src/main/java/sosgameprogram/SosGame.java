@@ -9,8 +9,8 @@ public abstract class SosGame {
   // currentPlayer holds "B" for blue player or "R" for red player
   private String currentPlayer;
   private String[][] gameBoard;
-  private String redPlayerLetterSelection;
   private String bluePlayerLetterSelection;
+  private String redPlayerLetterSelection;
   // Stores the result of the SOS game ("BV" for blue player victory, "RV" for red playe victory,
   // and "D" for draw
   private String gameResult;
@@ -113,19 +113,6 @@ public abstract class SosGame {
     }
   }
 
-  // Sets the letter selection for the red player
-  protected void setRedPlayerLetterSelection(String letterSelection) {
-    if (letterSelection.equals("S")) {
-      redPlayerLetterSelection = "S";
-    } else if (letterSelection.equals("O")) {
-      redPlayerLetterSelection = "O";
-    }
-  }
-
-  protected String getRedPlayerLetterSelection() {
-    return redPlayerLetterSelection;
-  }
-
   // Sets the letter selection for the blue player
   protected void setBluePlayerLetterSelection(String letterSelection) {
     if (letterSelection.equals("S")) {
@@ -137,6 +124,19 @@ public abstract class SosGame {
 
   protected String getBluePlayerLetterSelection() {
     return bluePlayerLetterSelection;
+  }
+
+  // Sets the letter selection for the red player
+  protected void setRedPlayerLetterSelection(String letterSelection) {
+    if (letterSelection.equals("S")) {
+      redPlayerLetterSelection = "S";
+    } else if (letterSelection.equals("O")) {
+      redPlayerLetterSelection = "O";
+    }
+  }
+
+  protected String getRedPlayerLetterSelection() {
+    return redPlayerLetterSelection;
   }
 
   protected abstract void bluePlayerValidMove(int row, int column);
@@ -151,7 +151,7 @@ public abstract class SosGame {
     return gameResult;
   }
 
-  public boolean isGameInProgress() {
+  protected boolean isGameInProgress() {
     return gameInProgress;
   }
 
@@ -163,7 +163,7 @@ public abstract class SosGame {
     gameBoard[row][column] = playerLetterSelection;
   }
 
-  protected String[][] getGameBoard () {
+  protected String[][] getGameBoard() {
     return gameBoard;
   }
 
