@@ -1042,7 +1042,6 @@ class SosGameTest {
     controller.setCurrentPlayer("B");
 
     Player.PlayerMove move = controller.moveByComputerPlayer();
-
     // Then the computer player makes a move placing an “S” or “O”, whichever letter will result
     // in the formation of an SOS sequence, on the space it found to form an SOS sequence
     assertNotNull(move);
@@ -1137,10 +1136,15 @@ class SosGameTest {
 
     // makes sure the computer player didn't make any unsafe moves
     assertFalse(unsafeMoves.contains(actualMoveSignature));
+
+    // makes sure the move was inside the board and that an S or O was selected as the letter
+    assertTrue(move.row >= 0 && move.row < 3);
+    assertTrue(move.column >= 0 && move.column < 3);
+    assertTrue(move.letter.equals("S") || move.letter.equals("O"));
   }
 
   @Test
-  public void testAC9_3_ComputerMakesRandomMoveOnEmptyBoard() {
+  public void testAC9_3_ComputerMakesRandomMoveIfNoSOSMovesOrSafeMoves() {
     // Given an ongoing game of either mode
     // And the player who currently has a turn is a computer player
     controller.setBoardSize(3);
@@ -1165,6 +1169,8 @@ class SosGameTest {
     // And the computer player makes the move it selected by placing an “S” or “O”, whichever
     // letter is chose on the board space it selected
     assertNotNull(move);
+
+    // makes sure the move was inside the board and that an S or O was selected as the letter
     assertTrue(move.row >= 0 && move.row < 3);
     assertTrue(move.column >= 0 && move.column < 3);
     assertTrue(move.letter.equals("S") || move.letter.equals("O"));
