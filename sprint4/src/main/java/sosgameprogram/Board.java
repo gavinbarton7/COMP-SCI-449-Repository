@@ -77,7 +77,7 @@ public class Board extends JPanel {
     int row = (y - boardOffset) / cellSize;
 
     if (game.isGameInProgress() == true) {
-      if (controller.getObjectOfCurrentPlayer().getPlayerType().equals("H")) {
+      if (controller.getCurrentPlayerType().equals("H")) {
         // Checks to see if the click is within the game board and paints S or O if the cell is
         // unoccupied
         if (row >= 0 && row < boardSize && col >= 0 && col < boardSize) {

@@ -154,7 +154,7 @@ public class SosGameController {
   }
 
   public Player.PlayerMove moveByComputerPlayer() {
-    if (getObjectOfCurrentPlayer().getPlayerType().equals("C")) {
+    if (getCurrentPlayerType().equals("C")) {
       Player currentPlayer = getObjectOfCurrentPlayer();
       return currentPlayer.moveSelection(game);
     }
