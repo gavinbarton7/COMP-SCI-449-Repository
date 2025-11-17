@@ -962,18 +962,20 @@ class SosGameTest {
     controller.setBoardSize(3);
     controller.setGameMode("S");
 
-    // When the player type, human or computer, is selected for both players
-    // And the "New Game" button is selected
+    // When the player type, human or computer, is selected for both the blue player and red player
+    // using their respective sets of human/computer radio buttons
+    // And the “New Game” button is selected
     controller.setBluePlayerTypeSelection("H");
     controller.setRedPlayerTypeSelection("C");
     controller.startOfANewGame();
-
-    // Then the two players are set up with functionality based on the type
     SosGame game = controller.getGame();
+
+    // Then the two players are set up with functionality based on the type that was selected
+    // using the human/computer radio buttons for each player
+    // And the game begins
     assertNotNull(game);
     assertTrue(game.isGameInProgress());
 
-    // Check that the correct player objects were created
     controller.setCurrentPlayer("B");
     assertEquals("H", controller.getCurrentPlayerType());
     assertTrue(controller.getObjectOfCurrentPlayer() instanceof HumanPlayer);
@@ -991,14 +993,17 @@ class SosGameTest {
     controller.setBoardSize(3);
     controller.setGameMode("G");
 
-    // When the player type, human or computer, is selected for both players
-    // And the "New Game" button is selected
+    // When the player type, human or computer, is selected for both the blue player and red player
+    // using their respective sets of human/computer radio buttons
+    // And the “New Game” button is selected
     controller.setBluePlayerTypeSelection("C");
     controller.setRedPlayerTypeSelection("C");
     controller.startOfANewGame();
-
-    // Then the two players are set up with functionality based on the type
     SosGame game = controller.getGame();
+
+    // Then the two players are set up with functionality based on the type that was selected
+    // using the human/computer radio buttons for each player
+    // And the game begins
     assertNotNull(game);
     assertTrue(game.isGameInProgress());
 
@@ -1013,7 +1018,8 @@ class SosGameTest {
 
   @Test
   public void testAC9_1_ComputerFormsHorizontalSOS() {
-    // Given an ongoing game
+    // Given an ongoing game of either mode
+    // And the player who currently has a turn is a computer player
     controller.setBoardSize(3);
     controller.setGameMode("S");
     controller.setBluePlayerTypeSelection("C");
@@ -1030,13 +1036,15 @@ class SosGameTest {
     game.makeMove(0, 0, "S");
     game.makeMove(0, 1, "O");
 
-    // When it's the computer player's turn
+    // When the computer player scans the board
+    // And the computer player determines that there is an option for them to place an “S” or “O”
+    // in a particular space that will allow them to form an SOS sequence
     controller.setCurrentPlayer("B");
 
-    // Then the computer player makes the move to form an SOS
     Player.PlayerMove move = controller.moveByComputerPlayer();
 
-    // Assert the computer chose the winning move
+    // Then the computer player makes a move placing an “S” or “O”, whichever letter will result
+    // in the formation of an SOS sequence, on the space it found to form an SOS sequence
     assertNotNull(move);
     assertEquals(0, move.row);
     assertEquals(2, move.column);
@@ -1045,7 +1053,8 @@ class SosGameTest {
 
   @Test
   public void testAC9_1_ComputerFormsVerticalSOSWithO() {
-    // Given an ongoing game
+    // Given an ongoing game of either mode
+    // And the player who currently has a turn is a computer player
     controller.setBoardSize(3);
     controller.setGameMode("S");
     controller.setBluePlayerTypeSelection("H");
@@ -1061,13 +1070,15 @@ class SosGameTest {
     game.makeMove(0, 0, "S");
     game.makeMove(2, 0, "S");
 
-    // When it's the computer player's turn
+    // When the computer player scans the board
+    // And the computer player determines that there is an option for them to place an “S” or “O”
+    // in a particular space that will allow them to form an SOS sequence
     controller.setCurrentPlayer("R");
 
-    // Then the computer player makes the move to form an SOS
     Player.PlayerMove move = controller.moveByComputerPlayer();
 
-    // Assert the computer chose the winning move
+    // Then the computer player makes a move placing an “S” or “O”, whichever letter will result
+    // in the formation of an SOS sequence, on the space it found to form an SOS sequence
     assertNotNull(move);
     assertEquals(1, move.row);
     assertEquals(0, move.column);
@@ -1076,7 +1087,8 @@ class SosGameTest {
 
   @Test
   public void testAC9_2_ComputerAvoidsAllOpponentSOSTraps() {
-    // Given an ongoing game
+    // Given an ongoing game of either mode
+    // And the player who currently has a turn is a computer player
     controller.setBoardSize(3);
     controller.setGameMode("S");
     controller.setBluePlayerTypeSelection("C");
@@ -1089,54 +1101,69 @@ class SosGameTest {
     // S _ _
     // _ _ _
     // _ _ _
-    // This creates six "unsafe" moves for the computer (Blue)
-    // that would allow Red to win on the next turn.
+    // This creates six "unsafe" moves for the computer player (the Blue player)
+    // that would allow the Red Player to form an SOS sequence on the next turn.
     game.makeMove(0, 0, "S"); // Simulate Red's move
 
-    // When it's the computer player's turn
+    // When the computer player scans the board
+    // And the computer player determines that there is no option for them to place an “S” or “O”
+    // in a particular space that will allow them to form an SOS sequence
+    // And the computer player determines that there is at least one particular space on the board
+    // where if it were to place an “S” or “O” to make a move that would not give the other player
+    // an opportunity to form an SOS sequence on their next turn
     controller.setCurrentPlayer("B");
 
-    // And the computer determines there is no option to form an SOS (AC 9.1 fails)
-    // And the computer determines there are "safe" moves
     Player.PlayerMove move = controller.moveByComputerPlayer();
 
-    // Then the computer player selects a "safe" move
+    // Then the computer player randomly selects a move based on the safe moves it found that will
+    // not give the other player an opportunity to form an SOS sequence on their next move
+    // And the player makes the safe move it selected by placing an “S” or “O”, whichever letter
+    // is chose on the board space it selected
     assertNotNull(move);
 
-    // Asserts the computer did NOT make any of the "unsafe" moves
     String actualMoveSignature = "R:" + move.row + " C:" + move.column + " L:" + move.letter;
 
-    // Define all 6 possible unsafe moves
     Set<String> unsafeMoves = new HashSet<>();
+
     // S O S unsafe moves (playing an 'O')
     unsafeMoves.add("R:0 C:1 L:O"); // Horizontal move: S O _
     unsafeMoves.add("R:1 C:0 L:O"); // Vertical move: S O _ (down)
     unsafeMoves.add("R:1 C:1 L:O"); // Diagonal move: S O _ (diag)
+
     // S _ S unsafe moves (playing an 'S')
     unsafeMoves.add("R:0 C:2 L:S"); // Horizontal move: S _ S
     unsafeMoves.add("R:2 C:0 L:S"); // Vertical move: S _ S (down)
     unsafeMoves.add("R:2 C:2 L:S"); // Diagonal move: S _ S (diag)
 
-
+    // makes sure the computer player didn't make any unsafe moves
     assertFalse(unsafeMoves.contains(actualMoveSignature));
   }
 
   @Test
   public void testAC9_3_ComputerMakesRandomMoveOnEmptyBoard() {
-    // Given an ongoing game
+    // Given an ongoing game of either mode
+    // And the player who currently has a turn is a computer player
     controller.setBoardSize(3);
     controller.setGameMode("S");
     controller.setBluePlayerTypeSelection("C");
     controller.setRedPlayerTypeSelection("H");
     controller.startOfANewGame();
 
-    // When the computer player scans the board and finds that every cell is unoccupied
+    // When the computer player scans the board
+    // And the computer player determines that there is no option for them to place an “S” or “O”
+    // in a particular space that will allow them to form an SOS sequence
+    // And the computer player determines that there are no particular spaces on the board where
+    // if it were to place an “S” or “O” to make a move that would not give the other player an
+    // opportunity to form an SOS sequence on their next turn
+    // And the computer player finds all possible removes remaining since there are no more
+    // safe moves
     controller.setCurrentPlayer("B");
 
-    // Then the computer player randomly selects a move
     Player.PlayerMove move = controller.moveByComputerPlayer();
 
-    // Assert that *a* valid move was made
+    // Then the computer player randomly selects a move of all the possible moves remaining
+    // And the computer player makes the move it selected by placing an “S” or “O”, whichever
+    // letter is chose on the board space it selected
     assertNotNull(move);
     assertTrue(move.row >= 0 && move.row < 3);
     assertTrue(move.column >= 0 && move.column < 3);
