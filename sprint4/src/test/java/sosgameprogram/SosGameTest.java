@@ -3,6 +3,8 @@ package sosgameprogram;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import java.util.HashSet;
+import java.util.Set;
 
 class SosGameTest {
   private SosGameController controller;
@@ -950,6 +952,195 @@ class SosGameTest {
 
     // And it is a draw
     assertEquals("D", controller.getGameResult());
+  }
+
+  @Test
+  public void testAC8_1_HumanVsComputerSetup() {
+    // Given no game is in progress
+    // And the board size has been selected
+    // And the game mode has been selected
+    controller.setBoardSize(3);
+    controller.setGameMode("S");
+
+    // When the player type, human or computer, is selected for both players
+    // And the "New Game" button is selected
+    controller.setBluePlayerTypeSelection("H");
+    controller.setRedPlayerTypeSelection("C");
+    controller.startOfANewGame();
+
+    // Then the two players are set up with functionality based on the type
+    SosGame game = controller.getGame();
+    assertNotNull(game);
+    assertTrue(game.isGameInProgress());
+
+    // Check that the correct player objects were created
+    controller.setCurrentPlayer("B");
+    assertEquals("H", controller.getCurrentPlayerType());
+    assertTrue(controller.getObjectOfCurrentPlayer() instanceof HumanPlayer);
+
+    controller.setCurrentPlayer("R");
+    assertEquals("C", controller.getCurrentPlayerType());
+    assertTrue(controller.getObjectOfCurrentPlayer() instanceof ComputerPlayer);
+  }
+
+  @Test
+  public void testAC8_1_ComputerVsComputerSetup() {
+    // Given no game is in progress
+    // And the board size has been selected
+    // And the game mode has been selected
+    controller.setBoardSize(3);
+    controller.setGameMode("G");
+
+    // When the player type, human or computer, is selected for both players
+    // And the "New Game" button is selected
+    controller.setBluePlayerTypeSelection("C");
+    controller.setRedPlayerTypeSelection("C");
+    controller.startOfANewGame();
+
+    // Then the two players are set up with functionality based on the type
+    SosGame game = controller.getGame();
+    assertNotNull(game);
+    assertTrue(game.isGameInProgress());
+
+    controller.setCurrentPlayer("B");
+    assertEquals("C", controller.getCurrentPlayerType());
+    assertTrue(controller.getObjectOfCurrentPlayer() instanceof ComputerPlayer);
+
+    controller.setCurrentPlayer("R");
+    assertEquals("C", controller.getCurrentPlayerType());
+    assertTrue(controller.getObjectOfCurrentPlayer() instanceof ComputerPlayer);
+  }
+
+  @Test
+  public void testAC9_1_ComputerFormsHorizontalSOS() {
+    // Given an ongoing game
+    controller.setBoardSize(3);
+    controller.setGameMode("S");
+    controller.setBluePlayerTypeSelection("C");
+    controller.setRedPlayerTypeSelection("H");
+    controller.startOfANewGame();
+
+    SosGame game = controller.getGame();
+
+    // Set up the board for a winning move:
+    // S O _
+    // _ _ _
+    // _ _ _
+    // Manually make moves to set up the board
+    game.makeMove(0, 0, "S");
+    game.makeMove(0, 1, "O");
+
+    // When it's the computer player's turn
+    controller.setCurrentPlayer("B");
+
+    // Then the computer player makes the move to form an SOS
+    Player.PlayerMove move = controller.moveByComputerPlayer();
+
+    // Assert the computer chose the winning move
+    assertNotNull(move);
+    assertEquals(0, move.row);
+    assertEquals(2, move.column);
+    assertEquals("S", move.letter);
+  }
+
+  @Test
+  public void testAC9_1_ComputerFormsVerticalSOSWithO() {
+    // Given an ongoing game
+    controller.setBoardSize(3);
+    controller.setGameMode("S");
+    controller.setBluePlayerTypeSelection("H");
+    controller.setRedPlayerTypeSelection("C"); // Red is Computer
+    controller.startOfANewGame();
+
+    SosGame game = controller.getGame();
+
+    // Set up the board for a winning move:
+    // S _ _
+    // _ _ _
+    // S _ _
+    game.makeMove(0, 0, "S");
+    game.makeMove(2, 0, "S");
+
+    // When it's the computer player's turn
+    controller.setCurrentPlayer("R");
+
+    // Then the computer player makes the move to form an SOS
+    Player.PlayerMove move = controller.moveByComputerPlayer();
+
+    // Assert the computer chose the winning move
+    assertNotNull(move);
+    assertEquals(1, move.row);
+    assertEquals(0, move.column);
+    assertEquals("O", move.letter);
+  }
+
+  @Test
+  public void testAC9_2_ComputerAvoidsAllOpponentSOSTraps() {
+    // Given an ongoing game
+    controller.setBoardSize(3);
+    controller.setGameMode("S");
+    controller.setBluePlayerTypeSelection("C");
+    controller.setRedPlayerTypeSelection("H");
+    controller.startOfANewGame();
+
+    SosGame game = controller.getGame();
+
+    // Set up the board with an opponent's 'S' at (0, 0)
+    // S _ _
+    // _ _ _
+    // _ _ _
+    // This creates six "unsafe" moves for the computer (Blue)
+    // that would allow Red to win on the next turn.
+    game.makeMove(0, 0, "S"); // Simulate Red's move
+
+    // When it's the computer player's turn
+    controller.setCurrentPlayer("B");
+
+    // And the computer determines there is no option to form an SOS (AC 9.1 fails)
+    // And the computer determines there are "safe" moves
+    Player.PlayerMove move = controller.moveByComputerPlayer();
+
+    // Then the computer player selects a "safe" move
+    assertNotNull(move);
+
+    // Asserts the computer did NOT make any of the "unsafe" moves
+    String actualMoveSignature = "R:" + move.row + " C:" + move.column + " L:" + move.letter;
+
+    // Define all 6 possible unsafe moves
+    Set<String> unsafeMoves = new HashSet<>();
+    // S O S unsafe moves (playing an 'O')
+    unsafeMoves.add("R:0 C:1 L:O"); // Horizontal move: S O _
+    unsafeMoves.add("R:1 C:0 L:O"); // Vertical move: S O _ (down)
+    unsafeMoves.add("R:1 C:1 L:O"); // Diagonal move: S O _ (diag)
+    // S _ S unsafe moves (playing an 'S')
+    unsafeMoves.add("R:0 C:2 L:S"); // Horizontal move: S _ S
+    unsafeMoves.add("R:2 C:0 L:S"); // Vertical move: S _ S (down)
+    unsafeMoves.add("R:2 C:2 L:S"); // Diagonal move: S _ S (diag)
+
+
+    assertFalse(unsafeMoves.contains(actualMoveSignature));
+  }
+
+  @Test
+  public void testAC9_3_ComputerMakesRandomMoveOnEmptyBoard() {
+    // Given an ongoing game
+    controller.setBoardSize(3);
+    controller.setGameMode("S");
+    controller.setBluePlayerTypeSelection("C");
+    controller.setRedPlayerTypeSelection("H");
+    controller.startOfANewGame();
+
+    // When the computer player scans the board and finds that every cell is unoccupied
+    controller.setCurrentPlayer("B");
+
+    // Then the computer player randomly selects a move
+    Player.PlayerMove move = controller.moveByComputerPlayer();
+
+    // Assert that *a* valid move was made
+    assertNotNull(move);
+    assertTrue(move.row >= 0 && move.row < 3);
+    assertTrue(move.column >= 0 && move.column < 3);
+    assertTrue(move.letter.equals("S") || move.letter.equals("O"));
   }
 }
 
