@@ -126,15 +126,19 @@ public class SosGuiFrame extends JFrame implements GameStateListener {
   public void createBottomPanel() {
     JPanel bottomPanel = new JPanel();
     bottomPanel.setLayout(new BorderLayout());
+    bottomPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 
     // Creates the checkbox for whether or not the game will be recorded
     JCheckBox recordGamecheckBox = new JCheckBox();
     recordGamecheckBox.setText("Record Game");
+    
+    JButton replayButton = new JButton("Replay Game");
 
     currentPlayerLabel = new JLabel("Current Player: Blue", SwingConstants.CENTER);
     currentPlayerLabel.setForeground(Color.BLUE);
 
     bottomPanel.add(recordGamecheckBox, BorderLayout.WEST);
+    bottomPanel.add(replayButton, BorderLayout.EAST);
     bottomPanel.add(currentPlayerLabel);
     this.add(bottomPanel, BorderLayout.SOUTH);
   }
