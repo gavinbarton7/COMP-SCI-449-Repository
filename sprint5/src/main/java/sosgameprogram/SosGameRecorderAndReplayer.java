@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SosGameRecorder {
+public class SosGameRecorderAndReplayer {
 
   private List<String> movesInRecordedGame;
   private String gameMode;
@@ -15,7 +15,7 @@ public class SosGameRecorder {
   private String redPlayerType;
   private boolean isRecordingGame;
 
-  public SosGameRecorder() {
+  public SosGameRecorderAndReplayer() {
     this.movesInRecordedGame = new ArrayList<>();
     this.isRecordingGame = false;
   }
@@ -95,4 +95,31 @@ public class SosGameRecorder {
   public int getNumberOfMoves() {
     return movesInRecordedGame.size();
   }
+
+  public static class ReplaySosGame {
+    public String gameMode;
+    public int boardSize;
+    public String bluePlayerType;
+    public String redPlayerType;
+    public List<ReplayMoveFromGame> moves;
+
+    public ReplaySosGame() {
+      moves = new ArrayList<>();
+    }
+
+    public static class ReplayMoveFromGame {
+      public String player;
+      public int row;
+      public int column;
+      public String letter;
+
+      public ReplayMoveFromGame(String player, int row, int column, String letter) {
+        this.player = player;
+        this.row = row;
+        this.column = column;
+        this.letter = letter;
+      }
+    }
+  }
+
 }
