@@ -143,10 +143,8 @@ public class SosGameRecorderAndReplayer {
           String[] parts = line.split(",");
           if (parts.length == 4) {
             ReplayOfSosGame.ReplayMoveFromGame move = new ReplayOfSosGame.ReplayMoveFromGame(
-                parts[0].trim(),
-                Integer.parseInt(parts[1].trim()),
-                Integer.parseInt(parts[2].trim()),
-                parts[3].trim()
+                parts[0].trim(), Integer.parseInt(parts[1].trim()),
+                Integer.parseInt(parts[2].trim()), parts[3].trim()
             );
             replay.gameMoves.add(move);
           }
