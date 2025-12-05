@@ -92,4 +92,53 @@ public class GameReplayGuiFrame extends JFrame implements GameStateListener {
     board = new Board(controller, this);
     this.add(board, BorderLayout.CENTER);
   }
+
+  private void createBottomPanel() {
+    JPanel bottomPanel = new JPanel();
+    bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
+
+    // Creates a game replay status panel that indicates which player is about to make a move based
+    // (in other words, it shows what the current turn label said at a given point when the game
+    // was originally played live) and the number of moves that have been made in the replay so far
+    JPanel statusPanel = new JPanel(new GridLayout(2, 1));
+
+    currentPlayerLabel = new JLabel("Current turn: Blue", SwingConstants.CENTER);
+    currentPlayerLabel.setForeground(Color.BLUE);
+
+    moveCountLabel = new JLabel("Moves made so far: 0 / " + sosGameReplay.gameMoves.size(),
+        SwingConstants.CENTER);
+
+    statusPanel.add(currentPlayerLabel);
+    statusPanel.add(moveCountLabel);
+
+    // Creates a replay controls panel with a play button to start, a pause button to pause in
+    // the middle of a replay, and a reset button to clear the board on the replay gui frame and
+    // start the replay over by clicking the "play" button again.
+    JPanel replayControlsPanel = new JPanel(new FlowLayout());
+
+    resetButton = new JButton("Reset");
+    playButton = new JButton("Play");
+    pauseButton = new JButton("Pause");
+
+    replayControlsPanel.add(playButton);
+    replayControlsPanel.add(pauseButton);
+    replayControlsPanel.add(resetButton);
+
+    bottomPanel.add(statusPanel);
+    bottomPanel.add(replayControlsPanel);
+
+    this.add(bottomPanel, BorderLayout.SOUTH);
+  }
+
+  // Changes the label for the current player after each move
+  private void updateCurrentPlayerLabel() {
+    String currentPlayerColor = controller.getCurrentPlayer();
+    if (currentPlayerColor.equals("B")) {
+      currentPlayerLabel.setText("Current turn: Blue");
+      currentPlayerLabel.setForeground(Color.BLUE);
+    } else if (currentPlayerColor.equals("R")) {
+      currentPlayerLabel.setText("Current turn: Red");
+      currentPlayerLabel.setForeground(Color.RED);
+    }
+  }
 }
