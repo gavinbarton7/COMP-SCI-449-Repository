@@ -1,8 +1,6 @@
 package sosgameprogram;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +36,6 @@ public class SosGameRecorderAndReplayer {
   }
 
   public boolean saveGameRecordingToOutputFile(String fileName) {
-
     if (movesInRecordedGame.isEmpty()) {
       return false;
     }
@@ -96,15 +93,15 @@ public class SosGameRecorderAndReplayer {
     return movesInRecordedGame.size();
   }
 
-  public static class ReplaySosGame {
+  public static class ReplayOfSosGame {
     public String gameMode;
     public int boardSize;
     public String bluePlayerType;
     public String redPlayerType;
-    public List<ReplayMoveFromGame> moves;
+    public List<ReplayMoveFromGame> gameMoves;
 
-    public ReplaySosGame() {
-      moves = new ArrayList<>();
+    public ReplayOfSosGame() {
+      gameMoves = new ArrayList<>();
     }
 
     public static class ReplayMoveFromGame {
@@ -118,6 +115,56 @@ public class SosGameRecorderAndReplayer {
         this.row = row;
         this.column = column;
         this.letter = letter;
+      }
+    }
+  }
+  
+  public static ReplayOfSosGame loadGameDataFromFile(String fileName) {
+    ReplayOfSosGame replay = new ReplayOfSosGame();
+    BufferedReader reader = null;
+
+    try {
+      reader = new BufferedReader(new FileReader(fileName));
+      String line;
+      boolean readingMovesFromGame = false;
+
+      while ((line = reader.readLine()) != null) {
+        if (line.startsWith("Game Mode:")) {
+          replay.gameMode = line.substring(9).trim();
+        } else if (line.startsWith("Board Size:")) {
+          replay.boardSize = Integer.parseInt(line.substring(10).trim());
+        } else if (line.startsWith("Blue Player Type:")) {
+          replay.bluePlayerType = line.substring(11).trim();
+        } else if (line.startsWith("Red Player Type:")) {
+          replay.redPlayerType = line.substring(10).trim();
+        } else if (line.equals("Moves Made in the Game:")) {
+          readingMovesFromGame = true;
+        } else if (readingMovesFromGame == true && line.trim().isEmpty() == false) {
+          String[] parts = line.split(",");
+          if (parts.length == 4) {
+            ReplayOfSosGame.ReplayMoveFromGame move = new ReplayOfSosGame.ReplayMoveFromGame(
+                parts[0].trim(),
+                Integer.parseInt(parts[1].trim()),
+                Integer.parseInt(parts[2].trim()),
+                parts[3].trim()
+            );
+            replay.gameMoves.add(move);
+          }
+        }
+      }
+
+      return replay;
+
+    } catch (IOException | NumberFormatException e) {
+      e.printStackTrace();
+      return null;
+    } finally {
+      if (reader != null) {
+        try {
+          reader.close();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
       }
     }
   }
