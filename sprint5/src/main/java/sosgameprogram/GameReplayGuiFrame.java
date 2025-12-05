@@ -18,10 +18,12 @@ public class GameReplayGuiFrame extends JFrame implements GameStateListener {
 
   @Override
   public void onGameStateChanged() {
+    updateCurrentPlayerLabel();
   }
 
   @Override
   public void onGameEnded() {
+
   }
 
   public GameReplayGuiFrame(SosGameRecorderAndReplayer.ReplayOfSosGame sosGameReplay) {
@@ -33,6 +35,11 @@ public class GameReplayGuiFrame extends JFrame implements GameStateListener {
     this.setTitle("SOS Game - Replay Mode");
     this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     this.setLayout(new BorderLayout());
+
+    setupGameReplay();
+    createTopPanel();
+    createGameBoardPanel();
+    createBottomPanel();
 
     this.pack();
     this.setLocationRelativeTo(null);
@@ -105,8 +112,8 @@ public class GameReplayGuiFrame extends JFrame implements GameStateListener {
     currentPlayerLabel = new JLabel("Current turn: Blue", SwingConstants.CENTER);
     currentPlayerLabel.setForeground(Color.BLUE);
 
-    moveCountLabel = new JLabel("Moves made so far: 0 / " + sosGameReplay.gameMoves.size(),
-        SwingConstants.CENTER);
+    moveCountLabel = new JLabel("Moves made so far: 0 out of " +
+        sosGameReplay.gameMoves.size(), SwingConstants.CENTER);
 
     statusPanel.add(currentPlayerLabel);
     statusPanel.add(moveCountLabel);
@@ -119,6 +126,10 @@ public class GameReplayGuiFrame extends JFrame implements GameStateListener {
     resetButton = new JButton("Reset");
     playButton = new JButton("Play");
     pauseButton = new JButton("Pause");
+
+    playButton.addActionListener(e -> playGameReplay());
+    pauseButton.addActionListener(e -> pauseGameReplay());
+    resetButton.addActionListener(e -> resetGameReplay());
 
     replayControlsPanel.add(playButton);
     replayControlsPanel.add(pauseButton);
@@ -140,5 +151,76 @@ public class GameReplayGuiFrame extends JFrame implements GameStateListener {
       currentPlayerLabel.setText("Current turn: Red");
       currentPlayerLabel.setForeground(Color.RED);
     }
+  }
+
+  // Used for play the game replay from the beginning or resuming it when the "play"
+  // button is clicked
+  private void playGameReplay() {
+    if (indexOfCurrentMove >= sosGameReplay.gameMoves.size()) {
+      resetGameReplay();
+      return;
+    }
+
+    isGameReplayPaused = false;
+
+    replayTimer = new Timer(1000, e -> {
+      if (isGameReplayPaused == false && indexOfCurrentMove < sosGameReplay.gameMoves.size()) {
+        executeReplayedGameMove(indexOfCurrentMove);
+        indexOfCurrentMove++;
+        updateMoveCount();
+
+        if (indexOfCurrentMove >= sosGameReplay.gameMoves.size()) {
+          ((Timer)e.getSource()).stop();
+        }
+      }
+    });
+    replayTimer.start();
+  }
+
+  // Used for pausing in the middle of a game replay (when pause button is clicked)
+  private void pauseGameReplay() {
+    isGameReplayPaused = true;
+    if (replayTimer != null) {
+      replayTimer.stop();
+    }
+  }
+
+  // Used for resetting the replay board to be blank and restarting the timer between moves
+  // when the "Reset" button, is clicked
+  private void resetGameReplay() {
+    if (replayTimer != null) {
+      replayTimer.stop();
+    }
+    indexOfCurrentMove = 0;
+    isGameReplayPaused = false;
+
+    setupGameReplay();
+    board.newBoard();
+    updateCurrentPlayerLabel();
+    updateMoveCount();
+  }
+
+  // Used for painting each move on the board during the game replay
+  private void executeReplayedGameMove(int index) {
+    SosGameRecorderAndReplayer.ReplayOfSosGame.ReplayMoveFromGame currentMove =
+        sosGameReplay.gameMoves.get(index);
+
+    controller.setCurrentPlayer(currentMove.player);
+
+    if (currentMove.player.equals("B")) {
+      controller.setBluePlayerLetterSelection(currentMove.letter);
+    } else {
+      controller.setRedPlayerLetterSelection(currentMove.letter);
+    }
+
+    controller.getGame().setCellContent(currentMove.row, currentMove.column);
+    board.repaint();
+    updateCurrentPlayerLabel();
+  }
+
+  // Used to update the move count label after each move
+  private void updateMoveCount() {
+    moveCountLabel.setText("Moves made so far: " + (indexOfCurrentMove) + " out of " +
+        sosGameReplay.gameMoves.size());
   }
 }
