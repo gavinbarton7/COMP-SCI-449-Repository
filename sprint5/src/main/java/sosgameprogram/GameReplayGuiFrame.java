@@ -23,7 +23,13 @@ public class GameReplayGuiFrame extends JFrame implements GameStateListener {
 
   @Override
   public void onGameEnded() {
-
+    if (replayTimer != null) {
+      replayTimer.stop();
+    }
+    JOptionPane.showMessageDialog(this,
+        getReplayedGameResultMessage(),
+        "Replay Finished Message",
+        JOptionPane.INFORMATION_MESSAGE);
   }
 
   public GameReplayGuiFrame(SosGameRecorderAndReplayer.ReplayOfSosGame sosGameReplay) {
@@ -171,6 +177,7 @@ public class GameReplayGuiFrame extends JFrame implements GameStateListener {
 
         if (indexOfCurrentMove >= sosGameReplay.gameMoves.size()) {
           ((Timer)e.getSource()).stop();
+          onGameEnded();
         }
       }
     });
@@ -222,5 +229,19 @@ public class GameReplayGuiFrame extends JFrame implements GameStateListener {
   private void updateMoveCount() {
     moveCountLabel.setText("Moves made so far: " + (indexOfCurrentMove) + " out of " +
         sosGameReplay.gameMoves.size());
+  }
+
+  private String getReplayedGameResultMessage() {
+    String replayedGameResult = controller.getGameResult();
+
+    if (replayedGameResult.equals("BV")) {
+     return "The blue player won this game.";
+    } else if (replayedGameResult.equals("RV")) {
+      return "The blue player won this game.";
+    } else if (replayedGameResult.equals("D")) {
+      return "The blue player won this game.";
+    } else {
+      return "";
+    }
   }
 }

@@ -17,6 +17,8 @@ public abstract class SosGame {
   private boolean gameInProgress;
   // This list stores the red and blue lines for the SOS formation
   private List<SosLine> sosLines;
+  private SosGameRecorderAndReplayer gameRecorder;
+
 
   public SosGame() {
     // Note: -1 is used as an initial value to tell if the board size has been set yet
@@ -66,6 +68,10 @@ public abstract class SosGame {
       this.lastColumn = lastColumn;
       this.player = player;
     }
+  }
+
+  public void setGameRecorder(SosGameRecorderAndReplayer recorder) {
+    this.gameRecorder = recorder;
   }
 
   // Sets the size of the board if inputted size is between 3 and 10, but returns false if inputted
@@ -161,6 +167,10 @@ public abstract class SosGame {
 
   protected void makeMove(int row, int column, String playerLetterSelection) {
     gameBoard[row][column] = playerLetterSelection;
+
+    if (gameRecorder != null && gameRecorder.isGameCurrentlyRecording() == true) {
+      gameRecorder.recordMove(currentPlayer, row, column, playerLetterSelection);
+    }
   }
 
   protected String[][] getGameBoard() {
