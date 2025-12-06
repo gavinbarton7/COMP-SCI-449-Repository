@@ -45,18 +45,18 @@ public class SosGameRecorderAndReplayer {
       writer = new BufferedWriter(new FileWriter(fileName));
 
       // Writes all of the pre-game configurations to the file
-      writer.write("Game Mode:" + gameMode);
+      writer.write("Game Mode: " + gameMode);
       writer.newLine();
-      writer.write("Board Size:" + boardSize);
+      writer.write("Board Size: " + boardSize);
       writer.newLine();
-      writer.write("Blue Player Type:" + bluePlayerType);
+      writer.write("Blue Player Type: " + bluePlayerType);
       writer.newLine();
-      writer.write("Red Player Type:" + redPlayerType);
+      writer.write("Red Player Type: " + redPlayerType);
       writer.newLine();
 
 
       // This (and following for loop) writes all of the moves made in the game to the file
-      writer.write("Moves Made in the Game:");
+      writer.write("Moves Made in the Game: ");
       writer.newLine();
 
       for (String move : movesInRecordedGame) {
@@ -129,15 +129,15 @@ public class SosGameRecorderAndReplayer {
       boolean readingMovesFromGame = false;
 
       while ((line = reader.readLine()) != null) {
-        if (line.startsWith("Game Mode:")) {
-          replay.gameMode = line.substring(9).trim();
-        } else if (line.startsWith("Board Size:")) {
-          replay.boardSize = Integer.parseInt(line.substring(10).trim());
-        } else if (line.startsWith("Blue Player Type:")) {
-          replay.bluePlayerType = line.substring(11).trim();
-        } else if (line.startsWith("Red Player Type:")) {
-          replay.redPlayerType = line.substring(10).trim();
-        } else if (line.equals("Moves Made in the Game:")) {
+        if (line.startsWith("Game Mode: ")) {
+          replay.gameMode = line.substring(11).trim();
+        } else if (line.startsWith("Board Size: ")) {
+          replay.boardSize = Integer.parseInt(line.substring(12).trim());
+        } else if (line.startsWith("Blue Player Type: ")) {
+          replay.bluePlayerType = line.substring(18).trim();
+        } else if (line.startsWith("Red Player Type: ")) {
+          replay.redPlayerType = line.substring(17).trim();
+        } else if (line.equals("Moves Made in the Game: ")) {
           readingMovesFromGame = true;
         } else if (readingMovesFromGame == true && line.trim().isEmpty() == false) {
           String[] parts = line.split(",");

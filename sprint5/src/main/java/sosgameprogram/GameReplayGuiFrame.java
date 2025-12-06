@@ -6,7 +6,7 @@ import java.awt.*;
 public class GameReplayGuiFrame extends JFrame implements GameStateListener {
   private SosGameController controller;
   private Board board;
-  private JLabel currentPlayerLabel;
+  private JLabel playerWhoMakesNextMoveLabel;
   private JLabel moveCountLabel;
   private SosGameRecorderAndReplayer.ReplayOfSosGame sosGameReplay;
   private int indexOfCurrentMove;
@@ -18,7 +18,7 @@ public class GameReplayGuiFrame extends JFrame implements GameStateListener {
 
   @Override
   public void onGameStateChanged() {
-    updateCurrentPlayerLabel();
+    updatePlayerWhoMakesNextMoveLabel();
   }
 
   @Override
@@ -43,9 +43,9 @@ public class GameReplayGuiFrame extends JFrame implements GameStateListener {
     this.setLayout(new BorderLayout());
 
     setupGameReplay();
-    createTopPanel();
-    createGameBoardPanel();
-    createBottomPanel();
+    createReplayTopPanel();
+    createReplayGameBoardPanel();
+    createReplayBottomPanel();
 
     this.pack();
     this.setLocationRelativeTo(null);
@@ -61,7 +61,7 @@ public class GameReplayGuiFrame extends JFrame implements GameStateListener {
     controller.startOfANewGame();
   }
 
-  private void createTopPanel() {
+  private void createReplayTopPanel() {
     String gameModeForLabel;
     String bluePlayerTypeForLabel;
     String redPlayerTypeForLabel;
@@ -101,27 +101,28 @@ public class GameReplayGuiFrame extends JFrame implements GameStateListener {
     this.add(topPanel, BorderLayout.NORTH);
   }
 
-  private void createGameBoardPanel() {
+  private void createReplayGameBoardPanel() {
     board = new Board(controller, this);
     this.add(board, BorderLayout.CENTER);
   }
 
-  private void createBottomPanel() {
+  private void createReplayBottomPanel() {
     JPanel bottomPanel = new JPanel();
     bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
 
-    // Creates a game replay status panel that indicates which player is about to make a move based
-    // (in other words, it shows what the current turn label said at a given point when the game
-    // was originally played live) and the number of moves that have been made in the replay so far
+    // Creates a game replay status panel that indicates which player is about to make the next
+    // move and the number of moves that have been made in the replay so far.
     JPanel statusPanel = new JPanel(new GridLayout(2, 1));
 
-    currentPlayerLabel = new JLabel("Current turn: Blue", SwingConstants.CENTER);
-    currentPlayerLabel.setForeground(Color.BLUE);
+    playerWhoMakesNextMoveLabel = new JLabel("The player who makes the next move is: Blue",
+        SwingConstants.CENTER);
+
+    playerWhoMakesNextMoveLabel.setForeground(Color.BLUE);
 
     moveCountLabel = new JLabel("Moves made so far: 0 out of " +
         sosGameReplay.gameMoves.size(), SwingConstants.CENTER);
 
-    statusPanel.add(currentPlayerLabel);
+    statusPanel.add(playerWhoMakesNextMoveLabel);
     statusPanel.add(moveCountLabel);
 
     // Creates a replay controls panel with a play button to start, a pause button to pause in
@@ -148,14 +149,14 @@ public class GameReplayGuiFrame extends JFrame implements GameStateListener {
   }
 
   // Changes the label for the current player after each move
-  private void updateCurrentPlayerLabel() {
+  private void updatePlayerWhoMakesNextMoveLabel() {
     String currentPlayerColor = controller.getCurrentPlayer();
     if (currentPlayerColor.equals("B")) {
-      currentPlayerLabel.setText("Current turn: Blue");
-      currentPlayerLabel.setForeground(Color.BLUE);
+      playerWhoMakesNextMoveLabel.setText("The player who makes the next move is: Blue");
+      playerWhoMakesNextMoveLabel.setForeground(Color.BLUE);
     } else if (currentPlayerColor.equals("R")) {
-      currentPlayerLabel.setText("Current turn: Red");
-      currentPlayerLabel.setForeground(Color.RED);
+      playerWhoMakesNextMoveLabel.setText("The player who makes the next move is: Red");
+      playerWhoMakesNextMoveLabel.setForeground(Color.RED);
     }
   }
 
@@ -203,7 +204,7 @@ public class GameReplayGuiFrame extends JFrame implements GameStateListener {
 
     setupGameReplay();
     board.newBoard();
-    updateCurrentPlayerLabel();
+    updatePlayerWhoMakesNextMoveLabel();
     updateMoveCount();
   }
 
@@ -222,7 +223,7 @@ public class GameReplayGuiFrame extends JFrame implements GameStateListener {
 
     controller.getGame().setCellContent(currentMove.row, currentMove.column);
     board.repaint();
-    updateCurrentPlayerLabel();
+    updatePlayerWhoMakesNextMoveLabel();
   }
 
   // Used to update the move count label after each move

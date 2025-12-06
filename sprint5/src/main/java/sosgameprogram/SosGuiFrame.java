@@ -5,6 +5,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 public class SosGuiFrame extends JFrame implements GameStateListener {
@@ -25,6 +27,9 @@ public class SosGuiFrame extends JFrame implements GameStateListener {
   private JRadioButton redPlayerSButton;
   private JRadioButton redPlayerOButton;
   private boolean computerMoveInProgress;
+  private JCheckBox recordGameCheckBox;
+  private JButton replayButton;
+  private SosGameRecorderAndReplayer gameRecorder;
 
   @Override
   public void onGameStateChanged() {
@@ -39,6 +44,7 @@ public class SosGuiFrame extends JFrame implements GameStateListener {
 
   public SosGuiFrame() {
     this.controller = new SosGameController();
+    this.gameRecorder = new SosGameRecorderAndReplayer();
     this.setTitle("SOS Game");
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setLayout(new BorderLayout());
@@ -129,15 +135,16 @@ public class SosGuiFrame extends JFrame implements GameStateListener {
     bottomPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 
     // Creates the checkbox for whether or not the game will be recorded
-    JCheckBox recordGamecheckBox = new JCheckBox();
-    recordGamecheckBox.setText("Record Game");
+    recordGameCheckBox = new JCheckBox();
+    recordGameCheckBox.setText("Record Game");
     
-    JButton replayButton = new JButton("Replay Game");
+    replayButton = new JButton("Replay Game");
+    replayButton.addActionListener(e -> replayButtonHandler());
 
     currentPlayerLabel = new JLabel("Current Player: Blue", SwingConstants.CENTER);
     currentPlayerLabel.setForeground(Color.BLUE);
 
-    bottomPanel.add(recordGamecheckBox, BorderLayout.WEST);
+    bottomPanel.add(recordGameCheckBox, BorderLayout.WEST);
     bottomPanel.add(replayButton, BorderLayout.EAST);
     bottomPanel.add(currentPlayerLabel);
     this.add(bottomPanel, BorderLayout.SOUTH);
@@ -290,6 +297,14 @@ public class SosGuiFrame extends JFrame implements GameStateListener {
       updateCurrentPlayerLabel();
       computerMoveInProgress = false;
       computerTurnHandler();
+
+      if (recordGameCheckBox.isSelected()) {
+        gameRecorder.beginRecordingGame( controller.getGameMode(), controller.getBoardSize(),
+            controller.getBluePlayerTypeSelection(), controller.getRedPlayerTypeSelection()
+        );
+        // Sets the recorder for the SOS game that is about to be played
+        controller.getGame().setGameRecorder(gameRecorder);
+      }
     }
   }
 
@@ -297,8 +312,6 @@ public class SosGuiFrame extends JFrame implements GameStateListener {
     // Create an object for the SOS game board panel
     board = new Board(controller, this);
 
-    // Adds the "TopPanel" panel to the "NORTH" section of the GUI layout and the checkbox to the
-    // "SOUTH" section of the GUI layout
     this.add(board, BorderLayout.CENTER);
   }
 
@@ -368,6 +381,11 @@ public class SosGuiFrame extends JFrame implements GameStateListener {
 
     JOptionPane.showMessageDialog(this, message, "Game Over",
         JOptionPane.INFORMATION_MESSAGE);
+
+    if (recordGameCheckBox.isSelected() && gameRecorder.getNumberOfMoves() > 0) {
+      saveGameRecording();
+      gameRecorder.stopGameRecording();
+    }
   }
 
   private void computerTurnHandler() {
@@ -398,6 +416,102 @@ public class SosGuiFrame extends JFrame implements GameStateListener {
         }
       };
       worker.execute();
+    }
+  }
+
+  // This method saves the game recording once the game is over
+  private void saveGameRecording() {
+    int option = JOptionPane.showConfirmDialog(
+        this,
+        "Would you like to save this game recording?",
+        "Save Recording",
+        JOptionPane.YES_NO_OPTION
+    );
+
+    if (option == JOptionPane.YES_OPTION) {
+      JFileChooser fileChooser = new JFileChooser();
+      fileChooser.setDialogTitle("Save Game Recording");
+
+      // Sets the directory of the file chooser
+      fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+
+      FileNameExtensionFilter filter = new FileNameExtensionFilter(
+          "Text Files (*.txt)", "txt"
+      );
+      fileChooser.setFileFilter(filter);
+
+      // Set default file name to SOS Game and the timestamp to indicate when it was recorded
+      String defaultName = "SOS_Game_" + System.currentTimeMillis() + ".txt";
+      fileChooser.setSelectedFile(new File(defaultName));
+
+      int result = fileChooser.showSaveDialog(this);
+
+      if (result == JFileChooser.APPROVE_OPTION) {
+        File file = fileChooser.getSelectedFile();
+        String fileName = file.getAbsolutePath();
+
+        // Add .txt extension if it wasn't included by the user
+        if (fileName.toLowerCase().endsWith(".txt") == false) {
+          fileName += ".txt";
+        }
+
+        boolean saved = gameRecorder.saveGameRecordingToOutputFile(fileName);
+
+        if (saved) {
+          JOptionPane.showMessageDialog(
+              this,
+              "Game recording saved successfully as: " + fileName,
+              "Save Successful",
+              JOptionPane.INFORMATION_MESSAGE
+          );
+        } else {
+          JOptionPane.showMessageDialog(
+              this,
+              "Failed to save game recording.",
+              "Save Failed",
+              JOptionPane.ERROR_MESSAGE
+          );
+        }
+      }
+    }
+  }
+
+  // This method tells the program what to do when the replay button is clicked by having it open
+  // a file chooser so the user can select a file and the opening a game replay GUI frame
+  // so that the game in that file can be replayed
+  private void replayButtonHandler() {
+    JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setDialogTitle("Select Game Recording to Replay");
+
+    // Set to current directory
+    fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+
+    FileNameExtensionFilter filter = new FileNameExtensionFilter(
+        "Text Files (*.txt)", "txt"
+    );
+    fileChooser.setFileFilter(filter);
+
+    int result = fileChooser.showOpenDialog(this);
+
+    if (result == JFileChooser.APPROVE_OPTION) {
+      File file = fileChooser.getSelectedFile();
+
+      SosGameRecorderAndReplayer.ReplayOfSosGame gameReplay =
+          SosGameRecorderAndReplayer.loadGameDataFromFile(file.getAbsolutePath()
+      );
+
+      if (gameReplay != null && gameReplay.gameMoves.isEmpty() == false) {
+        // Open a replay GUI Frame
+        new GameReplayGuiFrame(gameReplay);
+      } else {
+        JOptionPane.showMessageDialog(
+            this,
+            "Failed to load game recording from file. Check the file to make sure it is" +
+                " an SOS game recording by using a text editor.",
+            "Replay Load Failed",
+            JOptionPane.ERROR_MESSAGE
+        );
+      }
     }
   }
 }
